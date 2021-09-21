@@ -1,11 +1,7 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.model.Board;
-import com.webcheckers.model.Message;
 import spark.*;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
 
 /**

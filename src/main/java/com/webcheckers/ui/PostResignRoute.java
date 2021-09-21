@@ -1,14 +1,11 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.application.GameCenter;
-import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 import spark.Session;
 
-import java.util.Objects;
 import java.util.logging.Logger;
 
 import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER_KEY;

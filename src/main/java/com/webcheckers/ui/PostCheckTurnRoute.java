@@ -1,15 +1,13 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
-import com.webcheckers.application.GameCenter;
 import com.webcheckers.model.Board;
-import com.webcheckers.model.Message;
+import com.webcheckers.util.Message;
 import com.webcheckers.model.Player;
 import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.logging.Logger;
 
 import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER_KEY;
