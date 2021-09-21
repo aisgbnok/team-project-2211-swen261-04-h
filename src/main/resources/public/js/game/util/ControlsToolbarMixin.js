@@ -128,7 +128,7 @@ define(function(require){
       //
       return $button;
     }
-  }
+  };
 
   // export class constructor
   return ControlsToolbarMixin;

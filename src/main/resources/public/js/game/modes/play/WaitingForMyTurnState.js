@@ -21,7 +21,7 @@ define(function(require){
     function WaitingForMyTurnState(controller) {
         // private attributes
         this._controller = controller;
-    }
+    };
 
     //
     // Public (external) methods
