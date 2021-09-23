@@ -7,9 +7,9 @@ a web micro-framework.
 ## Team
 
 - JWD2488 Jake Downie
-- MEMBER2
-- MEMBER3
-- MEMBER4
+- IDC7947 Ian Chasse
+- AJS2576 Anthony Swierkosz
+- LKB6056 Lindsay Bowman
 
 
 ## Prerequisites
