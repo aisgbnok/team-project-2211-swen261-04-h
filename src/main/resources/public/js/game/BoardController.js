@@ -95,7 +95,7 @@ define(function(require){
       'td.' + SPACE_CLASS);
     }
 
-  };
+  }
 
   //
   // Public (external) methods

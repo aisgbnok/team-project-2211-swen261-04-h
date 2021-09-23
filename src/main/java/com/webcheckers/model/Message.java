@@ -14,103 +14,100 @@ import java.util.logging.Logger;
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
 public final class Message {
-  private static final Logger LOG = Logger.getLogger(Message.class.getName());
+    private static final Logger LOG = Logger.getLogger(Message.class.getName());
 
-  //
-  // Static Factory methods
-  //
+    //
+    // Static Factory methods
+    //
+    private final String text;
+    private final Type type;
 
-  /**
-   * A static helper method to create new error messages.
-   *
-   * @param message  the text of the message
-   *
-   * @return a new {@link Message}
-   */
-  public static Message error(final String message) {
-    return new Message(message, Type.ERROR);
-  }
+    //
+    // Inner Types
+    //
 
-  /**
-   * A static helper method to create new informational messages.
-   *
-   * @param message  the text of the message
-   *
-   * @return a new {@link Message}
-   */
-  public static Message info(final String message) {
-    return new Message(message, Type.INFO);
-  }
+    /**
+     * Create a new message.
+     *
+     * @param message the text of the message
+     * @param type    the type of message
+     */
+    private Message(final String message, final Type type) {
+        this.text = message;
+        this.type = type;
+        LOG.finer(this + " created.");
+    }
 
-  //
-  // Inner Types
-  //
+    //
+    // Attributes
+    //
 
-  /**
-   * The type of {@link Message}; either information or an error.
-   */
-  public enum Type {
-    INFO, ERROR
-  }
+    /**
+     * A static helper method to create new error messages.
+     *
+     * @param message the text of the message
+     * @return a new {@link Message}
+     */
+    public static Message error(final String message) {
+        return new Message(message, Type.ERROR);
+    }
 
-  //
-  // Attributes
-  //
+    /**
+     * A static helper method to create new informational messages.
+     *
+     * @param message the text of the message
+     * @return a new {@link Message}
+     */
+    public static Message info(final String message) {
+        return new Message(message, Type.INFO);
+    }
 
-  private final String text;
-  private final Type type;
+    //
+    // Constructor
+    //
 
-  //
-  // Constructor
-  //
+    /**
+     * Get the text of the message.
+     */
+    public String getText() {
+        return text;
+    }
 
-  /**
-   * Create a new message.
-   *
-   * @param message  the text of the message
-   * @param type  the type of message
-   */
-  private Message(final String message, final Type type) {
-    this.text = message;
-    this.type = type;
-    LOG.finer(this + " created.");
-  }
+    //
+    // Public methods
+    //
 
-  //
-  // Public methods
-  //
+    /**
+     * Get the type of the message.
+     */
+    public Type getType() {
+        return type;
+    }
 
-  /**
-   * Get the text of the message.
-   */
-  public String getText() {
-    return text;
-  }
+    /**
+     * Query whether this message was generated from a successful
+     * action; ie, not an {@link Type#ERROR}.
+     *
+     * @return true if not an error
+     */
+    public boolean isSuccessful() {
+        return !type.equals(Type.ERROR);
+    }
 
-  /**
-   * Get the type of the message.
-   */
-  public Type getType() {
-    return type;
-  }
+    @Override
+    public String toString() {
+        return "{Msg " + type + " '" + text + "'}";
+    }
 
-  /**
-   * Query whether this message was generated from a successful
-   * action; ie, not an {@link Type#ERROR}.
-   *
-   * @return true if not an error
-   */
-  public boolean isSuccessful() {
-    return !type.equals(Type.ERROR);
-  }
+    //
+    // Object methods
+    //
 
-  //
-  // Object methods
-  //
-
-  @Override
-  public String toString() {
-    return "{Msg " + type + " '" + text + "'}";
-  }
+    /**
+     * The type of {@link Message}; either information or an error.
+     */
+    public enum Type {
+        INFO, ERROR
+    }
 
 }
