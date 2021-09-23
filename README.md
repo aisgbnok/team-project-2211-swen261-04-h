@@ -9,7 +9,6 @@ a web micro-framework.
 - JWD2488 Jake Downie
 - IDC7947 Ian Chasse
 - AJS2576 Anthony Swierkosz
-- LKB6056 Lindsay Bowman
 
 
 ## Prerequisites
