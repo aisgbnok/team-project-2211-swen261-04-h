@@ -11,7 +11,7 @@ import spark.Response;
 import spark.Route;
 import spark.TemplateEngine;
 
-import com.webcheckers.util.Message;
+import com.webcheckers.model.Message;
 
 /**
  * The UI Controller to GET the Home page.
