@@ -94,7 +94,12 @@
       <version>${mockito.version}</version>
       <scope>test</scope>
     </dependency>
-    <!-- END: Unit testing libraries -->
+      <dependency>
+          <groupId>com.webcheckers</groupId>
+          <artifactId>checkers-app</artifactId>
+          <version>1.0-SNAPSHOT</version>
+      </dependency>
+      <!-- END: Unit testing libraries -->
 
   </dependencies>
 

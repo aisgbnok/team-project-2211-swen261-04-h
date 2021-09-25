@@ -16,8 +16,6 @@ import java.util.logging.Logger;
 public class GetSignInRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
 
-    private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
-
     private final TemplateEngine templateEngine;
 
     /**
@@ -32,7 +30,7 @@ public class GetSignInRoute implements Route {
     }
 
     /**
-     * Render the WebCheckers Home page.
+     * Render the WebCheckers Sign in
      *
      * @param request  the HTTP request
      * @param response the HTTP response
@@ -41,14 +39,7 @@ public class GetSignInRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("GetSignInRoute is invoked.");
-        //
         Map<String, Object> vm = new HashMap<>();
-        vm.put("title", "Welcome!");
-
-        // display a user message in the Home page
-        vm.put("message", WELCOME_MSG);
-
-        // render the View
         return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
     }
 }

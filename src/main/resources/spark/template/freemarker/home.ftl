@@ -16,7 +16,8 @@
   <#include "nav-bar.ftl" />
 
   <div class="body">
-
+    <b>${current_player}</b>
+    ${all_players}
     <!-- Provide a message to the user, if supplied. -->
     <#include "message.ftl" />
 

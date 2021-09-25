@@ -1,8 +1,11 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Message;
+import com.webcheckers.model.Player;
 import spark.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -17,6 +20,7 @@ public class GetHomeRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
     private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+    static final String PLAYER_KEY = "playerServices";
 
     private final TemplateEngine templateEngine;
 
@@ -41,13 +45,32 @@ public class GetHomeRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("GetHomeRoute is invoked.");
+        final Session httpSession = request.session();
+
         //
         Map<String, Object> vm = new HashMap<>();
         vm.put("title", "Welcome!");
 
         // display a user message in the Home page
         vm.put("message", WELCOME_MSG);
-
+        if(httpSession.attribute(PLAYER_KEY) != null) {
+            vm.put("current_player", ((Player) httpSession.attribute(PLAYER_KEY)).getName());
+        } else {
+            vm.put("current_player", "");
+        }
+        ArrayList<Player> players = PlayerLobby.getPlayers();
+        if (!players.isEmpty()){
+            StringBuilder list_construction = new StringBuilder();
+            list_construction.append("<ul>");
+            for (Player player :
+                    players) {
+                list_construction.append("<li>").append(player.getName()).append("</li>");
+            }
+            list_construction.append("</ul>");
+            vm.put("all_players",list_construction.toString());
+        } else {
+            vm.put("all_players", "");
+        }
         // render the View
         return templateEngine.render(new ModelAndView(vm, "home.ftl"));
     }

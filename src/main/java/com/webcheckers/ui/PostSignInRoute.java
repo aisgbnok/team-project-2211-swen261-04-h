@@ -1,6 +1,9 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.application.PlayerLobby;
+import com.webcheckers.application.SessionTimeoutWatchdog;
 import com.webcheckers.model.Message;
+import com.webcheckers.model.Player;
 import spark.*;
 
 import java.util.HashMap;
@@ -17,7 +20,11 @@ public class PostSignInRoute implements Route {
   private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
 
   private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+  static final String PLAYER_KEY = "playerServices";
+  static final String TIMEOUT_SESSION_KEY = "timeoutWatchdog";
 
+  // The length of the session timeout in seconds
+  static final int SESSION_TIMEOUT_PERIOD = 120;
   private final TemplateEngine templateEngine;
 
   /**
@@ -45,15 +52,28 @@ public class PostSignInRoute implements Route {
    */
   @Override
   public Object handle(Request request, Response response) {
+
+    final Session httpSession = request.session();
+
     LOG.finer("GetSignInRoute is invoked.");
     //
     Map<String, Object> vm = new HashMap<>();
-    vm.put("title", "Welcome!");
+    String param = request.queryParams("name");
+    if (PlayerLobby.addPlayer(new Player(param))){
+        // get the object that will provide client-specific services for this player
+        final Player playerService = PlayerLobby.getPlayer(param);
+        httpSession.attribute(PLAYER_KEY, playerService);
 
-    // display a user message in the Home page
-    vm.put("message", WELCOME_MSG);
+        // setup session timeout. The valueUnbound() method in the SessionTimeoutWatchdog will
+        // be called when the session is invalidated. The next invocation of this route will
+        // have a new Session object with no attributes.
+        httpSession.attribute(TIMEOUT_SESSION_KEY, new SessionTimeoutWatchdog(playerService));
+        httpSession.maxInactiveInterval(SESSION_TIMEOUT_PERIOD);
 
-    // render the View
-    return templateEngine.render(new ModelAndView(vm , "signin.ftl"));
+      return templateEngine.render(new ModelAndView(vm, "home.ftl"));
+    }
+    else {
+    return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
+    }
   }
 }
