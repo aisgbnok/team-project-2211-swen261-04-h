@@ -64,16 +64,15 @@ public class GetHomeRoute implements Route {
         ArrayList<Player> players = PlayerLobby.getPlayers();
         if ( players != null) {
             if (!players.isEmpty()) {
-                StringBuilder list_construction = new StringBuilder();
-                list_construction.append("<ul>");
+                ArrayList<String> list_construction = new ArrayList<>();
+//                list_construction.append("<ul>");
                 for (Player player :
                         players) {
-                    if (!player.equals(((Player) httpSession.attribute(PLAYER_KEY)))) {
-                        list_construction.append("<li>").append(player.getName()).append("</li>");
+                    if (!player.equals(( httpSession.attribute(PLAYER_KEY)))) {
+                        list_construction.add(player.getName());
                     }
                 }
-                list_construction.append("</ul>");
-                vm.put("all_players", list_construction.toString());
+                vm.put("all_players", list_construction);
             } else {
                 vm.put("all_players", "");
             }
