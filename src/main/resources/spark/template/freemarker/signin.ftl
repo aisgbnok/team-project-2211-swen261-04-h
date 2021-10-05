@@ -8,6 +8,8 @@
 </head>
 <body>
   <div class="page">
+    <!-- Provide a message to the user, if supplied. -->
+    <#include "message.ftl" />
     <form action="./signin" method="POST">
       <div>
         <label for="playerName">Who do you want to log in as?</label>
