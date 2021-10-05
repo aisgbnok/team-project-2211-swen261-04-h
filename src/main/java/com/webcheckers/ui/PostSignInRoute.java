@@ -4,6 +4,7 @@ import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.application.SessionTimeoutWatchdog;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
+import static spark.Spark.halt;
 import spark.*;
 
 import java.util.HashMap;
@@ -58,7 +59,14 @@ public class PostSignInRoute implements Route {
     LOG.finer("GetSignInRoute is invoked.");
     //
     Map<String, Object> vm = new HashMap<>();
-    String param = request.queryParams("name");
+
+    String param = request.queryParams("playerName");
+    param = param.strip();
+    if (param.length() == 0){
+        response.redirect(WebServer.LOGIN_URL);
+        halt();
+        return null;
+    }
     if (PlayerLobby.addPlayer(new Player(param))){
         // get the object that will provide client-specific services for this player
         final Player playerService = PlayerLobby.getPlayer(param);
@@ -69,8 +77,10 @@ public class PostSignInRoute implements Route {
         // have a new Session object with no attributes.
         httpSession.attribute(TIMEOUT_SESSION_KEY, new SessionTimeoutWatchdog(playerService));
         httpSession.maxInactiveInterval(SESSION_TIMEOUT_PERIOD);
+        response.redirect(WebServer.HOME_URL);
+        halt();
+        return null;
 
-      return templateEngine.render(new ModelAndView(vm, "home.ftl"));
     }
     else {
     return templateEngine.render(new ModelAndView(vm, "signin.ftl"));

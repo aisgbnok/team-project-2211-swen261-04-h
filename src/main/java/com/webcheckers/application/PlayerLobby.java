@@ -15,6 +15,9 @@ public class PlayerLobby {
         PlayerLobby.players = players;
     }
 
+    public static void initPlayers(){
+        players = new ArrayList<>();
+    }
     public static boolean addPlayer(Player player){
         if (players.contains(player)){
             return false;
@@ -22,6 +25,9 @@ public class PlayerLobby {
             players.add(player);
             return true;
         }
+    }
+    public static void removePlayer(Player player){
+        players.remove(player);
     }
 
     public static Player getPlayer(String param) {
@@ -32,6 +38,10 @@ public class PlayerLobby {
             }
         }
         return null;
+    }
+
+    public static int size(){
+        return players.size();
     }
 
 }

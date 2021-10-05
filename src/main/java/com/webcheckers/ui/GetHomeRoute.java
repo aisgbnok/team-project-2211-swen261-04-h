@@ -55,23 +55,33 @@ public class GetHomeRoute implements Route {
         vm.put("message", WELCOME_MSG);
         if(httpSession.attribute(PLAYER_KEY) != null) {
             vm.put("current_player", ((Player) httpSession.attribute(PLAYER_KEY)).getName());
+            vm.put("count", "");
+
         } else {
             vm.put("current_player", "");
+            vm.put("count", PlayerLobby.size());
         }
         ArrayList<Player> players = PlayerLobby.getPlayers();
-        if (!players.isEmpty()){
-            StringBuilder list_construction = new StringBuilder();
-            list_construction.append("<ul>");
-            for (Player player :
-                    players) {
-                list_construction.append("<li>").append(player.getName()).append("</li>");
+        if ( players != null) {
+            if (!players.isEmpty()) {
+                StringBuilder list_construction = new StringBuilder();
+                list_construction.append("<ul>");
+                for (Player player :
+                        players) {
+                    if (!player.equals(((Player) httpSession.attribute(PLAYER_KEY)))) {
+                        list_construction.append("<li>").append(player.getName()).append("</li>");
+                    }
+                }
+                list_construction.append("</ul>");
+                vm.put("all_players", list_construction.toString());
+            } else {
+                vm.put("all_players", "");
             }
-            list_construction.append("</ul>");
-            vm.put("all_players",list_construction.toString());
         } else {
             vm.put("all_players", "");
         }
         // render the View
         return templateEngine.render(new ModelAndView(vm, "home.ftl"));
     }
+
 }

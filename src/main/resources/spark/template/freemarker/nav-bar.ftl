@@ -1,8 +1,8 @@
  <div class="navigation">
-  <#if currentUser??>
+  <#if current_player!=''>
     <a href="/">my home</a> |
-      <form id="signout" action="/signout" method="post">
-      <a href="#" onclick="event.preventDefault(); signout.submit();">sign out [${currentUser.name}]</a>
+      <form id="signout" action="/signout" method="get">
+      <a href="/signout" >sign out [${current_player}]</a>
     </form>
   <#else>
     <a href="/signin">sign in</a>
