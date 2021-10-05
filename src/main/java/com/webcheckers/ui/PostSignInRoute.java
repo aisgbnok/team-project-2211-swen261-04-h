@@ -21,6 +21,7 @@ public class PostSignInRoute implements Route {
   private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
 
   private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
+    private static final Message USER_TAKEN = Message.info("Username taken, please select another.");
   static final String PLAYER_KEY = "playerServices";
   static final String TIMEOUT_SESSION_KEY = "timeoutWatchdog";
 
@@ -83,6 +84,7 @@ public class PostSignInRoute implements Route {
 
     }
     else {
+        vm.put("message", USER_TAKEN);
     return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
     }
   }
