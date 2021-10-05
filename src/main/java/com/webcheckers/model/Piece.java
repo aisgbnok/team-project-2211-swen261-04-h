@@ -3,17 +3,19 @@ package com.webcheckers.model;
 public class Piece {
 
   public enum Type {
-    SINGLE, KING
+    SINGLE,
+    KING
   }
 
   public enum Color {
-    RED, WHITE
+    RED,
+    WHITE
   }
 
   private final Type type;
   private final Color color;
 
-  public Piece(Type type, Color color) {
+  protected Piece(Type type, Color color) {
     this.type = type;
     this.color = color;
   }

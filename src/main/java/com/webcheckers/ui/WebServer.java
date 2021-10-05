@@ -56,6 +56,7 @@ public class WebServer {
   public static final String HOME_URL = "/";
   public static final String LOGIN_URL = "/signin";
   public static final String LOGOUT_URL = "/signout";
+  public static final String GAME_URL = "/game";
 
 
   //
@@ -145,6 +146,7 @@ public class WebServer {
     get(LOGIN_URL, new GetSignInRoute(templateEngine));
     post(LOGIN_URL, new PostSignInRoute(templateEngine));
     get(LOGOUT_URL, new GetSignOutRoute(templateEngine));
+    get(GAME_URL, new GetHomeRoute(templateEngine));
     PlayerLobby.initPlayers();
 
 
