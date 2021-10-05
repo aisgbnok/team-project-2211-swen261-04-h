@@ -16,7 +16,12 @@
   <#include "nav-bar.ftl" />
 
   <div class="body">
-
+    <#if current_player!=''>
+    <b>Current Player: ${current_player}</b>
+    ${all_players}
+      <#else>
+      Players online: ${count}
+    </#if>
     <!-- Provide a message to the user, if supplied. -->
     <#include "message.ftl" />
 

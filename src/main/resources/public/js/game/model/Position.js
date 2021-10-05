@@ -20,7 +20,7 @@ define(function(require){
     //
     this.row = row;
     this.cell = cell;
-  };
+  }
 
   // export class constructor
   return Position;
