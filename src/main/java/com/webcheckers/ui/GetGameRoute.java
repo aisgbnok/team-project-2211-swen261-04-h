@@ -1,7 +1,9 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.application.PlayerLobby;
-import com.webcheckers.model.Message;
+import com.webcheckers.model.BoardView;
+import com.webcheckers.model.Piece;
+import com.webcheckers.model.Piece.Color;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -23,19 +25,16 @@ public class GetGameRoute implements Route {
     PLAY,
     SPECTATOR,
     REPLAY
-  };
+  }
 
-  private PlayerLobby playerLobby;
-
-  private final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
   static final String PLAYER_KEY = "playerServices";
 
   // TODO: Make enumeration
-  private final Player currentUser;
-  private final String viewMode = "PLAY";
+  private Player currentUser;
+  private static viewMode viewMode = GetGameRoute.viewMode.PLAY;
   // private final Map<String, Object> modeOptionsAsJSON;
-
   private final TemplateEngine templateEngine;
+  private PlayerLobby playerLobby;
 
   /**
    * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
@@ -60,38 +59,41 @@ public class GetGameRoute implements Route {
   public Object handle(Request request, Response response) {
     LOG.finer("GetGameRoute is invoked.");
     final Session httpSession = request.session();
-
     //
     Map<String, Object> vm = new HashMap<>();
-    vm.put("title", "Welcome!");
+    vm.put("title", "Game");
 
-    // display a user message in the Home page
-    vm.put("message", WELCOME_MSG);
+    Player opponent;
+
+    // Ensure player is logged in
     if (httpSession.attribute(PLAYER_KEY) != null) {
-      vm.put("current_player", ((Player) httpSession.attribute(PLAYER_KEY)).getName());
-      vm.put("count", "");
+      currentUser = httpSession.attribute(PLAYER_KEY);
+      vm.put("current_player", currentUser.getName());
+      vm.put("currentUser", currentUser);
+      vm.put("redPlayer", currentUser);
+      vm.put("activeColor", Color.RED);
+      vm.put("viewMode", viewMode);
+
+      LOG.finer(request.queryParams("opponent"));
+      if(request.queryParams("opponent") !=null) {
+        opponent = playerLobby.getPlayer(request.queryParams("opponent"));
+        vm.put("whitePlayer", opponent);
+      }
+
+
+
+      BoardView board = new BoardView();
+      vm.put("board", board);
+      board.fillRed();
+
+
+
+
+
+
 
     } else {
-      vm.put("current_player", "");
-      vm.put("count", PlayerLobby.size());
-    }
-    ArrayList<Player> players = PlayerLobby.getPlayers();
-    if (players != null) {
-      if (!players.isEmpty()) {
-        StringBuilder list_construction = new StringBuilder();
-        list_construction.append("<ul>");
-        for (Player player : players) {
-          if (!player.equals(((Player) httpSession.attribute(PLAYER_KEY)))) {
-            list_construction.append("<li>").append(player.getName()).append("</li>");
-          }
-        }
-        list_construction.append("</ul>");
-        vm.put("all_players", list_construction.toString());
-      } else {
-        vm.put("all_players", "");
-      }
-    } else {
-      vm.put("all_players", "");
+      response.redirect("/");
     }
     // render the View
     return templateEngine.render(new ModelAndView(vm, "game.ftl"));

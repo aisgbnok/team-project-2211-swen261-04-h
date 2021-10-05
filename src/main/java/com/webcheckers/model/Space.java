@@ -21,7 +21,7 @@ public class Space {
   }
 
   public Piece getPiece() {
-    return null;
+    return piece;
   }
 
   public void setValid(boolean valid) {

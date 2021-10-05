@@ -146,8 +146,9 @@ public class WebServer {
     get(LOGIN_URL, new GetSignInRoute(templateEngine));
     post(LOGIN_URL, new PostSignInRoute(templateEngine));
     get(LOGOUT_URL, new GetSignOutRoute(templateEngine));
-    get(GAME_URL, new GetHomeRoute(templateEngine));
+    get(GAME_URL, new GetGameRoute(templateEngine));
     PlayerLobby.initPlayers();
+
 
 
     //

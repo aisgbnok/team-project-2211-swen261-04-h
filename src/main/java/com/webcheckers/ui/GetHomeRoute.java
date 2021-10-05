@@ -69,7 +69,7 @@ public class GetHomeRoute implements Route {
                 for (Player player :
                         players) {
                     if (!player.equals(((Player) httpSession.attribute(PLAYER_KEY)))) {
-                        list_construction.append("<li>").append(player.getName()).append("</li>");
+                        list_construction.append("<li> <a href=\"/game?opponent=").append(player.getName()).append("\" >").append(player.getName()).append("</a> </li>");
                     }
                 }
                 list_construction.append("</ul>");
