@@ -29,7 +29,6 @@ public class GetGameRoute implements Route {
 
   static final String PLAYER_KEY = "playerServices";
 
-  // TODO: Make enumeration
   private Player currentUser;
   private static viewMode viewMode = GetGameRoute.viewMode.PLAY;
   // private final Map<String, Object> modeOptionsAsJSON;
