@@ -1,5 +1,5 @@
 ---
-geometry: margin=1in fontfamily: roboto
+geometry: margin=.75in
 ---
 
 # PROJECT Design Documentation
@@ -76,7 +76,7 @@ gameplay.
 
 This section describes the application domain.
 
-![The WebCheckers Domain Model](domain-model-placeholder.png)
+![The WebCheckers Domain Model](domain-model.png)
 
 > _Provide a high-level overview of the domain for this application. You
 > can discuss the more important domain entities and their relationship
