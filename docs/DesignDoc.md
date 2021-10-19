@@ -1,5 +1,5 @@
 ---
-geometry: margin=1in
+geometry: margin=1in fontfamily: roboto
 ---
 
 # PROJECT Design Documentation
@@ -25,9 +25,6 @@ designed to utilize Object-Oriented design concepts from SOLID and GRASP. Theref
 is split into three main tiers: UI, Model, and Application.
 
 ### Purpose
-
-> _Provide a very brief statement about the project and the most
-> important user group and user goals._
 
 WebCheckers allows multiple users to play a game of American checkers against another user.
 
