@@ -78,9 +78,11 @@ This section describes the application domain.
 
 ![The WebCheckers Domain Model](domain-model.png)
 
-> _Provide a high-level overview of the domain for this application. You
-> can discuss the more important domain entities and their relationship
-> to each other._
+- Players view a homepage and then begin the sign-in process.
+- Once the player is signed in to the application then they can start a game of checkers.
+- A game of checkers consists of a board, a playerLobby, and other attributes like a gameID.
+- The board contains rows which contains spaces, and each valid space might have a piece.
+- A piece can be red or black and normal or a king.
 
 ## Architecture and Design
 
