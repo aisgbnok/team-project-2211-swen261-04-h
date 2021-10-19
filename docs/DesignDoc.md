@@ -30,31 +30,47 @@ WebCheckers allows multiple users to play a game of American checkers against an
 
 ### Glossary and Acronyms
 
-> _Provide a table of terms and acronyms._
-
 | Term | Definition |
 |------|------------|
 | VO | Value Object |
+| MVP | Minimum Viable Product |
+| UI | User Interface |
+|  | |
 
 ## Requirements
 
 This section describes the features of the application.
 
-> _In this section you do not need to be exhaustive and list every
-> story. Focus on top-level features from the Vision document and
-> maybe Epics and critical Stories._
-
 ### Definition of MVP
 
-> _Provide a simple description of the Minimum Viable Product._
+The WebCheckers MVP should be capable of handling users and gameplay. Players must be able to sign
+in, start a game with another player, and resign/sign out if they wish. They must be able to play a
+game which enforces the American Rules of Checkers. Throughout the product flow the system must
+complete validation like gameboard move validation, and username validation to ensure legal
+gameplay.
 
 ### MVP Features
 
-> _Provide a list of top-level Epics and/or Stories of the MVP._
+#### User Handling
+
+- Allow multiple users to sign in and be connected to a single server.
+- Ensure no username is used twice.
+- Allow players to resign and/or sign out.
+
+#### Gameplay
+
+- Allow two players to play a game of checkers against another.
+- Enforce American Rules of Checkers.
+- Red Player Moves First
+- Alternate Players
+- Validate Jump Moves
 
 ### Roadmap of Enhancements
 
-> _Provide a list of top-level features in the order you plan to consider them._
+1. Save Game
+2. Multiple Games
+3. Asynchronous Play
+4. A.I. Player
 
 ## Application Domain
 
