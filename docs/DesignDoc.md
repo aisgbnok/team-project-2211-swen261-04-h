@@ -11,10 +11,9 @@ geometry: margin=1in
 ## Team Information
 * Team name: TEAMNAME
 * Team members
-  * MEMBER1
-  * MEMBER2
-  * MEMBER3
-  * MEMBER4
+  * Ian Chasse (idc7947) 
+  * Jake Downie (jwd2488)
+  * Anthony Swierkosz (ajs2576)
 
 ## Executive Summary
 
