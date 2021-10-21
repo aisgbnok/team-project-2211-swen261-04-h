@@ -31,11 +31,11 @@ WebCheckers allows multiple users to play a game of American checkers against an
 ### Glossary and Acronyms
 
 | Term | Definition |
-|------|------------|
+|:------|:------------|
 | VO | Value Object |
 | MVP | Minimum Viable Product |
 | UI | User Interface |
-|  | |
+| A.I. | Artificial Intelligence|
 
 ## Requirements
 
