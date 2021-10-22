@@ -8,6 +8,23 @@ public class BoardView implements Iterable<Row> {
 
   private List<Row> rows;
   private int length = 8;
+  private String turn;
+
+  private ArrayList<Move> validMoves;
+
+  public void addValidMove(Move move) {
+    validMoves.add(move);
+  }
+
+
+  public String getTurn() {
+    return turn;
+  }
+
+  public void setTurn(String turn) {
+    this.turn = turn;
+  }
+
 
   public BoardView() {
     this.rows = new ArrayList<>();
@@ -46,5 +63,24 @@ public class BoardView implements Iterable<Row> {
   @Override
   public Iterator<Row> iterator() {
     return rows.iterator();
+  }
+
+  public List<Row> getRows() {
+    return rows;
+  }
+
+  public Space getPieceAtPosition(int x, int y) {
+    for (Row row : rows) {
+      for (Space space : row.getSpaces()) {
+        if (space.getCell() == x && space.getRow() == y) {
+          return space;
+        }
+      }
+    }
+    return null; // space not found
+  }
+
+  public ArrayList<Move> getValidMoves() {
+    return validMoves;
   }
 }

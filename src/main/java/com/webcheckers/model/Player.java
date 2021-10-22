@@ -3,6 +3,8 @@ package com.webcheckers.model;
 import java.util.Objects;
 
 public class Player {
+    private String type;
+
     public String getName() {
         return name;
     }

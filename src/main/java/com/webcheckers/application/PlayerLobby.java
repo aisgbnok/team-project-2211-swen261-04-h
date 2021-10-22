@@ -1,6 +1,5 @@
 package com.webcheckers.application;
 
-import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
 
 import java.util.ArrayList;

@@ -4,13 +4,14 @@ import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.application.SessionTimeoutWatchdog;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
-import static spark.Spark.halt;
 import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
+
+import static spark.Spark.halt;
 
 /**
  * The UI Controller to GET the Login page.

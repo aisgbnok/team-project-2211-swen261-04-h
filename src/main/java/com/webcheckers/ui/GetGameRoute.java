@@ -1,13 +1,10 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.application.PlayerLobby;
-import com.webcheckers.model.BoardView;
-import com.webcheckers.model.Piece;
+import com.webcheckers.model.*;
 import com.webcheckers.model.Piece.Color;
-import com.webcheckers.model.Player;
 import spark.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -70,25 +67,46 @@ public class GetGameRoute implements Route {
       vm.put("current_player", currentUser.getName());
       vm.put("currentUser", currentUser);
       vm.put("redPlayer", currentUser);
-      vm.put("activeColor", Color.RED);
+      vm.put("activeColor", Color.RED); // TODO CHANGE ACTIVE COLOR WHENEVER THE TURN CHANGES
       vm.put("viewMode", viewMode);
 
       LOG.finer(request.queryParams("opponent"));
-      if(request.queryParams("opponent") !=null) {
+      if (request.queryParams("opponent") != null) {
         opponent = playerLobby.getPlayer(request.queryParams("opponent"));
         vm.put("whitePlayer", opponent);
       }
 
 
-
       BoardView board = new BoardView();
       vm.put("board", board);
       board.fillRed();
+      for (Row row : board.getRows()) {
+        for (Space space : row.getSpaces()) {
+          int x = space.getCell();
+          int y = space.getRow();
+          Space space2 = board.getPieceAtPosition(x + 1, y + 1);
+          if (space2 != null) {
+            if (space2.getPiece() == null) {
+              Move newMove = new Move();
+              newMove.setStart(space);
+              newMove.setEnd(space2);
+              board.addValidMove(newMove);
+            }
+        }
+        }
+      }
+
+      httpSession.attribute("BOARD", board);
 
 
-
-
-
+      /*
+      String current_turn = board.getTurn();
+      if (current_turn == currentUser.getName()){
+        vm.put("turn", "YOUR TURN");
+      } else {
+        vm.put("turn", "OPPONENTS TURN");
+      }
+       */
 
 
     } else {
