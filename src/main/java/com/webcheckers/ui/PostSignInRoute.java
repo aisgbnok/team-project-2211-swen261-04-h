@@ -64,7 +64,7 @@ public class PostSignInRoute implements Route {
 
     String param = request.queryParams("playerName");
     param = param.strip();
-    if (param.length() == 0){
+    if (param.length() == 0) {
         response.redirect(WebServer.LOGIN_URL);
         halt();
         return null;

@@ -19,7 +19,7 @@ public class PlayerLobby {
         players = new ArrayList<>();
     }
     public static boolean addPlayer(Player player){
-        if (players.contains(player)){
+        if (players.contains(player) || player.getName().contains("\"")|| player.getName().contains("'")){
             return false;
         } else {
             players.add(player);
