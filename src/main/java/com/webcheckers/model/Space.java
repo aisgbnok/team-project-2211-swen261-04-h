@@ -26,7 +26,7 @@ public class Space {
 
   protected Space(int cellIdx) {
     this.cellIdx = cellIdx;
-    this.isValid = false;
+    this.isValid = true;
     this.piece = null;
   }
 
@@ -48,5 +48,6 @@ public class Space {
 
   public void setPiece(Piece newPiece) {
     this.piece = newPiece;
+    this.isValid = false;
   }
 }

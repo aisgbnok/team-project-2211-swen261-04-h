@@ -8,7 +8,6 @@ import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.logging.Logger;
 
 /**
@@ -16,15 +15,8 @@ import java.util.logging.Logger;
  *
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
-public class PostValidateMoveRoute implements Route {
+public class PostResignGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
-    private final TemplateEngine templateEngine;
-
-    public PostValidateMoveRoute(TemplateEngine templateEngine) {
-        this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
-        //
-        LOG.config("GetSignInRoute is initialized.");
-    }
 
 
     /**

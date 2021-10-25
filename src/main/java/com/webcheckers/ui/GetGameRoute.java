@@ -67,17 +67,26 @@ public class GetGameRoute implements Route {
       vm.put("current_player", currentUser.getName());
       vm.put("currentUser", currentUser);
       vm.put("redPlayer", currentUser);
-      vm.put("activeColor", Color.RED); // TODO CHANGE ACTIVE COLOR WHENEVER THE TURN CHANGES
+      vm.put("whitePlayer", currentUser);
+
+      BoardView board = httpSession.attribute("BOARD");
+      if (board == null){
+        board = new BoardView();
+      }
+      if (board.getTurn().equals("OPPONENT")) {
+        vm.put("activeColor", Color.RED);
+      } else {
+        vm.put("activeColor", Color.WHITE);
+      }
       vm.put("viewMode", viewMode);
 
       LOG.finer(request.queryParams("opponent"));
       if (request.queryParams("opponent") != null) {
-        opponent = playerLobby.getPlayer(request.queryParams("opponent"));
+        opponent = PlayerLobby.getPlayer(request.queryParams("opponent"));
         vm.put("whitePlayer", opponent);
       }
 
 
-      BoardView board = new BoardView();
       vm.put("board", board);
       board.fillRed();
       for (Row row : board.getRows()) {

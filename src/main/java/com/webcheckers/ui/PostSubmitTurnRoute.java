@@ -8,7 +8,6 @@ import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.logging.Logger;
 
 /**
@@ -16,15 +15,8 @@ import java.util.logging.Logger;
  *
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
-public class PostValidateMoveRoute implements Route {
+public class PostSubmitTurnRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
-    private final TemplateEngine templateEngine;
-
-    public PostValidateMoveRoute(TemplateEngine templateEngine) {
-        this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
-        //
-        LOG.config("GetSignInRoute is initialized.");
-    }
 
 
     /**
@@ -53,24 +45,7 @@ public class PostValidateMoveRoute implements Route {
         //
         Map<String, Object> vm = new HashMap<>();
 
-        String param = request.queryParams("actionData");
-        Gson gson = new Gson();
-        Move newMove = gson.fromJson(param, Move.class);
-
-
         BoardView board = httpSession.attribute("BOARD");
-
-        Message message;
-        if (board.getValidMoves().contains(newMove)) {
-            //TODO: RETURN TRUE JSON
-            message = Message.info("true");
-
-            board.setTurn("OPPONENT");
-        } else {
-            //TODO: RETURN FALSE JSON
-            message = Message.info("false");
-        }
-        return gson.toJson(message);
-
+        return null;
     }
 }
