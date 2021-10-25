@@ -48,8 +48,8 @@ input[type="submit"] {
 div.page {
   background: white;
   border: 1px solid #6ECCFF;
-  max-width: 710px;
-  margin: 30px auto;
+  max-width: 904px;
+  margin: 48px auto;
   border-radius: 8px;
   overflow: hidden;
 }
@@ -64,28 +64,25 @@ div.page h1 {
 }
 
 div.page div.navigation {
-  background: #DEE9FF;
-  padding: 4px 10px;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #eee;
-  color: #888;
-  font-size: 12px;
-  letter-spacing: 0.5px;
+  padding: 6px 10px 0;
+  background-color: #6ECCFF;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  letter-spacing: .035em;
 }
 
 div.page div.navigation a {
-  color: #444;
-  font-weight: bold;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
 }
 
 div.page h2 {
   margin: 0.5em 0 0.25em 0;
   color: #1057FF;
-  text-shadow: 0 1px 2px #ccc;
 }
 
 div.page div.body {
-  padding: 10px;
+  padding: 12px;
 }
 
 div.page div.footer {
@@ -151,7 +148,7 @@ div.INFO {
 }
 
 
-button {
+.button {
   font-weight: 500;
   text-decoration: none;
   padding: 0 8px 0 8px;
@@ -169,9 +166,29 @@ button {
   background-color: rgba(0, 0, 0, .08);
 }
 
-button:hover {
+.nav-button {
+  padding: 8px;
+  min-width: 0;
+  min-height: 0;
+  border-radius: 6px 6px 0 0;
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+.button:not(:last-of-type) {
+  margin-right: 8px;
+}
+
+.nav-button:not(:last-of-type), .nav-button:not(:last-child) {
+  margin-right: 4px;
+}
+
+.button:hover {
   cursor: pointer;
   background-color: rgba(121, 205, 255, 0.6);
+}
+
+.nav-button:hover {
+  background-color: rgba(0, 0, 0, 0.12);
 }
 
 button.player {

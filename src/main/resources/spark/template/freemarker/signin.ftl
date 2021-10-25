@@ -14,13 +14,13 @@
     <form action="./signin" method="POST">
       <div id="username__entry">
         <label for="playerName" id="name-label">Who do you want to log in as?</label>
-        <input name="playerName" id="name" value="">
+        <input name="playerName" id="name" value="" autofocus>
       </div>
       <div id="sign-in_controls">
-        <button id="sign-in" name="sign-in">
+        <button class="button" id="sign-in">
           <span><!---->Log In<!----></span>
         </button>
-        <button id="cancel" name="cancel">
+        <button class="button" id="cancel" name="cancel">
           <span><!---->Cancel<!----></span>
         </button>
       </div>
