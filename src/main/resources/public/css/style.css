@@ -48,8 +48,10 @@ input[type="submit"] {
 div.page {
   background: white;
   border: 1px solid #6ECCFF;
-  width: 710px;
+  max-width: 710px;
   margin: 30px auto;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 div.page h1 {
@@ -58,8 +60,7 @@ div.page h1 {
   padding: 10px 14px;
   color: white;
   letter-spacing: 1px;
-  text-shadow: 0 0 3px #2477FF;
-  font-weight: normal;
+  font-weight: 600;
 }
 
 div.page div.navigation {
@@ -111,27 +112,78 @@ div.ERROR {
  * The styling of a Message with an INFO type.
  */
 div.INFO {
-  margin: 10px 0;
+  margin: 0 0 12px 0;
   background: #CAECFF;
   filter: brightness(115%);
   border: 1px solid #6ECCFF;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  padding: 4px;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  padding: 8px;
   font-size: 13px;
+  font-weight: 600;
+  color: #003474;
 }
 
 .flex-container {
   display: flex;
   flex-flow: row wrap;
 }
+
+/**
+* Styling of the Sign In page
+ */
+#username__entry {
+  margin: 0 0 12px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+#username__entry #name-label {
+  margin: 0 0 4px 0;
+}
+
+#username__entry #name {
+  border: 1px solid rgba(0, 0, 0, .38);
+  border-radius: 4px;
+  padding: 8px;
+  min-height: 12px;
+}
+
+
+button {
+  font-weight: 500;
+  text-decoration: none;
+  padding: 0 8px 0 8px;
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 64px;
+  min-height: 36px;
+  border: none;
+  outline: none;
+  vertical-align: middle;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, .08);
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: rgba(121, 205, 255, 0.6);
+}
+
 button.player {
   background-color: #f1f1f1;
   width: 100px;
   margin: 10px;
 }
+
 button.game {
   background-color: #fff1f1;
   width: 100px;
   margin: 10px;
 }
+
+

@@ -61,6 +61,13 @@ public class PostSignInRoute implements Route {
     LOG.finer("PostSignInRoute is invoked.");
     Map<String, Object> vm = new HashMap<>();
 
+    if (request.queryParams("cancel") != null) {
+      response.redirect(WebServer.HOME_URL);
+      return null;
+    }
+    // Set the title
+    vm.put("title", "Sign In");
+
     // Get username
     String username = request.queryParams("playerName").strip();
 
