@@ -71,30 +71,37 @@ public class PostSignInRoute implements Route {
     // Get username
     String username = request.queryParams("playerName").strip();
 
-    // Username is empty tell the user it is empty.
+    // Handle Username Validation Checking
     if (username.isEmpty()) {
+      // If username is empty, notify the user.
       vm.put("message", USER_EMPTY);
       return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
-    }
-
-    // If the username is accepted
-    else if (PlayerLobby.addPlayer(new Player(username))) {
-      // Get the object that will provide client-specific services for this player
-      final Player playerService = PlayerLobby.getPlayer(username);
-      httpSession.attribute(PLAYER_KEY, playerService);
-
-      // setup session timeout. The valueUnbound() method in the SessionTimeoutWatchdog will
-      // be called when the session is invalidated. The next invocation of this route will
-      // have a new Session object with no attributes.
-      httpSession.attribute(TIMEOUT_SESSION_KEY, new SessionTimeoutWatchdog(playerService));
-      httpSession.maxInactiveInterval(SESSION_TIMEOUT_PERIOD);
-      response.redirect(WebServer.HOME_URL);
-      halt();
-      return null;
-
-    } else {
+    } else if (username.contains("\"") || username.contains("'")) {
+      // If username is invalid, notify the user.
       vm.put("message", USER_INVALID);
       return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
+    } else if (PlayerLobby.contains(username)) {
+      // If username is already taken, notify the user.
+      vm.put("message", USER_TAKEN);
+      return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
     }
+
+    // Username passed validation
+    // Now we can create a new Player
+    final Player playerService = new Player(username);
+    // We can also register that player with the PlayerLobby
+    PlayerLobby.addPlayer(playerService);
+
+    // Get the object that will provide client-specific services for this player
+    httpSession.attribute(PLAYER_KEY, playerService);
+
+    // setup session timeout. The valueUnbound() method in the SessionTimeoutWatchdog will
+    // be called when the session is invalidated. The next invocation of this route will
+    // have a new Session object with no attributes.
+    httpSession.attribute(TIMEOUT_SESSION_KEY, new SessionTimeoutWatchdog(playerService));
+    httpSession.maxInactiveInterval(SESSION_TIMEOUT_PERIOD);
+    response.redirect(WebServer.HOME_URL);
+    halt();
+    return null;
   }
 }
