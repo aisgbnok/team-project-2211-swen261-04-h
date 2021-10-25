@@ -19,6 +19,7 @@ import static com.webcheckers.ui.GetHomeRoute.PLAYER_KEY;
  *
  * @author <a href='mailto:jwd2488@rit.edu'>Jake Downie</a>
  * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
+ * @author <a href='mailto:idc7947@rit.edu'>Ian Chasse</a>
  */
 public class PostSignInRoute implements Route {
   // Console Logger
@@ -37,7 +38,7 @@ public class PostSignInRoute implements Route {
   private final TemplateEngine templateEngine;
 
   /**
-   * Create the Spark Route (UI controller) to handle all {@code POST /} HTTP requests.
+   * Create the Spark Route (UI controller) to handle all {@code POST /signin} HTTP requests.
    *
    * @param templateEngine the HTML template rendering engine
    */

@@ -9,6 +9,7 @@ import java.util.ArrayList;
  *
  * @author <a href='mailto:jwd2488@rit.edu'>Jake Downie</a>
  * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
+ * @author <a href='mailto:idc7947@rit.edu'>Ian Chasse</a>
  */
 public class PlayerLobby {
   // ArrayList used for storing players
