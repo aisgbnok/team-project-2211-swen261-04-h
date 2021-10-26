@@ -66,8 +66,8 @@ public class GetGameRoute implements Route {
     Player opponent;
 
     // Ensure player is logged in
-    if (httpSession.attribute(PLAYER_KEY) != null) {
-      currentUser = httpSession.attribute(PLAYER_KEY);
+    if (httpSession.attribute(CURRENT_USER) != null) {
+      currentUser = httpSession.attribute(CURRENT_USER);
       vm.put("current_player", currentUser.getName());
       vm.put("currentUser", currentUser);
       vm.put("redPlayer", currentUser);
