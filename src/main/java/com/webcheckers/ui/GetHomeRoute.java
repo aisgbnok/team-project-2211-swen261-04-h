@@ -26,7 +26,7 @@ public class GetHomeRoute implements Route {
   // User Welcome Message
   private static final Message WELCOME_MSG =
       Message.info("Welcome to the world of online Checkers.");
-  static final String PLAYER_KEY = "playerServices";
+  static final String CURRENT_USER = "currentUser";
 
   // TemplateEngine used for HTML page rendering
   private final TemplateEngine templateEngine;
@@ -38,7 +38,7 @@ public class GetHomeRoute implements Route {
    */
   public GetHomeRoute(final TemplateEngine templateEngine) {
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
-    //
+
     LOG.config("GetHomeRoute is initialized.");
   }
 
@@ -61,10 +61,11 @@ public class GetHomeRoute implements Route {
     // Display welcome message on the Home page
     vm.put("message", WELCOME_MSG);
 
-    if (httpSession.attribute(PLAYER_KEY) != null) {
+
+    if (httpSession.attribute(CURRENT_USER) != null) {
       // If a player is signed in
       // Set the currentUser to the PLAYER_KEY name
-      vm.put("currentUser", ((Player) httpSession.attribute(PLAYER_KEY)));
+      vm.put("currentUser", ((Player) httpSession.attribute(CURRENT_USER)));
       // Set the playerCount to null
       vm.put("playerCount", null);
 
@@ -88,7 +89,7 @@ public class GetHomeRoute implements Route {
         ArrayList<String> list_construction = new ArrayList<>();
         // For each player except the current player generate an HTML list entry
         for (Player player : players) {
-          if (!player.equals((httpSession.attribute(PLAYER_KEY)))) {
+          if (!player.equals((httpSession.attribute(CURRENT_USER)))) {
             list_construction.add(player.getName());
           }
         }

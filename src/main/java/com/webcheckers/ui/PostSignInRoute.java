@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import static spark.Spark.halt;
-import static com.webcheckers.ui.GetHomeRoute.PLAYER_KEY;
+import static com.webcheckers.ui.GetHomeRoute.CURRENT_USER;
 
 /**
  * The UI Controller to POST the user sign in.
@@ -92,17 +92,18 @@ public class PostSignInRoute implements Route {
 
     // Username passed validation
     // Now we can create a new Player
-    final Player playerService = new Player(username);
+    final Player currentUser = new Player(username);
     // We can also register that player with the PlayerLobby
-    PlayerLobby.addPlayer(playerService);
+    PlayerLobby.addPlayer(currentUser);
 
-    // Get the object that will provide client-specific services for this player
-    httpSession.attribute(PLAYER_KEY, playerService);
+    // Set the httpSession CURRENT_USER attribute to the currentUSer
+    httpSession.attribute(CURRENT_USER, currentUser);
 
+    // TODO: Anthony Swierkosz needs to understand what this does
     // setup session timeout. The valueUnbound() method in the SessionTimeoutWatchdog will
     // be called when the session is invalidated. The next invocation of this route will
     // have a new Session object with no attributes.
-    httpSession.attribute(TIMEOUT_SESSION_KEY, new SessionTimeoutWatchdog(playerService));
+    httpSession.attribute(TIMEOUT_SESSION_KEY, new SessionTimeoutWatchdog(currentUser));
     httpSession.maxInactiveInterval(SESSION_TIMEOUT_PERIOD);
     response.redirect(WebServer.HOME_URL);
     halt();
