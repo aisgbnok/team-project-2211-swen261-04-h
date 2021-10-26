@@ -10,21 +10,24 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import static com.webcheckers.ui.GetHomeRoute.PLAYER_KEY;
+
 /**
  * The UI Controller to GET the Game page.
  *
  * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
+ * @author <a href='mailto:jwd2488@rit.edu'>Jake Downie</a>
  */
 public class GetGameRoute implements Route {
+  // Console Logger
   private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
 
+  // Possible viewModes
   private enum viewMode {
     PLAY,
     SPECTATOR,
     REPLAY
   }
-
-  static final String PLAYER_KEY = "playerServices";
 
   private Player currentUser;
   private static viewMode viewMode = GetGameRoute.viewMode.PLAY;
@@ -33,14 +36,14 @@ public class GetGameRoute implements Route {
   private PlayerLobby playerLobby;
 
   /**
-   * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
+   * Create the Spark Route (UI controller) to handle all {@code GET /game} HTTP requests.
    *
    * @param templateEngine the HTML template rendering engine
    */
   public GetGameRoute(final TemplateEngine templateEngine) {
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
 
-    //
+
     LOG.config("GetGameRoute is initialized.");
   }
 
@@ -55,8 +58,9 @@ public class GetGameRoute implements Route {
   public Object handle(Request request, Response response) {
     LOG.finer("GetGameRoute is invoked.");
     final Session httpSession = request.session();
-    //
     Map<String, Object> vm = new HashMap<>();
+
+    // Set the title
     vm.put("title", "Game");
 
     Player opponent;
@@ -70,7 +74,7 @@ public class GetGameRoute implements Route {
       vm.put("whitePlayer", currentUser);
 
       BoardView board = httpSession.attribute("BOARD");
-      if (board == null){
+      if (board == null) {
         board = new BoardView();
       }
       if (board.getTurn().equals("OPPONENT")) {
@@ -86,7 +90,6 @@ public class GetGameRoute implements Route {
         vm.put("whitePlayer", opponent);
       }
 
-
       vm.put("board", board);
       board.fillRed();
       for (Row row : board.getRows()) {
@@ -101,12 +104,11 @@ public class GetGameRoute implements Route {
               newMove.setEnd(space2);
               board.addValidMove(newMove);
             }
-        }
+          }
         }
       }
 
       httpSession.attribute("BOARD", board);
-
 
       /*
       String current_turn = board.getTurn();
@@ -116,7 +118,6 @@ public class GetGameRoute implements Route {
         vm.put("turn", "OPPONENTS TURN");
       }
        */
-
 
     } else {
       response.redirect("/");

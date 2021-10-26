@@ -57,15 +57,18 @@ public class PostSignInRoute implements Route {
    */
   @Override
   public Object handle(Request request, Response response) {
+    LOG.finer("PostSignInRoute is invoked.");
 
     final Session httpSession = request.session();
-    LOG.finer("PostSignInRoute is invoked.");
     Map<String, Object> vm = new HashMap<>();
 
+    // If cancel button isn't null then the user clicked it
     if (request.queryParams("cancel") != null) {
+      // Redirect to the homepage
       response.redirect(WebServer.HOME_URL);
       return null;
     }
+
     // Set the title
     vm.put("title", "Sign In");
 
