@@ -1,6 +1,7 @@
 package com.webcheckers.application;
 
 import com.webcheckers.model.Game;
+import com.webcheckers.model.Player;
 import java.util.ArrayList;
 
 /**
@@ -66,13 +67,29 @@ public class GameCenter {
    * @param gameID Game ID used to find Game.
    * @return Whether Game with matching gameID exists or not. True or False respectively.
    */
-  public static boolean contains(int gameID) {
+  public static boolean containsGame(int gameID) {
     for (Game game : games) {
       if (game.getGameID() == gameID) {
         return true;
       }
     }
     return false;
+  }
+
+
+  /**
+   * Finds a game in GameCenter using player lookup.
+   *
+   * @param player Player used to find Game.
+   * @return Whether Game with matching player exists or not. True or False respectively.
+   */
+  public static Game findGame(Player player) {
+    for (Game game : games) {
+      if (game.getPlayers().contains(player)) {
+        return game;
+      }
+    }
+    return null;
   }
 
   /**
