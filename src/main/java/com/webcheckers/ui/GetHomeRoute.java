@@ -81,38 +81,6 @@ public class GetHomeRoute implements Route {
       // Set the playerCount to PlayerLobby size, minus one to account for current user.
       vm.put("playerCount", (PlayerLobby.size() - 1));
 
-      // TODO: Improve
-      // Get players from PlayerLobby
-      ArrayList<Player> players = PlayerLobby.getPlayers();
-      // If players is not null
-      if (players != null) {
-        // if players is not empty
-        if (!players.isEmpty()) {
-          // Create a new ArrayList of Strings for storing the HTML player list
-          ArrayList<String> list_construction = new ArrayList<>();
-          // For each player except the current player generate an HTML list entry
-          for (Player player : players) {
-            if (!player.equals(currentUser)) {
-              list_construction.add(player.getName());
-            }
-          }
-          if (list_construction.isEmpty()) {
-            // Set currentPlayers to null
-            vm.put("currentPlayers", null);
-          } else {
-            // Set currentPlayers to the list_construction
-            vm.put("currentPlayers", list_construction);
-          }
-
-        } else {
-          // Set currentPlayers to null
-          vm.put("currentPlayers", null);
-        }
-      } else {
-        // Set currentPlayers to null
-        vm.put("currentPlayers", null);
-      }
-
     } else {
       // If there is no player signed in
       // Set the currentUser to null
@@ -120,6 +88,38 @@ public class GetHomeRoute implements Route {
 
       // Set the playerCount to PlayerLobby size
       vm.put("playerCount", PlayerLobby.size());
+    }
+
+    // TODO: Improve
+    // Get players from PlayerLobby
+    ArrayList<Player> players = PlayerLobby.getPlayers();
+    // If players is not null
+    if (players != null) {
+      // if players is not empty
+      if (!players.isEmpty()) {
+        // Create a new ArrayList of Strings for storing the HTML player list
+        ArrayList<String> list_construction = new ArrayList<>();
+        // For each player except the current player generate an HTML list entry
+        for (Player player : players) {
+          if (!player.equals(currentUser)) {
+            list_construction.add(player.getName());
+          }
+        }
+        if (list_construction.isEmpty()) {
+          // Set currentPlayers to null
+          vm.put("currentPlayers", null);
+        } else {
+          // Set currentPlayers to the list_construction
+          vm.put("currentPlayers", list_construction);
+        }
+
+      } else {
+        // Set currentPlayers to null
+        vm.put("currentPlayers", null);
+      }
+    } else {
+      // Set currentPlayers to null
+      vm.put("currentPlayers", null);
     }
 
     // Render the Home page view
