@@ -1,5 +1,9 @@
 package com.webcheckers.ui;
 
+import static com.webcheckers.ui.GetHomeRoute.CURRENT_USER;
+
+import com.webcheckers.application.PlayerLobby;
+import com.webcheckers.model.Player;
 import spark.*;
 
 import java.util.HashMap;
@@ -45,6 +49,20 @@ public class GetSignInRoute implements Route {
 
     // Set the title
     vm.put("title", "Sign In");
+
+    if(request.queryParams("addtestusers")  != null) {
+      final Player anthony = new Player("Anthony");
+      final Player jake = new Player("Jake");
+      final Player Ian = new Player("Ian");
+
+      PlayerLobby.addPlayer(anthony);
+      PlayerLobby.addPlayer(jake);
+      PlayerLobby.addPlayer(Ian);
+
+      request.session().attribute(CURRENT_USER, anthony);
+      response.redirect(WebServer.HOME_URL);
+      return null;
+    }
 
     // Render the Sign-In page view
     return templateEngine.render(new ModelAndView(vm, "signin.ftl"));

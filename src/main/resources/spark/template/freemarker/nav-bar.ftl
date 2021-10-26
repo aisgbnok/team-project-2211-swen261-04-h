@@ -7,5 +7,6 @@
       </form>
     <#else>
       <a class="button nav-button" href="/signin">Sign In</a>
+      <a class="button nav-button" href="/signin?addtestusers=true">Add Test Users</a>
     </#if>
 </div>
