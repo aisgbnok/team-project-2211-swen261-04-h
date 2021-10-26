@@ -33,7 +33,7 @@
                 <#list currentPlayers as player>
                   <form action="/game" method="GET">
                     <div class="player-card">
-                        <button class="player-card__name" type="submit" value="${player}">${player}</button>
+                        <button class="player-card__name" type="submit" name="opponent" value="${player}">${player}</button>
                     </div>
                   </form>
                 </#list>

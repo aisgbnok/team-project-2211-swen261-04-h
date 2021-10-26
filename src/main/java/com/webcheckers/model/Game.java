@@ -23,9 +23,9 @@ public class Game {
   private BoardView board;
   private Message message;
 
-  public Game(Player redPlayer, Player whitePlayer) {
+  public Game(Player redPlayer, Player whitePlayer, BoardView board) {
     // Create Board
-    this.board = new BoardView();
+    this.board = board;
 
     // Set Players
     this.redPlayer = redPlayer;
