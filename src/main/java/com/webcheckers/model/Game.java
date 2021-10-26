@@ -14,6 +14,8 @@ public class Game {
     WHITE
   }
 
+  private int gameID;
+  private static int gameIDCounter = 0;
   private Player currentUser;
   private viewModes viewMode;
   private Map<String, Object> modeOptionsAsJSON;
@@ -24,7 +26,10 @@ public class Game {
   private Message message;
 
   public Game(Player redPlayer, Player whitePlayer, BoardView board) {
-    // Create Board
+    // Set gameID
+    this.gameID= gameIDCounter++;
+
+    // Set Board
     this.board = board;
 
     // Set Players
@@ -37,5 +42,9 @@ public class Game {
 
     // For all the MVP stories this variable must be set to PLAY.
     this.viewMode = viewModes.PLAY;
+  }
+
+  public int getGameID() {
+    return gameID;
   }
 }
