@@ -59,45 +59,54 @@ public class GetGameRoute implements Route {
     // Set the title
     vm.put("title", "Game");
 
+    // TODO: Should these be private global variables?
+    // Get currentUser
+    Player currentUser = httpSession.attribute(CURRENT_USER);
+
     // If user isn't signed in then return home
-    if (httpSession.attribute(CURRENT_USER) == null) {
+    if (currentUser == null) {
       response.redirect(WebServer.HOME_URL);
       return null;
     }
 
-    // TODO: Should these be private global variables?
-    // Get currentUser
-    Player currentUser = httpSession.attribute(CURRENT_USER);
-    Player opponent;
-    if (request.queryParams("opponent") != null) {
+    // Initialize Opponent
+    Player opponent = null;
+
+    // Initialize Game and Board
+    Game game;
+    BoardView board = null;
+
+    // If the opponent query param is found then this is game setup
+    if(request.queryParams("opponent") != null) {
       opponent = PlayerLobby.getPlayer(request.queryParams("opponent"));
       httpSession.attribute(OPPONENT_KEY, opponent);
-    } else {
-      opponent = httpSession.attribute(OPPONENT_KEY);
 
-      // If there is no opponent then go home
-      if (httpSession.attribute(OPPONENT_KEY) == null) {
-        response.redirect(WebServer.HOME_URL);
-        return null;
-      }
-    }
-
-    // Create a game
-    Game game = httpSession.attribute(GAME_KEY);
-    BoardView board = httpSession.attribute(BOARD_KEY);
-    if (game == null) {
-      // If there is no board then create one
-      if (board == null) {
-        board = new BoardView();
-        httpSession.attribute(BOARD_KEY, board);
-      }
-
+      board = new BoardView();
       game = new Game(currentUser, opponent, board);
-      httpSession.attribute(GAME_KEY, game);
       GameCenter.addGame(game);
+      httpSession.attribute(BOARD_KEY, board);
+      httpSession.attribute(GAME_KEY, game);
+
       response.redirect(WebServer.GAME_URL + "?gameID=" + game.getGameID());
       return null;
     }
+
+    if(request.queryParams("gameID") != null) {
+      game = GameCenter.getGame(Integer.parseInt(request.queryParams("gameID")));
+      board = game.getBoard();
+      httpSession.attribute(GAME_KEY, game);
+      httpSession.attribute(BOARD_KEY, board);
+
+
+      opponent = httpSession.attribute(OPPONENT_KEY);
+
+      if(opponent == null) {
+        opponent = game.getOppositePlayer(currentUser);
+        httpSession.attribute(OPPONENT_KEY, opponent);
+      }
+
+    }
+
 
     // Set both players to  be in game
     currentUser.setGame(true);
