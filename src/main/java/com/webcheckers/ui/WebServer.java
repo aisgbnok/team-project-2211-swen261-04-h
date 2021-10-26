@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
 import spark.TemplateEngine;
 
@@ -149,6 +150,7 @@ public class WebServer {
     get(GAME_URL, new GetGameRoute(templateEngine));
     post(VALIDATE_URL, new PostValidateMoveRoute(templateEngine));
     PlayerLobby.initPlayers();
+    GameCenter.initGames();
 
     LOG.config("WebServer is initialized.");
   }
