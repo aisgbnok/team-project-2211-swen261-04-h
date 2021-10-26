@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.*;
+import com.webcheckers.model.Game.viewModes;
 import com.webcheckers.model.Piece.Color;
 import spark.*;
 
@@ -10,7 +11,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import static com.webcheckers.ui.GetHomeRoute.PLAYER_KEY;
+import static com.webcheckers.ui.GetHomeRoute.CURRENT_USER;
 
 /**
  * The UI Controller to GET the Game page.
@@ -22,18 +23,8 @@ public class GetGameRoute implements Route {
   // Console Logger
   private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
 
-  // Possible viewModes
-  private enum viewMode {
-    PLAY,
-    SPECTATOR,
-    REPLAY
-  }
-
-  private Player currentUser;
-  private static viewMode viewMode = GetGameRoute.viewMode.PLAY;
-  // private final Map<String, Object> modeOptionsAsJSON;
+  // TemplateEngine used for HTML page rendering
   private final TemplateEngine templateEngine;
-  private PlayerLobby playerLobby;
 
   /**
    * Create the Spark Route (UI controller) to handle all {@code GET /game} HTTP requests.
@@ -42,7 +33,6 @@ public class GetGameRoute implements Route {
    */
   public GetGameRoute(final TemplateEngine templateEngine) {
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
-
 
     LOG.config("GetGameRoute is initialized.");
   }
@@ -63,6 +53,18 @@ public class GetGameRoute implements Route {
     // Set the title
     vm.put("title", "Game");
 
+    // If user isn't signed in then return home
+    if(httpSession.attribute(CURRENT_USER) == null) {
+      response.redirect(WebServer.HOME_URL);
+      return null;
+    }
+
+    // Get currentUser
+    Player currentUser = httpSession.attribute(CURRENT_USER);
+
+
+
+
     Player opponent;
 
     // Ensure player is logged in
@@ -82,7 +84,7 @@ public class GetGameRoute implements Route {
       } else {
         vm.put("activeColor", Color.WHITE);
       }
-      vm.put("viewMode", viewMode);
+      //vm.put("viewMode", viewMode);
 
       LOG.finer(request.queryParams("opponent"));
       if (request.queryParams("opponent") != null) {

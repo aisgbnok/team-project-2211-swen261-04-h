@@ -4,6 +4,7 @@ import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.application.SessionTimeoutWatchdog;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
+import java.util.Locale;
 import spark.*;
 
 import java.util.HashMap;

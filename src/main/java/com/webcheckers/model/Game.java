@@ -3,13 +3,15 @@ package com.webcheckers.model;
 import java.util.Map;
 
 public class Game {
-  enum viewModes {
+  public enum viewModes {
     PLAY,
     SPECTATOR,
     REPLAY
   }
-  enum colors {
-    RED, WHITE
+
+  public enum colors {
+    RED,
+    WHITE
   }
 
   private Player currentUser;
@@ -23,7 +25,7 @@ public class Game {
 
   public Game(Player redPlayer, Player whitePlayer) {
     // Create Board
-    this.board =  new BoardView();
+    this.board = new BoardView();
 
     // Set Players
     this.redPlayer = redPlayer;
@@ -35,8 +37,5 @@ public class Game {
 
     // For all the MVP stories this variable must be set to PLAY.
     this.viewMode = viewModes.PLAY;
-
   }
-
-
 }
