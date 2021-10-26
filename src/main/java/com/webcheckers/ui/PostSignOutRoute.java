@@ -32,7 +32,7 @@ public class PostSignOutRoute implements Route {
    */
   public PostSignOutRoute(final TemplateEngine templateEngine) {
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
-    //
+
     LOG.config("PostSignInRoute is initialized.");
   }
 

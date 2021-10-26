@@ -63,17 +63,18 @@ public class GetHomeRoute implements Route {
 
     if (httpSession.attribute(PLAYER_KEY) != null) {
       // If a player is signed in
-      // Set the current_player to the PLAYER_KEY name
-      vm.put("current_player", ((Player) httpSession.attribute(PLAYER_KEY)).getName());
-      // Set the count to empty String
-      vm.put("count", "");
+      // Set the currentUser to the PLAYER_KEY name
+      vm.put("currentUser", ((Player) httpSession.attribute(PLAYER_KEY)));
+      // Set the playerCount to null
+      vm.put("playerCount", null);
 
     } else {
       // If there is no player signed in
-      // Set the current_player to empty String
-      vm.put("current_player", "");
-      // Set the count to PlayerLobby size
-      vm.put("count", PlayerLobby.size());
+      // Set the currentUser to null
+      vm.put("currentUser", null);
+
+      // Set the playerCount to PlayerLobby size
+      vm.put("playerCount", PlayerLobby.size());
     }
 
     // TODO: Improve
@@ -91,15 +92,21 @@ public class GetHomeRoute implements Route {
             list_construction.add(player.getName());
           }
         }
-        // Set all_players to the list_construction
-        vm.put("all_players", list_construction);
+        if (list_construction.isEmpty()) {
+          // Set currentPlayers to null
+          vm.put("currentPlayers", null);
+        } else {
+          // Set currentPlayers to the list_construction
+          vm.put("currentPlayers", list_construction);
+        }
+
       } else {
-        // Set all_players to empty String
-        vm.put("all_players", "");
+        // Set currentPlayers to null
+        vm.put("currentPlayers", null);
       }
     } else {
-      // Set all_players to empty String
-      vm.put("all_players", "");
+      // Set currentPlayers to null
+      vm.put("currentPlayers", null);
     }
 
     // Render the Home page view
