@@ -67,7 +67,7 @@ public class GetHomeRoute implements Route {
       // Set the currentUser to the PLAYER_KEY name
       vm.put("currentUser", ((Player) httpSession.attribute(CURRENT_USER)));
       // Set the playerCount to null
-      vm.put("playerCount", null);
+      vm.put("playerCount", (PlayerLobby.size() - 1));
 
     } else {
       // If there is no player signed in

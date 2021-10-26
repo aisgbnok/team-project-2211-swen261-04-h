@@ -29,10 +29,13 @@
       <h2>Players Online</h2>
         <#if currentUser??>
             <#if currentPlayers??>
+                <p>Click on any player to start a game against them. There are ${playerCount} players to choose!</p>
                 <#list currentPlayers as player>
-                  <p>${player}
-                    <a href="/game?versus=${player}">Challenge</a>
-                  </p>
+                  <form action="/game" method="GET">
+                    <div class="player-card">
+                        <button class="player-card__name" type="submit" value="${player}">${player}</button>
+                    </div>
+                  </form>
                 </#list>
             <#else>
               There are no other players online!
