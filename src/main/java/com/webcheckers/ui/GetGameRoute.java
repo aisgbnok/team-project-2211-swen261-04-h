@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.*;
 import com.webcheckers.model.Game.viewModes;
@@ -26,6 +27,7 @@ public class GetGameRoute implements Route {
 
   static final String GAME_KEY = "game";
   static final String BOARD_KEY = "board";
+  static final String OPPONENT_KEY = "opponent";
 
   // TemplateEngine used for HTML page rendering
   private final TemplateEngine templateEngine;
@@ -66,7 +68,19 @@ public class GetGameRoute implements Route {
     // TODO: Should these be private global variables?
     // Get currentUser
     Player currentUser = httpSession.attribute(CURRENT_USER);
-    Player opponent = PlayerLobby.getPlayer(request.queryParams("opponent"));
+    Player opponent;
+    if (request.queryParams("opponent") != null) {
+      opponent = PlayerLobby.getPlayer(request.queryParams("opponent"));
+      httpSession.attribute(OPPONENT_KEY, opponent);
+    } else {
+      opponent = httpSession.attribute(OPPONENT_KEY);
+
+      // If there is no opponent then go home
+      if (httpSession.attribute(OPPONENT_KEY) == null) {
+        response.redirect(WebServer.HOME_URL);
+        return null;
+      }
+    }
 
     // Create a game
     Game game = httpSession.attribute(GAME_KEY);
@@ -80,18 +94,25 @@ public class GetGameRoute implements Route {
 
       game = new Game(currentUser, opponent, board);
       httpSession.attribute(GAME_KEY, game);
+      GameCenter.addGame(game);
+      response.redirect(WebServer.GAME_URL + "?gameID=" + game.getGameID());
+      return null;
     }
+
+    // Set both players to  be in game
+    currentUser.setGame(true);
+    opponent.setGame(true); // TODO fix
 
     vm.put("currentUser", currentUser);
     vm.put("redPlayer", currentUser);
     vm.put("whitePlayer", opponent);
+    vm.put("viewMode", viewModes.PLAY);
 
     if (board.getTurn().equals("OPPONENT")) {
       vm.put("activeColor", Color.RED);
     } else {
       vm.put("activeColor", Color.WHITE);
     }
-    vm.put("viewMode", viewModes.PLAY);
 
     LOG.finer(request.queryParams("opponent"));
     if (request.queryParams("opponent") != null) {
@@ -101,6 +122,8 @@ public class GetGameRoute implements Route {
 
     vm.put("board", board);
     board.fillRed();
+
+    /*
     for (Row row : board.getRows()) {
       for (Space space : row.getSpaces()) {
         int x = space.getCell();
