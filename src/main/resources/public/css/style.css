@@ -48,6 +48,7 @@ input[type="submit"] {
 div.page {
   background: white;
   border: 1px solid #6ECCFF;
+  min-width: 690px;
   max-width: 904px;
   margin: 48px auto;
   border-radius: 8px;
