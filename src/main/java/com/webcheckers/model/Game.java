@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class Game {
@@ -27,7 +28,7 @@ public class Game {
 
   public Game(Player redPlayer, Player whitePlayer, BoardView board) {
     // Set gameID
-    this.gameID= gameIDCounter++;
+    this.gameID = gameIDCounter++;
 
     // Set Board
     this.board = board;
@@ -42,6 +43,13 @@ public class Game {
 
     // For all the MVP stories this variable must be set to PLAY.
     this.viewMode = viewModes.PLAY;
+  }
+
+  public ArrayList<Player> getPlayers() {
+    ArrayList<Player> players = new ArrayList<>();
+    players.add(redPlayer);
+    players.add(whitePlayer);
+    return players;
   }
 
   public int getGameID() {
