@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
@@ -26,7 +27,7 @@ public class GetHomeRoute implements Route {
   // User Welcome Message
   private static final Message WELCOME_MSG =
       Message.info("Welcome to the world of online Checkers.");
-  static final String PLAYER_KEY = "playerServices";
+  static final String CURRENT_USER = "currentUser";
 
   // TemplateEngine used for HTML page rendering
   private final TemplateEngine templateEngine;
@@ -38,7 +39,7 @@ public class GetHomeRoute implements Route {
    */
   public GetHomeRoute(final TemplateEngine templateEngine) {
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
-    //
+
     LOG.config("GetHomeRoute is initialized.");
   }
 
@@ -61,19 +62,32 @@ public class GetHomeRoute implements Route {
     // Display welcome message on the Home page
     vm.put("message", WELCOME_MSG);
 
-    if (httpSession.attribute(PLAYER_KEY) != null) {
-      // If a player is signed in
-      // Set the current_player to the PLAYER_KEY name
-      vm.put("current_player", ((Player) httpSession.attribute(PLAYER_KEY)).getName());
-      // Set the count to empty String
-      vm.put("count", "");
+    // Get the currentUser from the CURRENT_USER attribute
+    Player currentUser = httpSession.attribute(CURRENT_USER);
+
+    // If a user is signed in
+    if (currentUser != null) {
+
+      // If the user is in a game
+      if (currentUser.inGame()) {
+        response.redirect(
+            WebServer.GAME_URL + "?gameID=" + GameCenter.findGame(currentUser).getGameID());
+        return null;
+      }
+
+      // Set the currentUser to the CURRENT_USER name
+      vm.put("currentUser", currentUser);
+
+      // Set the playerCount to PlayerLobby size, minus one to account for current user.
+      vm.put("playerCount", (PlayerLobby.size() - 1));
 
     } else {
       // If there is no player signed in
-      // Set the current_player to empty String
-      vm.put("current_player", "");
-      // Set the count to PlayerLobby size
-      vm.put("count", PlayerLobby.size());
+      // Set the currentUser to null
+      vm.put("currentUser", null);
+
+      // Set the playerCount to PlayerLobby size
+      vm.put("playerCount", PlayerLobby.size());
     }
 
     // TODO: Improve
@@ -87,19 +101,25 @@ public class GetHomeRoute implements Route {
         ArrayList<String> list_construction = new ArrayList<>();
         // For each player except the current player generate an HTML list entry
         for (Player player : players) {
-          if (!player.equals((httpSession.attribute(PLAYER_KEY)))) {
+          if (!player.equals(currentUser)) {
             list_construction.add(player.getName());
           }
         }
-        // Set all_players to the list_construction
-        vm.put("all_players", list_construction);
+        if (list_construction.isEmpty()) {
+          // Set currentPlayers to null
+          vm.put("currentPlayers", null);
+        } else {
+          // Set currentPlayers to the list_construction
+          vm.put("currentPlayers", list_construction);
+        }
+
       } else {
-        // Set all_players to empty String
-        vm.put("all_players", "");
+        // Set currentPlayers to null
+        vm.put("currentPlayers", null);
       }
     } else {
-      // Set all_players to empty String
-      vm.put("all_players", "");
+      // Set currentPlayers to null
+      vm.put("currentPlayers", null);
     }
 
     // Render the Home page view

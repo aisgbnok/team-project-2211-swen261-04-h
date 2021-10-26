@@ -26,19 +26,25 @@
             or replay archived games
     -->
     <div class="player-info">
-        <#if current_player!=''>
-          <h2>Welcome back, ${current_player}</h2>
-          <b>Current Player: ${current_player}</b>
-            <#list all_players as player>
-              <p>${player}
-                <a href="/game?versus=${player}">Challenge</a>
-              </p>
-            </#list>
-        <#else>
-            <#if count=0>
-              No one is online!
+      <h2>Players Online</h2>
+        <#if currentUser??>
+            <#if currentPlayers??>
+              <p>Click on any player to start a game against them. There are ${playerCount} players
+                to choose!</p>
+                <#list currentPlayers as player>
+                  <form action="/game" method="GET">
+                    <button class="button" type="submit" name="opponent"
+                            value="${player}">${player}</button>
+                  </form>
+                </#list>
             <#else>
-              Players Online: ${count}
+              There are no other players online!
+            </#if>
+        <#else>
+            <#if playerCount=0>
+              There are no other players online!
+            <#else>
+              There are ${playerCount} players online. Sign in to see who they are!
             </#if>
         </#if>
     </div>

@@ -16,7 +16,6 @@ public class BoardView implements Iterable<Row> {
     validMoves.add(move);
   }
 
-
   public String getTurn() {
     return turn;
   }
@@ -24,7 +23,6 @@ public class BoardView implements Iterable<Row> {
   public void setTurn(String turn) {
     this.turn = turn;
   }
-
 
   public BoardView() {
     this.turn = "SELF";
@@ -48,6 +46,18 @@ public class BoardView implements Iterable<Row> {
     }
   }
 
+  public void fillWhite() {
+    for (Row row : rows) {
+      int index = row.getIndex();
+      if (index <= 2) {
+        row.fillRed();
+      } else if (index <= 4) {
+
+      } else {
+        row.fillWhite();
+      }
+    }
+  }
 
   @Override
   public Iterator<Row> iterator() {
@@ -71,7 +81,7 @@ public class BoardView implements Iterable<Row> {
 
   public ArrayList<Move> getValidMoves() {
     ArrayList<Move> moves = new ArrayList<>();
-    
+
     return validMoves;
   }
 }
