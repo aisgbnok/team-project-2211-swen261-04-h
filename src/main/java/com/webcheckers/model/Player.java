@@ -11,14 +11,16 @@ import java.util.Objects;
 public class Player {
 
   private final String name;
+  private boolean inGame;
 
   /**
-   * Player constructor sets the player name.
+   * Player constructor sets the player name and sets inGame to false.
    *
    * @param name Player username.
    */
   public Player(String name) {
     this.name = name;
+    this.inGame = false;
   }
 
   /**
@@ -31,7 +33,25 @@ public class Player {
   }
 
   /**
-   * Determiens if the provided Player instance is equal to this Player instance.
+   * Sets whether the player is in a game or not.
+   *
+   * @param inGame Boolean used to set whether player is in a game or not.
+   */
+  public void setGame(boolean inGame) {
+    this.inGame = inGame;
+  }
+
+  /**
+   * Returns value of inGame;
+   *
+   * @return True if the player is in a game, or false if they aren't.
+   */
+  public boolean inGame() {
+    return this.inGame;
+  }
+
+  /**
+   * Determines if the provided Player instance is equal to this Player instance.
    *
    * @param o Player to compare equality.
    * @return True if the two Players are equal, or false if they are not equal.
