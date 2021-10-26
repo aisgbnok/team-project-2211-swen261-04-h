@@ -1,14 +1,13 @@
 package com.webcheckers.ui;
 
-import static spark.Spark.*;
+import com.google.gson.Gson;
+import com.webcheckers.application.PlayerLobby;
+import spark.TemplateEngine;
 
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import com.google.gson.Gson;
-
-import com.webcheckers.application.PlayerLobby;
-import spark.TemplateEngine;
+import static spark.Spark.*;
 
 
 /**
@@ -57,6 +56,7 @@ public class WebServer {
   public static final String LOGIN_URL = "/signin";
   public static final String LOGOUT_URL = "/signout";
   public static final String GAME_URL = "/game";
+  private static final String VALIDATE_URL = "/validateMove";
 
 
   //
@@ -145,7 +145,8 @@ public class WebServer {
     get(HOME_URL, new GetHomeRoute(templateEngine));
     get(LOGIN_URL, new GetSignInRoute(templateEngine));
     post(LOGIN_URL, new PostSignInRoute(templateEngine));
-    get(LOGOUT_URL, new GetSignOutRoute(templateEngine));
+    post(VALIDATE_URL, new PostValidateMoveRoute(templateEngine));
+    get(LOGOUT_URL, new PostSignOutRoute(templateEngine));
     get(GAME_URL, new GetGameRoute(templateEngine));
     PlayerLobby.initPlayers();
 

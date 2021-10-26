@@ -14,73 +14,95 @@ import java.util.logging.Logger;
 /**
  * The UI Controller to GET the Home page.
  *
+ * @author <a href='mailto:jwd2488@rit.edu'>Jake Downie</a>
+ * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
+ * @author <a href='mailto:idc7947@rit.edu'>Ian Chasse</a>
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
 public class GetHomeRoute implements Route {
-    private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
+  // Console Logger
+  private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
-    private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
-    static final String PLAYER_KEY = "playerServices";
+  // User Welcome Message
+  private static final Message WELCOME_MSG =
+      Message.info("Welcome to the world of online Checkers.");
+  static final String PLAYER_KEY = "playerServices";
 
-    private final TemplateEngine templateEngine;
+  // TemplateEngine used for HTML page rendering
+  private final TemplateEngine templateEngine;
 
-    /**
-     * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
-     *
-     * @param templateEngine the HTML template rendering engine
-     */
-    public GetHomeRoute(final TemplateEngine templateEngine) {
-        this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
-        //
-        LOG.config("GetHomeRoute is initialized.");
+  /**
+   * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
+   *
+   * @param templateEngine the HTML template rendering engine
+   */
+  public GetHomeRoute(final TemplateEngine templateEngine) {
+    this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
+    //
+    LOG.config("GetHomeRoute is initialized.");
+  }
+
+  /**
+   * Render the WebCheckers Home page.
+   *
+   * @param request the HTTP request
+   * @param response the HTTP response
+   * @return the rendered HTML for the Home page
+   */
+  @Override
+  public Object handle(Request request, Response response) {
+    LOG.finer("GetHomeRoute is invoked.");
+    final Session httpSession = request.session();
+    Map<String, Object> vm = new HashMap<>();
+
+    // Set the title
+    vm.put("title", "Welcome!");
+
+    // Display welcome message on the Home page
+    vm.put("message", WELCOME_MSG);
+
+    if (httpSession.attribute(PLAYER_KEY) != null) {
+      // If a player is signed in
+      // Set the current_player to the PLAYER_KEY name
+      vm.put("current_player", ((Player) httpSession.attribute(PLAYER_KEY)).getName());
+      // Set the count to empty String
+      vm.put("count", "");
+
+    } else {
+      // If there is no player signed in
+      // Set the current_player to empty String
+      vm.put("current_player", "");
+      // Set the count to PlayerLobby size
+      vm.put("count", PlayerLobby.size());
     }
 
-    /**
-     * Render the WebCheckers Home page.
-     *
-     * @param request  the HTTP request
-     * @param response the HTTP response
-     * @return the rendered HTML for the Home page
-     */
-    @Override
-    public Object handle(Request request, Response response) {
-        LOG.finer("GetHomeRoute is invoked.");
-        final Session httpSession = request.session();
-
-        //
-        Map<String, Object> vm = new HashMap<>();
-        vm.put("title", "Welcome!");
-
-        // display a user message in the Home page
-        vm.put("message", WELCOME_MSG);
-        if(httpSession.attribute(PLAYER_KEY) != null) {
-            vm.put("current_player", ((Player) httpSession.attribute(PLAYER_KEY)).getName());
-            vm.put("count", "");
-
-        } else {
-            vm.put("current_player", "");
-            vm.put("count", PlayerLobby.size());
+    // TODO: Improve
+    // Get players from PlayerLobby
+    ArrayList<Player> players = PlayerLobby.getPlayers();
+    // If players is not null
+    if (players != null) {
+      // if players is not empty
+      if (!players.isEmpty()) {
+        // Create a new ArrayList of Strings for storing the HTML player list
+        ArrayList<String> list_construction = new ArrayList<>();
+        // For each player except the current player generate an HTML list entry
+        for (Player player : players) {
+          if (!player.equals((httpSession.attribute(PLAYER_KEY)))) {
+            list_construction.add(player.getName());
+          }
         }
-        ArrayList<Player> players = PlayerLobby.getPlayers();
-        if ( players != null) {
-            if (!players.isEmpty()) {
-                ArrayList<String> list_construction = new ArrayList<>();
-//                list_construction.append("<ul>");
-                for (Player player :
-                        players) {
-                    if (!player.equals(( httpSession.attribute(PLAYER_KEY)))) {
-                        list_construction.add(player.getName());
-                    }
-                }
-                vm.put("all_players", list_construction);
-            } else {
-                vm.put("all_players", "");
-            }
-        } else {
-            vm.put("all_players", "");
-        }
-        // render the View
-        return templateEngine.render(new ModelAndView(vm, "home.ftl"));
+        // Set all_players to the list_construction
+        vm.put("all_players", list_construction);
+      } else {
+        // Set all_players to empty String
+        vm.put("all_players", "");
+      }
+    } else {
+      // Set all_players to empty String
+      vm.put("all_players", "");
     }
 
+    // Render the Home page view
+    return templateEngine.render(new ModelAndView(vm, "home.ftl"));
+  }
 }

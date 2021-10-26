@@ -2,6 +2,7 @@ package com.webcheckers.model;
 
 import com.webcheckers.model.Piece.Color;
 import com.webcheckers.model.Piece.Type;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -56,5 +57,9 @@ public class Row implements Iterable<Space> {
   @Override
   public Iterator<Space> iterator() {
     return spaces.iterator();
+  }
+
+  public ArrayList<Space> getSpaces() {
+    return spaces;
   }
 }
