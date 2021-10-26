@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import com.webcheckers.model.Piece.Color;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -57,6 +58,15 @@ public class Game {
       return whitePlayer;
     } else if (player.equals(whitePlayer)) {
       return redPlayer;
+    }
+    return null;
+  }
+
+  public Color getPlayerColor(Player player) {
+    if (player.equals(redPlayer)) {
+      return Color.RED;
+    } else if (player.equals(whitePlayer)) {
+      return Color.WHITE;
     }
     return null;
   }

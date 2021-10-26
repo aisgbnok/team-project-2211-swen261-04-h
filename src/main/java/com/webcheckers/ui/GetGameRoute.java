@@ -59,6 +59,8 @@ public class GetGameRoute implements Route {
     // Set the title
     vm.put("title", "Game");
 
+    // TODO improve this in the next sprint. Very janky code.
+
     // TODO: Should these be private global variables?
     // Get currentUser
     Player currentUser = httpSession.attribute(CURRENT_USER);
@@ -73,11 +75,11 @@ public class GetGameRoute implements Route {
     Player opponent = null;
 
     // Initialize Game and Board
-    Game game;
+    Game game = null;
     BoardView board = null;
 
     // If the opponent query param is found then this is game setup
-    if(request.queryParams("opponent") != null) {
+    if (request.queryParams("opponent") != null) {
       opponent = PlayerLobby.getPlayer(request.queryParams("opponent"));
       httpSession.attribute(OPPONENT_KEY, opponent);
 
@@ -91,33 +93,41 @@ public class GetGameRoute implements Route {
       return null;
     }
 
-    if(request.queryParams("gameID") != null) {
+    if (request.queryParams("gameID") != null) {
       game = GameCenter.getGame(Integer.parseInt(request.queryParams("gameID")));
       board = game.getBoard();
       httpSession.attribute(GAME_KEY, game);
       httpSession.attribute(BOARD_KEY, board);
 
-
       opponent = httpSession.attribute(OPPONENT_KEY);
 
-      if(opponent == null) {
+      if (opponent == null) {
         opponent = game.getOppositePlayer(currentUser);
         httpSession.attribute(OPPONENT_KEY, opponent);
       }
-
     }
-
 
     // Set both players to  be in game
     currentUser.setGame(true);
-    opponent.setGame(true); // TODO fix
+    opponent.setGame(true);
 
     vm.put("currentUser", currentUser);
-    vm.put("redPlayer", currentUser);
-    vm.put("whitePlayer", opponent);
-    vm.put("viewMode", viewModes.PLAY);
 
-    if (board.getTurn().equals("OPPONENT")) {
+    if (game.getPlayerColor(currentUser) == Color.RED) {
+      vm.put("redPlayer", currentUser);
+      vm.put("whitePlayer", opponent);
+      board.fillRed();
+    } else if (game.getPlayerColor(currentUser) == Color.WHITE) {
+      vm.put("redPlayer", opponent);
+      vm.put("whitePlayer", currentUser);
+      board.fillWhite();
+    }
+
+    vm.put("viewMode", viewModes.PLAY);
+    vm.put("activeColor", Color.RED);
+
+    // TODO movement
+    /*if (board.getTurn().equals("OPPONENT")) {
       vm.put("activeColor", Color.RED);
     } else {
       vm.put("activeColor", Color.WHITE);
@@ -128,9 +138,6 @@ public class GetGameRoute implements Route {
       opponent = PlayerLobby.getPlayer(request.queryParams("opponent"));
       vm.put("whitePlayer", opponent);
     }
-
-    vm.put("board", board);
-    board.fillRed();
 
     /*
     for (Row row : board.getRows()) {
@@ -158,7 +165,10 @@ public class GetGameRoute implements Route {
     }
      */
 
-    // render the View
+    // Give freemarker the board
+    vm.put(BOARD_KEY, board);
+
+    // Render the Game View
     return templateEngine.render(new ModelAndView(vm, "game.ftl"));
   }
 }
