@@ -111,8 +111,7 @@ WebCheckers application.
 
 ![The WebCheckers Web Interface Statechart](web-interface.png)
 
-> _Provide a summary of the application's user interface. Describe, from
-> the user's perspective, the flow of the pages in the web application._
+The application provies teh player with a view of a traditional chess board with access to submit moves, resing a game, among other things. 
 
 ### UI Tier
 
@@ -176,8 +175,5 @@ WebCheckers application.
 
 ### Unit Testing and Code Coverage
 
-> _Discuss your unit testing strategy. Report on the code coverage
-> achieved from unit testing of the code base. Discuss the team's
-> coverage targets, why you selected those values, and how well your
-> code coverage met your targets. If there are any anomalies, discuss
-> those._
+Unit tests are written before development starts in most cases unless an urgent issue needs to be resolved.
+Eventually, all unit tests are to be completed and validated. User testing is done by one of the developers. 
