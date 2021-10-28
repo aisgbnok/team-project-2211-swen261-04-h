@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta http-equiv="refresh" content="10">
   <title>Web Checkers | ${title}</title>
   <link rel="stylesheet" type="text/css" href="/css/style.css">
@@ -28,7 +28,7 @@
     <div class="player-info">
       <h2>Players Online</h2>
         <#if currentUser??>
-            <#if currentPlayers??>
+            <#if (currentPlayers?size > 0)>
               <p>Click on any player to start a game against them. There are ${playerCount} players
                 to choose!</p>
                 <#list currentPlayers as player>

@@ -27,7 +27,11 @@ public class GetHomeRoute implements Route {
   // User Welcome Message
   private static final Message WELCOME_MSG =
       Message.info("Welcome to the world of online Checkers.");
-  static final String CURRENT_USER = "currentUser";
+
+  // HTTP Attribute Keys
+  public static final String CURRENT_USER = "currentUser";
+  public static final String PLAYER_COUNT = "playerCount";
+  public static final String PLAYER_LIST = "currentPlayers";
 
   // TemplateEngine used for HTML page rendering
   private final TemplateEngine templateEngine;
@@ -56,71 +60,40 @@ public class GetHomeRoute implements Route {
     final Session httpSession = request.session();
     Map<String, Object> vm = new HashMap<>();
 
+    // Get the currentUser from the CURRENT_USER attribute
+    Player currentUser = httpSession.attribute(CURRENT_USER);
+
+    // If a user is signed in and is in a game
+    if (currentUser != null && currentUser.inGame()) {
+      response.redirect(
+          WebServer.GAME_URL + "?gameID=" + GameCenter.findGame(currentUser).getGameID());
+      return null;
+    }
+
+    // Generate Player List
+    ArrayList<String> playersHTML = new ArrayList<>();
+
+    // For each player in player lobby that isn't the current user add them to the playersHTML list
+    for (Player player : PlayerLobby.getPlayers()) {
+      if (!player.equals(currentUser)) {
+        playersHTML.add(player.getName());
+      }
+    }
+
     // Set the title
     vm.put("title", "Welcome!");
 
     // Display welcome message on the Home page
     vm.put("message", WELCOME_MSG);
 
-    // Get the currentUser from the CURRENT_USER attribute
-    Player currentUser = httpSession.attribute(CURRENT_USER);
+    // Set the CURRENT_USER to the currentUser name
+    vm.put(CURRENT_USER, currentUser);
 
-    // If a user is signed in
-    if (currentUser != null) {
+    // Set the PLAYER_COUNT to playersHTML size
+    vm.put(PLAYER_COUNT, playersHTML.size());
 
-      // If the user is in a game
-      if (currentUser.inGame()) {
-        response.redirect(
-            WebServer.GAME_URL + "?gameID=" + GameCenter.findGame(currentUser).getGameID());
-        return null;
-      }
-
-      // Set the currentUser to the CURRENT_USER name
-      vm.put("currentUser", currentUser);
-
-      // Set the playerCount to PlayerLobby size, minus one to account for current user.
-      vm.put("playerCount", (PlayerLobby.size() - 1));
-
-    } else {
-      // If there is no player signed in
-      // Set the currentUser to null
-      vm.put("currentUser", null);
-
-      // Set the playerCount to PlayerLobby size
-      vm.put("playerCount", PlayerLobby.size());
-    }
-
-    // TODO: Improve
-    // Get players from PlayerLobby
-    ArrayList<Player> players = PlayerLobby.getPlayers();
-    // If players is not null
-    if (players != null) {
-      // if players is not empty
-      if (!players.isEmpty()) {
-        // Create a new ArrayList of Strings for storing the HTML player list
-        ArrayList<String> list_construction = new ArrayList<>();
-        // For each player except the current player generate an HTML list entry
-        for (Player player : players) {
-          if (!player.equals(currentUser)) {
-            list_construction.add(player.getName());
-          }
-        }
-        if (list_construction.isEmpty()) {
-          // Set currentPlayers to null
-          vm.put("currentPlayers", null);
-        } else {
-          // Set currentPlayers to the list_construction
-          vm.put("currentPlayers", list_construction);
-        }
-
-      } else {
-        // Set currentPlayers to null
-        vm.put("currentPlayers", null);
-      }
-    } else {
-      // Set currentPlayers to null
-      vm.put("currentPlayers", null);
-    }
+    // Set PLAYER_LIST to the playersHTML list
+    vm.put(PLAYER_LIST, playersHTML);
 
     // Render the Home page view
     return templateEngine.render(new ModelAndView(vm, "home.ftl"));
