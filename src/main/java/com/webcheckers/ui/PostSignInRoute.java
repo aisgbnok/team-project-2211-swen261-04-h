@@ -28,9 +28,9 @@ public class PostSignInRoute implements Route {
   // Player Name Error Messages
   private static final Message PLAYER_NAME_EMPTY = Message.error("Player Name is empty!");
   private static final Message PLAYER_NAME_INVALID =
-      Message.error("Player Name invalid, don't use quotes!");
+      Message.error("Player Name invalid, use alphanumeric characters!");
   private static final Message PLAYER_NAME_TAKEN =
-      Message.error("Player Name taken, please select another!");
+      Message.error("Player Name taken, select another!");
 
   // The length of the session timeout in seconds
   static final int SESSION_TIMEOUT_PERIOD = 120;
@@ -75,7 +75,7 @@ public class PostSignInRoute implements Route {
       // If playerName is empty, notify the user.
       vm.put("message", PLAYER_NAME_EMPTY);
       return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
-    } else if (playerName.contains("\"") || playerName.contains("'")) {
+    } else if (!playerName.matches("^[a-zA-Z0-9 _]*$")) {
       // If playerName is invalid, notify the user.
       vm.put("message", PLAYER_NAME_INVALID);
       return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
