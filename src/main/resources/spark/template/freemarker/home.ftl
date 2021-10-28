@@ -27,7 +27,7 @@
     -->
     <div class="player-info">
       <h2>Players Online</h2>
-        <#if currentUser??>
+        <#if currentPlayer??>
             <#if (currentPlayers?size > 0)>
               <p>Click on any player to start a game against them. There
                   <#if (playerCount > 1)>

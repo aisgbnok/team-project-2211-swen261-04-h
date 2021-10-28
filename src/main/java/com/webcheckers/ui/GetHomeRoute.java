@@ -30,8 +30,8 @@ public class GetHomeRoute implements Route {
 
   // HTTP Attribute Keys
   public static final String CURRENT_PLAYER = "currentPlayer";
+  public static final String CURRENT_PLAYERS = "currentPlayers";
   public static final String PLAYER_COUNT = "playerCount";
-  public static final String PLAYER_LIST = "currentPlayers";
 
   // TemplateEngine used for HTML page rendering
   private final TemplateEngine templateEngine;
@@ -60,13 +60,13 @@ public class GetHomeRoute implements Route {
     final Session httpSession = request.session();
     Map<String, Object> vm = new HashMap<>();
 
-    // Get the currentUser from the CURRENT_USER attribute
-    Player currentUser = httpSession.attribute(CURRENT_PLAYER);
+    // Get the currentPlayer from the CURRENT_USER attribute
+    Player currentPlayer = httpSession.attribute(CURRENT_PLAYER);
 
     // If a user is signed in and is in a game
-    if (currentUser != null && currentUser.inGame()) {
+    if (currentPlayer != null && currentPlayer.inGame()) {
       response.redirect(
-          WebServer.GAME_URL + "?gameID=" + GameCenter.findGame(currentUser).getGameID());
+          WebServer.GAME_URL + "?gameID=" + GameCenter.findGame(currentPlayer).getGameID());
       return null;
     }
 
@@ -75,7 +75,7 @@ public class GetHomeRoute implements Route {
 
     // For each player in player lobby that isn't the current user add them to the playersHTML list
     for (Player player : PlayerLobby.getPlayers()) {
-      if (!player.equals(currentUser)) {
+      if (!player.equals(currentPlayer)) {
         playersHTML.add(player.getName());
       }
     }
@@ -86,14 +86,14 @@ public class GetHomeRoute implements Route {
     // Display welcome message on the Home page
     vm.put("message", WELCOME_MSG);
 
-    // Set the CURRENT_USER to the currentUser name
-    vm.put(CURRENT_PLAYER, currentUser);
+    // Set the CURRENT_PLAYER to the currentPlayer name
+    vm.put(CURRENT_PLAYER, currentPlayer);
 
     // Set the PLAYER_COUNT to playersHTML size
     vm.put(PLAYER_COUNT, playersHTML.size());
 
     // Set PLAYER_LIST to the playersHTML list
-    vm.put(PLAYER_LIST, playersHTML);
+    vm.put(CURRENT_PLAYERS, playersHTML);
 
     // Render the Home page view
     return templateEngine.render(new ModelAndView(vm, "home.ftl"));

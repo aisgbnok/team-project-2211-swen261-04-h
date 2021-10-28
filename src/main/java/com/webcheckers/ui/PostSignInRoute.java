@@ -67,7 +67,7 @@ public class PostSignInRoute implements Route {
     // Set the title
     vm.put("title", "Sign In");
 
-    // Get username
+    // Get Player Name
     String playerName = request.queryParams("playerName").strip();
 
     // Handle playerName Validation Checking

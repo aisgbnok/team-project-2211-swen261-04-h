@@ -1,9 +1,9 @@
 <div class="navigation">
-    <#if currentUser??>
+    <#if currentPlayer??>
       <a class="button nav-button" href="/">Go Home</a>
       <form id="signout" action="/signout" method="post">
         <a class="button nav-button" href="#" onclick="event.preventDefault(); signout.submit();">
-          Sign Out [${currentUser.name}]</a>
+          Sign Out [${currentPlayer.name}]</a>
       </form>
     <#else>
       <a class="button nav-button" href="/signin">Sign In</a>
