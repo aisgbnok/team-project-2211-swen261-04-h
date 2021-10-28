@@ -29,8 +29,13 @@
       <h2>Players Online</h2>
         <#if currentUser??>
             <#if (currentPlayers?size > 0)>
-              <p>Click on any player to start a game against them. There are ${playerCount} players
-                to choose!</p>
+              <p>Click on any player to start a game against them. There
+                  <#if (playerCount > 1)>
+                    are ${playerCount} players
+                  <#else>
+                    is ${playerCount} player
+                  </#if>
+                to choose! </p>
                 <#list currentPlayers as player>
                   <form action="/game" method="GET">
                     <button class="button" type="submit" name="opponent"
@@ -42,9 +47,15 @@
             </#if>
         <#else>
             <#if playerCount=0>
-              There are no other players online!
+              <p>There are no other players online!</p>
             <#else>
-              There are ${playerCount} players online. Sign in to see who they are!
+              <p>There
+                  <#if (playerCount > 1)>
+                    are ${playerCount} players
+                  <#else>
+                    is ${playerCount} player
+                  </#if>
+                online! Sign in to see who they are!</p>
             </#if>
         </#if>
     </div>
