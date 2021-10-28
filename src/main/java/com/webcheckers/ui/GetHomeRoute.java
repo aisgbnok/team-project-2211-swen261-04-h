@@ -29,6 +29,7 @@ public class GetHomeRoute implements Route {
       Message.info("Welcome to the world of online Checkers.");
 
   // HTTP Attribute Keys
+  public static final String MESSAGE = "message";
   public static final String CURRENT_PLAYER = "currentPlayer";
   public static final String CURRENT_PLAYERS = "currentPlayers";
   public static final String PLAYER_COUNT = "playerCount";
@@ -83,8 +84,17 @@ public class GetHomeRoute implements Route {
     // Set the title
     vm.put("title", "Welcome!");
 
-    // Display welcome message on the Home page
-    vm.put("message", WELCOME_MSG);
+    // Get possible message from other pages
+    Message message = httpSession.attribute(MESSAGE);
+
+    // If there is a message display it, then remove it from session
+    if (message != null) {
+      vm.put(MESSAGE, message);
+      httpSession.removeAttribute(MESSAGE);
+    } else {
+      // If there is no message, then display the welcome message
+      vm.put(MESSAGE, WELCOME_MSG);
+    }
 
     // Set the CURRENT_PLAYER to the currentPlayer name
     vm.put(CURRENT_PLAYER, currentPlayer);

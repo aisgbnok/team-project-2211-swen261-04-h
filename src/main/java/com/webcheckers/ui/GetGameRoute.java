@@ -13,6 +13,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER;
+import static com.webcheckers.ui.GetHomeRoute.MESSAGE;
 
 /**
  * The UI Controller to GET the Game page.
@@ -24,6 +25,8 @@ public class GetGameRoute implements Route {
 
   // Console Logger
   private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
+
+  private static final String PLAYER_IN_GAME = " is already in a game, choose someone else!";
 
   static final String GAME_KEY = "game";
   static final String BOARD_KEY = "board";
@@ -62,11 +65,12 @@ public class GetGameRoute implements Route {
     // TODO improve this in the next sprint. Very janky code.
 
     // TODO: Should these be private global variables?
-    // Get currentUser
-    Player currentUser = httpSession.attribute(CURRENT_PLAYER);
+    // Get currentPlayer
+    Player currentPlayer = httpSession.attribute(CURRENT_PLAYER);
 
     // If user isn't signed in then return home
-    if (currentUser == null) {
+    if (currentPlayer == null) {
+      // If playerName is empty, notify the user.
       response.redirect(WebServer.HOME_URL);
       return null;
     }
@@ -79,12 +83,18 @@ public class GetGameRoute implements Route {
     BoardView board = null;
 
     // If the opponent query param is found then this is game setup
-    if (request.queryParams("opponent") != null) {
-      opponent = PlayerLobby.getPlayer(request.queryParams("opponent"));
+    if (request.queryParams(OPPONENT_KEY) != null) {
+
+      opponent = PlayerLobby.getPlayer(request.queryParams(OPPONENT_KEY));
+      if (opponent.inGame()) {
+        httpSession.attribute(MESSAGE, Message.error(opponent.getName() + PLAYER_IN_GAME));
+        response.redirect(WebServer.HOME_URL);
+        return null;
+      }
       httpSession.attribute(OPPONENT_KEY, opponent);
 
       board = new BoardView();
-      game = new Game(currentUser, opponent, board);
+      game = new Game(currentPlayer, opponent, board);
       GameCenter.addGame(game);
       httpSession.attribute(BOARD_KEY, board);
       httpSession.attribute(GAME_KEY, game);
@@ -102,24 +112,24 @@ public class GetGameRoute implements Route {
       opponent = httpSession.attribute(OPPONENT_KEY);
 
       if (opponent == null) {
-        opponent = game.getOppositePlayer(currentUser);
+        opponent = game.getOppositePlayer(currentPlayer);
         httpSession.attribute(OPPONENT_KEY, opponent);
       }
     }
 
     // Set both players to  be in game
-    currentUser.setGame(true);
+    currentPlayer.setGame(true);
     opponent.setGame(true);
 
-    vm.put(CURRENT_PLAYER, currentUser);
+    vm.put(CURRENT_PLAYER, currentPlayer);
 
-    if (game.getPlayerColor(currentUser) == Color.RED) {
-      vm.put("redPlayer", currentUser);
+    if (game.getPlayerColor(currentPlayer) == Color.RED) {
+      vm.put("redPlayer", currentPlayer);
       vm.put("whitePlayer", opponent);
       board.fillRed();
-    } else if (game.getPlayerColor(currentUser) == Color.WHITE) {
+    } else if (game.getPlayerColor(currentPlayer) == Color.WHITE) {
       vm.put("redPlayer", opponent);
-      vm.put("whitePlayer", currentUser);
+      vm.put("whitePlayer", currentPlayer);
       board.fillWhite();
     }
 
@@ -158,7 +168,7 @@ public class GetGameRoute implements Route {
 
     /*
     String current_turn = board.getTurn();
-    if (current_turn == currentUser.getName()){
+    if (current_turn == currentPlayer.getName()){
       vm.put("turn", "YOUR TURN");
     } else {
       vm.put("turn", "OPPONENTS TURN");
