@@ -111,7 +111,7 @@ public class GetGameRoute implements Route {
     currentUser.setGame(true);
     opponent.setGame(true);
 
-    vm.put("currentUser", currentUser);
+    vm.put(CURRENT_PLAYER, currentUser);
 
     if (game.getPlayerColor(currentUser) == Color.RED) {
       vm.put("redPlayer", currentUser);
