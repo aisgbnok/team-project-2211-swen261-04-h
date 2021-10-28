@@ -18,6 +18,10 @@ import java.util.logging.Logger;
 public class PostResignGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
 
+    public PostResignGameRoute() {
+
+    }
+
 
     /**
      * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
@@ -42,26 +46,10 @@ public class PostResignGameRoute implements Route {
         final Session httpSession = request.session();
 
         LOG.finer("GetSignInRoute is invoked.");
-        //
         Map<String, Object> vm = new HashMap<>();
-
-        String param = request.queryParams("actionData");
         Gson gson = new Gson();
-        Move newMove = gson.fromJson(param, Move.class);
-
-
-        BoardView board = httpSession.attribute("BOARD");
-
         Message message;
-        if (board.getValidMoves().contains(newMove)) {
-            //TODO: RETURN TRUE JSON
-            message = Message.info("true");
-
-            board.setTurn("OPPONENT");
-        } else {
-            //TODO: RETURN FALSE JSON
-            message = Message.info("false");
-        }
+        message = Message.info("Resignation success!");
         return gson.toJson(message);
 
     }

@@ -26,7 +26,7 @@ public class Space {
 
   protected Space(int cellIdx) {
     this.cellIdx = cellIdx;
-    this.isValid = true;
+    this.isValid = false;
     this.piece = null;
   }
 

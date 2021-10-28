@@ -3,11 +3,11 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.model.BoardView;
 import com.webcheckers.model.Message;
-import com.webcheckers.model.Move;
 import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 /**
@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  *
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
-public class PostSubmitTurnRoute implements Route {
+public class PostCheckTurnRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
 
 
@@ -42,14 +42,16 @@ public class PostSubmitTurnRoute implements Route {
         final Session httpSession = request.session();
 
         LOG.finer("GetSignInRoute is invoked.");
-        //
         Map<String, Object> vm = new HashMap<>();
-
+        Gson gson = new Gson();
+        Message message;
         BoardView board = httpSession.attribute("BOARD");
-        board.makeMove(board.proposedMove);
-        board.proposedMove = null;
-        board.setTurn("OPPONENT");
+        if (Objects.equals(board.getTurn(), "SELF")){
+            message = Message.info("true");
+        } else {
+            message = Message.info("false");
+        }
+        return gson.toJson(message);
 
-        return Message.info("Success");
     }
 }

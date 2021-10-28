@@ -26,7 +26,7 @@ public class GetGameRoute implements Route {
   private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
 
   static final String GAME_KEY = "game";
-  static final String BOARD_KEY = "board";
+  static final String BOARD_KEY = "BOARD";
   static final String OPPONENT_KEY = "opponent";
 
   // TemplateEngine used for HTML page rendering
@@ -105,6 +105,8 @@ public class GetGameRoute implements Route {
         opponent = game.getOppositePlayer(currentUser);
         httpSession.attribute(OPPONENT_KEY, opponent);
       }
+    } else {
+      board = new BoardView();
     }
 
     // Set both players to  be in game
@@ -165,10 +167,13 @@ public class GetGameRoute implements Route {
     }
      */
 
+    board.getValidMoves();
+
     // Give freemarker the board
     vm.put(BOARD_KEY, board);
 
     // Render the Game View
+    httpSession.attribute(BOARD_KEY, board);
     return templateEngine.render(new ModelAndView(vm, "game.ftl"));
   }
 }

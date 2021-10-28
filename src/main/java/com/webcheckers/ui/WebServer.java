@@ -149,6 +149,9 @@ public class WebServer {
     post(SIGNOUT_URL, new PostSignOutRoute(templateEngine));
     get(GAME_URL, new GetGameRoute(templateEngine));
     post(VALIDATE_URL, new PostValidateMoveRoute(templateEngine));
+    post("/submit_turn", new PostSubmitTurnRoute());
+    post("/resignGame", new PostResignGameRoute());
+    post("/checkTurn", new PostCheckTurnRoute());
     PlayerLobby.initPlayers();
     GameCenter.initGames();
 

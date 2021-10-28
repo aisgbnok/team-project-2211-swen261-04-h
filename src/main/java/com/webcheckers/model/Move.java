@@ -4,6 +4,11 @@ public class Move {
     private Space start;
     private Space end;
 
+    public Move(Space space, Space space2) {
+        start = space;
+        end = space2;
+    }
+
     public Space getStart() {
         return start;
     }
