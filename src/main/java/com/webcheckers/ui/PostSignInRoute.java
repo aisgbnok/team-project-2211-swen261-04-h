@@ -4,7 +4,6 @@ import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.application.SessionTimeoutWatchdog;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
-import java.util.Locale;
 import spark.*;
 
 import java.util.HashMap;
@@ -13,7 +12,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import static spark.Spark.halt;
-import static com.webcheckers.ui.GetHomeRoute.CURRENT_USER;
+import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER;
 
 /**
  * The UI Controller to POST the user sign in.
@@ -26,10 +25,12 @@ public class PostSignInRoute implements Route {
   // Console Logger
   private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
 
-  // Username Error Messages
-  private static final Message USER_EMPTY = Message.info("Username is empty!");
-  private static final Message USER_INVALID = Message.info("Username invalid, don't use quotes!");
-  private static final Message USER_TAKEN = Message.info("Username taken, please select another!");
+  // Player Name Error Messages
+  private static final Message PLAYER_NAME_EMPTY = Message.error("Player Name is empty!");
+  private static final Message PLAYER_NAME_INVALID =
+      Message.error("Player Name invalid, don't use quotes!");
+  private static final Message PLAYER_NAME_TAKEN =
+      Message.error("Player Name taken, please select another!");
 
   // The length of the session timeout in seconds
   static final int SESSION_TIMEOUT_PERIOD = 120;
@@ -74,37 +75,37 @@ public class PostSignInRoute implements Route {
     vm.put("title", "Sign In");
 
     // Get username
-    String username = request.queryParams("playerName").strip();
+    String playerName = request.queryParams("playerName").strip();
 
-    // Handle Username Validation Checking
-    if (username.isEmpty()) {
-      // If username is empty, notify the user.
-      vm.put("message", USER_EMPTY);
+    // Handle playerName Validation Checking
+    if (playerName.isEmpty()) {
+      // If playerName is empty, notify the user.
+      vm.put("message", PLAYER_NAME_EMPTY);
       return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
-    } else if (username.contains("\"") || username.contains("'")) {
-      // If username is invalid, notify the user.
-      vm.put("message", USER_INVALID);
+    } else if (playerName.contains("\"") || playerName.contains("'")) {
+      // If playerName is invalid, notify the user.
+      vm.put("message", PLAYER_NAME_INVALID);
       return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
-    } else if (PlayerLobby.contains(username)) {
-      // If username is already taken, notify the user.
-      vm.put("message", USER_TAKEN);
+    } else if (PlayerLobby.contains(playerName)) {
+      // If playerName is already taken, notify the user.
+      vm.put("message", PLAYER_NAME_TAKEN);
       return templateEngine.render(new ModelAndView(vm, "signin.ftl"));
     }
 
     // Username passed validation
     // Now we can create a new Player
-    final Player currentUser = new Player(username);
+    final Player currentPlayer = new Player(playerName);
     // We can also register that player with the PlayerLobby
-    PlayerLobby.addPlayer(currentUser);
+    PlayerLobby.addPlayer(currentPlayer);
 
-    // Set the httpSession CURRENT_USER attribute to the currentUSer
-    httpSession.attribute(CURRENT_USER, currentUser);
+    // Set the httpSession CURRENT_USER attribute to the currentPlayer
+    httpSession.attribute(CURRENT_PLAYER, currentPlayer);
 
-    // TODO: Anthony Swierkosz needs to understand what this does
+    // TODO: Anthony needs to understand what this does
     // setup session timeout. The valueUnbound() method in the SessionTimeoutWatchdog will
     // be called when the session is invalidated. The next invocation of this route will
     // have a new Session object with no attributes.
-    httpSession.attribute(TIMEOUT_SESSION_KEY, new SessionTimeoutWatchdog(currentUser));
+    httpSession.attribute(TIMEOUT_SESSION_KEY, new SessionTimeoutWatchdog(currentPlayer));
     httpSession.maxInactiveInterval(SESSION_TIMEOUT_PERIOD);
     response.redirect(WebServer.HOME_URL);
     halt();

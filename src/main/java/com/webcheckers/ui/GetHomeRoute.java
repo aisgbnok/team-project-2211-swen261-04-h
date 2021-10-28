@@ -29,7 +29,7 @@ public class GetHomeRoute implements Route {
       Message.info("Welcome to the world of online Checkers.");
 
   // HTTP Attribute Keys
-  public static final String CURRENT_USER = "currentUser";
+  public static final String CURRENT_PLAYER = "currentPlayer";
   public static final String PLAYER_COUNT = "playerCount";
   public static final String PLAYER_LIST = "currentPlayers";
 
@@ -61,7 +61,7 @@ public class GetHomeRoute implements Route {
     Map<String, Object> vm = new HashMap<>();
 
     // Get the currentUser from the CURRENT_USER attribute
-    Player currentUser = httpSession.attribute(CURRENT_USER);
+    Player currentUser = httpSession.attribute(CURRENT_PLAYER);
 
     // If a user is signed in and is in a game
     if (currentUser != null && currentUser.inGame()) {
@@ -87,7 +87,7 @@ public class GetHomeRoute implements Route {
     vm.put("message", WELCOME_MSG);
 
     // Set the CURRENT_USER to the currentUser name
-    vm.put(CURRENT_USER, currentUser);
+    vm.put(CURRENT_PLAYER, currentUser);
 
     // Set the PLAYER_COUNT to playersHTML size
     vm.put(PLAYER_COUNT, playersHTML.size());

@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import static com.webcheckers.ui.GetHomeRoute.CURRENT_USER;
+import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER;
 
 /**
  * The UI Controller to GET the Game page.
@@ -63,7 +63,7 @@ public class GetGameRoute implements Route {
 
     // TODO: Should these be private global variables?
     // Get currentUser
-    Player currentUser = httpSession.attribute(CURRENT_USER);
+    Player currentUser = httpSession.attribute(CURRENT_PLAYER);
 
     // If user isn't signed in then return home
     if (currentUser == null) {
