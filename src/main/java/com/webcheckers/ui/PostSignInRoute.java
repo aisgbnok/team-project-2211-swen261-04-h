@@ -64,13 +64,6 @@ public class PostSignInRoute implements Route {
     final Session httpSession = request.session();
     Map<String, Object> vm = new HashMap<>();
 
-    // If cancel button isn't null then the user clicked it
-    if (request.queryParams("cancel") != null) {
-      // Redirect to the homepage
-      response.redirect(WebServer.HOME_URL);
-      return null;
-    }
-
     // Set the title
     vm.put("title", "Sign In");
 
