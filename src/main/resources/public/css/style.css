@@ -192,6 +192,10 @@ div.INFO {
   background-color: rgba(0, 0, 0, 0.12);
 }
 
+.player-info form:not(:last-child) .button {
+  margin-bottom: 6px;
+}
+
 button.player {
   background-color: #f1f1f1;
   width: 100px;
