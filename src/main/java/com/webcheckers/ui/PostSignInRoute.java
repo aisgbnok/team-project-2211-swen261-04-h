@@ -32,9 +32,9 @@ public class PostSignInRoute implements Route {
   private static final Message PLAYER_NAME_TAKEN =
       Message.error("Player Name taken, select another!");
 
-  // The length of the session timeout in seconds
-  static final int SESSION_TIMEOUT_PERIOD = 120;
-  static final String TIMEOUT_SESSION_KEY = "timeoutWatchdog";
+  // The length of the session timeout in seconds?
+  //  static final int SESSION_TIMEOUT_PERIOD = 120;
+  //  static final String TIMEOUT_SESSION_KEY = "timeoutWatchdog";
 
   // TemplateEngine used for HTML page rendering
   private final TemplateEngine templateEngine;
@@ -94,14 +94,19 @@ public class PostSignInRoute implements Route {
     // Set the httpSession CURRENT_USER attribute to the currentPlayer
     httpSession.attribute(CURRENT_PLAYER, currentPlayer);
 
-    // TODO: Anthony needs to understand what this does
+    // TODO: This needs to be implemented much better, before actually including!
+    // This seems to set the session timeout to 120 seconds (2 minutes). This is great; however, we
+    // don't properly remove the current player from the playerLobby or GameCenter yet.
+    // Somebody tell me if i'm wrong?!
+
+    /*
     // setup session timeout. The valueUnbound() method in the SessionTimeoutWatchdog will
     // be called when the session is invalidated. The next invocation of this route will
     // have a new Session object with no attributes.
     httpSession.attribute(TIMEOUT_SESSION_KEY, new SessionTimeoutWatchdog(currentPlayer));
     httpSession.maxInactiveInterval(SESSION_TIMEOUT_PERIOD);
+    halt();*/
     response.redirect(WebServer.HOME_URL);
-    halt();
     return null;
   }
 }
