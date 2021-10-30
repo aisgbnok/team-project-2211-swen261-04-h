@@ -165,9 +165,10 @@ public class GetGameRoute implements Route {
     } else {
       vm.put("turn", "OPPONENTS TURN");
     }
-     */
+
 
     board.getValidMoves();
+     */
 
     // Give freemarker the board
     vm.put(BOARD_KEY, board);
