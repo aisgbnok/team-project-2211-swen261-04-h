@@ -26,7 +26,7 @@ public class GetGameRoute implements Route {
   private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
 
   static final String GAME_KEY = "game";
-  static final String BOARD_KEY = "BOARD";
+  static final String BOARD_KEY = "board";
   static final String OPPONENT_KEY = "opponent";
 
   // TemplateEngine used for HTML page rendering
