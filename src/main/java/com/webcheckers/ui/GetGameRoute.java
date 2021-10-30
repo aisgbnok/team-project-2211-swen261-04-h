@@ -115,6 +115,8 @@ public class GetGameRoute implements Route {
         opponent = game.getOppositePlayer(currentPlayer);
         httpSession.attribute(OPPONENT_KEY, opponent);
       }
+    } else {
+      board = new BoardView();
     }
 
     // Set both players to  be in game
@@ -173,12 +175,16 @@ public class GetGameRoute implements Route {
     } else {
       vm.put("turn", "OPPONENTS TURN");
     }
+
+
+    board.getValidMoves();
      */
 
     // Give freemarker the board
     vm.put(BOARD_KEY, board);
 
     // Render the Game View
+    httpSession.attribute(BOARD_KEY, board);
     return templateEngine.render(new ModelAndView(vm, "game.ftl"));
   }
 }

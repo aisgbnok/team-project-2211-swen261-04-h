@@ -9,6 +9,7 @@ public class BoardView implements Iterable<Row> {
   private List<Row> rows;
   private int length = 8;
   private String turn;
+  public Move proposedMove;
 
   private ArrayList<Move> validMoves;
 
@@ -81,7 +82,40 @@ public class BoardView implements Iterable<Row> {
 
   public ArrayList<Move> getValidMoves() {
     ArrayList<Move> moves = new ArrayList<>();
+    for(Row row: rows){
+      for(Space space : row){
+        if (space.getPiece() != null){
+          if (space.getPiece().getColor() == Piece.Color.RED){
+            for(Row row2: rows){
+              for(Space space2 : row2){
+                if (space.getPiece() == null){
+                  moves.add(new Move(space, space2));
+                  space2.setValid(true);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    return moves;
+  }
 
-    return validMoves;
+  public void makeMove(Move proposedMove) {
+    for (Row row:rows) {
+      for(Space space:row){
+        if (proposedMove.getStart() == space){
+          Piece temp = space.getPiece();
+          space.setPiece(null);
+          for (Row row2:rows) {
+            for (Space space2 : row2) {
+              if (proposedMove.getEnd() == space2) {
+                space2.setPiece(temp);
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
