@@ -1,6 +1,10 @@
 package com.webcheckers.ui;
 
+import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER;
+
 import com.google.gson.Gson;
+import com.webcheckers.application.GameCenter;
+import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
 import java.util.Objects;
@@ -43,7 +47,15 @@ public class PostResignRoute implements Route {
     LOG.finer("PostResignRoute is invoked.");
 
     final Session httpSession = request.session();
-    Player player = httpSession.attribute(GetHomeRoute.CURRENT_PLAYER);
+    Player player = httpSession.attribute(CURRENT_PLAYER);
+
+    // TODO actually implement player resignation
+    // For now player is signed out
+    PlayerLobby.removePlayer(player);
+    httpSession.removeAttribute(CURRENT_PLAYER);
+
+//    player.setGame(false);
+//    GameCenter.findGame(player).destroy();
 
     return gson.toJson(Message.info("true"));
   }
