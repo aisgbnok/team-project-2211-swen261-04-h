@@ -45,5 +45,5 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
       - uses: axel-op/googlejavaformat-action@v3
         with:
-          args: "--skip-removing-unused-imports --replace"
+          args: "--skip-removing-unused-imports --skip-reflowing-long-strings --skip-javadoc-formatting --replace"
           commitMessage: "Google Java Formatter"
