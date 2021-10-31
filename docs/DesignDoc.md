@@ -4,11 +4,6 @@ geometry: margin=.75in
 
 # PROJECT Design Documentation
 
-> _The following template provides the headings for your Design
-> Documentation. As you edit each section make sure you remove these
-> commentary 'blockquotes'; the lines that start with a > character
-> and appear in the generated PDF in italics._
-
 ## Team Information
 
 * Team name: TEAMNAME
@@ -111,25 +106,25 @@ WebCheckers application.
 
 ![The WebCheckers Web Interface Statechart](web-interface.png)
 
-The application provies teh player with a view of a traditional chess board with access to submit moves, resing a game, among other things. 
+The application provides the player with a view of a traditional chess board with access to submit moves, resing a game, among other things. 
+
+The web checkers game starts with a home page that presents the
+user with the ability to sign and to see how many people are playing.
+
+After signing in you can then see a list of games and have the ability
+to select a game to join. Once you are in the game you are presented with a checkers board.
 
 ### UI Tier
+The main UI for the server is WebServer class that handles routing, and displaying pages. Each page is represented in a class
+like GetGameRoute or GetSignInRoute. The "route" is the page that is displayed.
 
-> _Provide a summary of the Server-side UI tier of your architecture.
-> Describe the types of components in the tier and describe their
-> responsibilities. This should be a narrative description, i.e. it has
-> a flow or "story line" that the reader can follow._
-
+For handling user inputs, the Post classes are used. This is stuff like PostCheckTurnRoute and PostSignOutRoute.
+These routes can also still direct users to different pages throughout the application.
 > _At appropriate places as part of this narrative provide one or more
 > static models (UML class structure or object diagrams) with some
 > details such as critical attributes and methods._
 
-> _You must also provide any dynamic models, such as statechart and
-> sequence diagrams, as is relevant to a particular aspect of the design
-> that you are describing. For example, in WebCheckers you might create
-> a sequence diagram of the `POST /validateMove` HTTP request processing
-> or you might show a statechart diagram if the Game component uses a
-> state machine to manage the game._
+![img_1.png](img_1.png)
 
 > _If a dynamic model, such as a statechart describes a feature that is
 > not mostly in this tier and cuts across multiple tiers, you can
@@ -139,39 +134,36 @@ The application provies teh player with a view of a traditional chess board with
 
 ### Application Tier
 
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
+The application tier handles a player lobby and a session timeout watchdog.
+Both of these components are essential to the project working as desired.
+
+The player lobby tracks what players are in the game and SessionTimeoutWatchdog tracks 
+ player sessions. 
 
 ### Model Tier
 
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
+Our model tier contains components that represent different game objects like the board,
+player, pieces, spaces, and moves. This is important as it represents the fundamental asepcts of the game that 
+make up our design. 
+
+![img.png](img.png)
+
 
 ### Design Improvements
 
-> _Discuss design improvements that you would make if the project were
-> to continue. These improvement should be based on your direct
-> analysis of where there are problems in the code base which could be
-> addressed with design changes, and describe those suggested design
-> improvements. After completion of the Code metrics exercise, you
-> will also discuss the resutling metric measurements. Indicate the
-> hot spots the metrics identified in your code base, and your
-> suggested design improvements to address those hot spots._
+We need to do more trello updates, prioritization of assignments and deadlines. We need to utilize more git branches, like a branch per user story, instead of random branching.
+Our code follows object-oriented programming pretty well and will be improved further on.
 
 ## Testing
 
-> _This section will provide information about the testing performed
-> and the results of the testing._
+Testing is preformed consistently throughout development by all developers. Testing can be done locally by opening another game 
+in an incognito window that doesn't track cookies. 
 
 ### Acceptance Testing
 
-> _Report on the number of user stories that have passed all their
-> acceptance criteria tests, the number that have some acceptance
-> criteria tests failing, and the number of user stories that
-> have not had any testing yet. Highlight the issues found during
-> acceptance testing and if there are any concerns._
+4 user stories have passed acceptance criteria testing. A number of user stories are going to be
+testing at a later date when we have more resources and complete user stories.
+Our strategy for writing user stories is to keep it short, sweet, and functional.
 
 ### Unit Testing and Code Coverage
 
