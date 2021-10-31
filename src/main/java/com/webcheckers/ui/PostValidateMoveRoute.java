@@ -62,8 +62,8 @@ public class PostValidateMoveRoute implements Route {
 
         Message message;
         if (board.getValidMoves().contains(newMove)) {
-           message = Message.info("true");
-           board.proposedMove = newMove;
+            message = Message.info("true");
+            board.proposedMove = newMove;
         } else {
             message = Message.info("false");
         }

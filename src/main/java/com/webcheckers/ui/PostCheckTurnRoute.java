@@ -46,7 +46,7 @@ public class PostCheckTurnRoute implements Route {
         Gson gson = new Gson();
         Message message;
         BoardView board = httpSession.attribute("BOARD");
-        if (Objects.equals(board.getTurn(), "SELF")){
+        if (Objects.equals(board.getTurn(), "SELF")) {
             message = Message.info("true");
         } else {
             message = Message.info("false");

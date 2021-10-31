@@ -16,27 +16,27 @@ import java.util.logging.Logger;
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
 public class SessionTimeoutWatchdog implements HttpSessionBindingListener {
-  private static final Logger LOG = Logger.getLogger(SessionTimeoutWatchdog.class.getName());
+    private static final Logger LOG = Logger.getLogger(SessionTimeoutWatchdog.class.getName());
 
-  private final Player playerServices;
+    private final Player playerServices;
 
-  public SessionTimeoutWatchdog(final Player playerServices) {
-    LOG.fine("Watch dog created.");
-    this.playerServices = Objects.requireNonNull(playerServices);
-  }
+    public SessionTimeoutWatchdog(final Player playerServices) {
+        LOG.fine("Watch dog created.");
+        this.playerServices = Objects.requireNonNull(playerServices);
+    }
 
-  @Override
-  public void valueBound(HttpSessionBindingEvent event) {
-    // ignore this event
-    LOG.fine("Player session started.");
-  }
+    @Override
+    public void valueBound(HttpSessionBindingEvent event) {
+        // ignore this event
+        LOG.fine("Player session started.");
+    }
 
-  @Override
-  public void valueUnbound(HttpSessionBindingEvent event) {
-    // the session is being terminated do some cleanup
-    //TODO: Kill Session
-    //playerServices.endSession();
-    //
-    LOG.fine("Player session ended.");
-  }
+    @Override
+    public void valueUnbound(HttpSessionBindingEvent event) {
+        // the session is being terminated do some cleanup
+        //TODO: Kill Session
+        //playerServices.endSession();
+        //
+        LOG.fine("Player session ended.");
+    }
 }
