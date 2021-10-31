@@ -8,6 +8,7 @@ import java.util.Map;
 public class Game {
     private static int gameIDCounter = 0;
     private final int gameID;
+    public boolean active;
     private final Player currentUser;
     private final viewModes viewMode;
     private Map<String, Object> modeOptionsAsJSON;

@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
@@ -23,18 +24,11 @@ import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER;
 public class PostResignRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
 
-    private final Gson gson;
 
     // TODO improve documentation
 
-    /**
-     * Create the Spark Route (UI controller) to handle all {@code POST /resign} HTTP requests.
-     *
-     * @param gson
-     */
-    public PostResignRoute(Gson gson) {
-        this.gson = Objects.requireNonNull(gson, "gson is required");
-        LOG.config("PostResignRoute is initialized.");
+
+    public PostResignRoute() {
     }
 
     // TODO improve documentation
@@ -55,12 +49,13 @@ public class PostResignRoute implements Route {
 
         // TODO actually implement player resignation
         // For now player is signed out
-        PlayerLobby.removePlayer(player);
-        httpSession.removeAttribute(CURRENT_PLAYER);
+       // PlayerLobby.removePlayer(player);
+       // httpSession.removeAttribute(CURRENT_PLAYER);
 
-//    player.setGame(false);
-//    GameCenter.findGame(player).destroy();
+       player.setGame(false);
 
-        return gson.toJson(Message.info("true"));
+       Objects.requireNonNull(GameCenter.findGame(player)).active = false;
+        response.redirect(WebServer.HOME_URL);
+        return Message.info("true");
     }
 }
