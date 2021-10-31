@@ -53,15 +53,9 @@ public class PostBackupMoveRoute implements Route {
         BoardView board = httpSession.attribute("BOARD");
 
         Message message;
-        if (board.getValidMoves().contains(newMove)) {
-            //TODO: RETURN TRUE JSON
-            message = Message.info("true");
-
-            board.setTurn("OPPONENT");
-        } else {
-            //TODO: RETURN FALSE JSON
-            message = Message.info("false");
-        }
+        board.undoMove(board.lastMove);
+        //TODO: Change turn
+        message = Message.info("true");
         return gson.toJson(message);
 
     }

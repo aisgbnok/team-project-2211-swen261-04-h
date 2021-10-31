@@ -10,6 +10,7 @@ public class BoardView implements Iterable<Row> {
   private int length = 8;
   private String turn;
   public Move proposedMove;
+  public Move lastMove;
 
   private ArrayList<Move> validMoves;
 
@@ -101,6 +102,24 @@ public class BoardView implements Iterable<Row> {
     return moves;
   }
 
+  public void undoMove (Move proposedMove) {
+    for (Row row:rows) {
+      for(Space space:row){
+        if (proposedMove.getStart() == space){
+         space.setPiece(proposedMove.getStart().getPiece());
+          for (Row row2:rows) {
+            for (Space space2 : row2) {
+              if (proposedMove.getEnd() == space2) {
+                space2.setPiece(proposedMove.getEnd().getPiece());
+                lastMove = proposedMove;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   public void makeMove(Move proposedMove) {
     for (Row row:rows) {
       for(Space space:row){
@@ -111,6 +130,7 @@ public class BoardView implements Iterable<Row> {
             for (Space space2 : row2) {
               if (proposedMove.getEnd() == space2) {
                 space2.setPiece(temp);
+                lastMove = proposedMove;
               }
             }
           }
