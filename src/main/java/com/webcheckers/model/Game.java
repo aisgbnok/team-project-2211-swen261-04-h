@@ -15,9 +15,9 @@ public class Game {
     private final Player redPlayer;
     private final Player whitePlayer;
     private final colors activeColor;
-    private final BoardView board;
+    private final Board board;
     private Message message;
-    public Game(Player redPlayer, Player whitePlayer, BoardView board) {
+    public Game(Player redPlayer, Player whitePlayer, Board board) {
         // Set gameID
         this.gameID = gameIDCounter++;
 
@@ -61,7 +61,7 @@ public class Game {
         return null;
     }
 
-    public BoardView getBoard() {
+    public Board getBoard() {
         return board;
     }
 

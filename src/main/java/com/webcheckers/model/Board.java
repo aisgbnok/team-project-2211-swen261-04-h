@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class BoardView implements Iterable<Row> {
+public class Board implements Iterable<Row> {
 
     public Move proposedMove;
     public Move lastMove;
@@ -13,7 +13,7 @@ public class BoardView implements Iterable<Row> {
     private String turn;
     private ArrayList<Move> validMoves;
 
-    public BoardView() {
+    public Board() {
         this.turn = "SELF";
         this.rows = new ArrayList<>();
 
