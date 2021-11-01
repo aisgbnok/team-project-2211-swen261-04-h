@@ -71,11 +71,10 @@ public class PostStartGameRoute implements Route {
     if (currentPlayer == null) return false;
 
     // We shouldn't start a new game if the currentPlayer is already in a game
-    if(currentPlayer.inGame()) return false;
+    if (currentPlayer.inGame()) return false;
 
     // We can't start a game if there is no opponent QueryParameter key
     if (request.queryParams(OPPONENT_PLAYER_KEY).isEmpty()) return false;
-
 
     // TODO: Check to see if opponent QueryParameter matches with a Player in PlayerLobby
 
@@ -86,10 +85,6 @@ public class PostStartGameRoute implements Route {
   private void setupGame(Session currentSession, Player currentPlayer, Player opponentPlayer) {
     // Create new Game Model
     Game newGame = new Game(currentPlayer, opponentPlayer);
-
-    // Set Game session attribute
-    currentSession.attribute(GAME_KEY, newGame);
-    //currentSession.attribute(BOARD_KEY, newGame.getBoard());
 
     // Set the opponent attribute
     currentSession.attribute(OPPONENT_PLAYER_KEY, opponentPlayer);
