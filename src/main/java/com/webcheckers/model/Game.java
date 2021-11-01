@@ -18,6 +18,17 @@ public class Game {
   private final Board board;
   private Message message;
 
+  public enum viewModes {
+    PLAY,
+    SPECTATOR,
+    REPLAY
+  }
+
+  public enum colors {
+    RED,
+    WHITE
+  }
+
   public Game(Player redPlayer, Player whitePlayer) {
     // Set gameID
     this.gameID = gameIDCounter++;
@@ -56,16 +67,5 @@ public class Game {
 
   public int getGameID() {
     return gameID;
-  }
-
-  public enum viewModes {
-    PLAY,
-    SPECTATOR,
-    REPLAY
-  }
-
-  public enum colors {
-    RED,
-    WHITE
   }
 }
