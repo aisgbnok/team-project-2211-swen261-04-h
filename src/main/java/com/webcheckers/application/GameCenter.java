@@ -68,9 +68,9 @@ public class GameCenter {
    * @param gameID Game ID used to find Game.
    * @return Game with the matching gameID, or null if it doesn't exist.
    */
-  public static Game findGame(int gameID) {
+  public static Game findGame(String gameID) {
     for (Game game : games) {
-      if (game.getGameID() == gameID) {
+      if (game.getGameID().equals(gameID)) {
         return game;
       }
     }

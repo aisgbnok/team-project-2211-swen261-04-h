@@ -2,12 +2,11 @@ package com.webcheckers.model;
 
 import com.webcheckers.model.Piece.Color;
 
-import java.util.ArrayList;
 import java.util.Map;
+import java.util.UUID;
 
 public class Game {
-  private static int gameIDCounter = 0;
-  private final int gameID;
+  private final UUID gameID;
   public boolean active;
   private final Player currentUser;
   private final viewModes viewMode;
@@ -31,7 +30,7 @@ public class Game {
 
   public Game(Player redPlayer, Player whitePlayer) {
     // Set gameID
-    this.gameID = gameIDCounter++;
+    this.gameID = UUID.randomUUID();
 
     // Create a new board
     this.board = new Board();
@@ -65,7 +64,7 @@ public class Game {
     return board;
   }
 
-  public int getGameID() {
+  public UUID getGameID() {
     return gameID;
   }
 }

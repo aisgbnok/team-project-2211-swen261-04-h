@@ -1,13 +1,12 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.application.GameCenter;
-import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Game.viewModes;
-import com.webcheckers.model.Message;
 import com.webcheckers.model.Piece.Color;
 import com.webcheckers.model.Player;
+import java.util.UUID;
 import spark.*;
 
 import java.util.HashMap;
@@ -16,8 +15,6 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER_KEY;
-import static com.webcheckers.ui.GetHomeRoute.MESSAGE;
-import static com.webcheckers.ui.PostStartGameRoute.OPPONENT_PLAYER_KEY;
 import static com.webcheckers.ui.PostStartGameRoute.BOARD_KEY;
 import static com.webcheckers.ui.PostStartGameRoute.GAME_KEY;
 import static com.webcheckers.ui.WebServer.GAME_URL;
@@ -149,11 +146,25 @@ public class GetGameRoute implements Route {
     // Check if the current Player is in a game
     if (!currentPlayerInGame(currentPlayer)) return false;
 
-    // If "gameID" is not given then redirect to the game
-    if (request.queryParams(GAME_ID_KEY) == null) {
+    // Get the gameID as a string
+    String gameIDString = request.queryParams(GAME_ID_KEY);
+
+    // If gameID is not given then redirect to the game
+    if (gameIDString == null) {
       // The NullPointerException should never occur because we already know that the currentPlayer
       // is in a game, meaning the game should be found and every game has a gameID.
       response.redirect(GAME_URL + "?gameID=" + GameCenter.findGame(currentPlayer).getGameID());
+      return false;
+    }
+
+    // gameID must be given, so now validate that the gameID is a UUID
+    UUID gameID;
+    try{
+       gameID = UUID.fromString(gameIDString);
+
+    } catch (IllegalArgumentException exception){
+      // gameID is not a valid UUID so we redirect home.
+      // TODO: we should eventually give user error message
       return false;
     }
 
