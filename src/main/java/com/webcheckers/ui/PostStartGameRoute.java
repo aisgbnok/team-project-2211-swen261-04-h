@@ -1,6 +1,8 @@
 package com.webcheckers.ui;
 
 import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER;
+import static com.webcheckers.ui.WebServer.GAME_URL;
+import static com.webcheckers.ui.WebServer.HOME_URL;
 import static spark.Spark.halt;
 
 import com.webcheckers.application.GameCenter;
@@ -49,17 +51,18 @@ public class PostStartGameRoute implements Route {
     Player currentPlayer = currentSession.attribute(CURRENT_PLAYER);
 
     // Check to see if canGameStart is false, if it is false we can't start a new game
-    if(!canGameStart(request, currentPlayer)) {
+    if (!canGameStart(request, currentPlayer)) {
       halt("Conditions aren't met for game start.");
+
       return null;
     }
 
     // All conditions for staring a game have been met, so we can set up a new game.
     Player opponentPlayer = PlayerLobby.getPlayer(request.queryParams(OPPONENT_PLAYER_KEY));
+    setupGame(currentSession, currentPlayer, opponentPlayer);
 
-    setupGame(currentSession,currentPlayer, opponentPlayer);
-
-    response.redirect("/");
+    // Redirect to home
+    response.redirect(HOME_URL);
     return null;
   }
 
