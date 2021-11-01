@@ -16,8 +16,7 @@ import java.util.logging.Logger;
 
 import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER_KEY;
 import static com.webcheckers.ui.PostStartGameRoute.BOARD_KEY;
-import static com.webcheckers.ui.PostStartGameRoute.GAME_KEY;
-import static com.webcheckers.ui.WebServer.GAME_URL;
+import static com.webcheckers.ui.PostStartGameRoute.OPPONENT_PLAYER_KEY;
 
 /**
  * The UI Controller to GET the Game page.
@@ -34,6 +33,7 @@ public class GetGameRoute implements Route {
   // Console Logger
   private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
   private static final String PLAYER_IN_GAME = " is already in a game, choose someone else!";
+
   // TemplateEngine used for HTML page rendering
   private final TemplateEngine templateEngine;
 
@@ -64,9 +64,8 @@ public class GetGameRoute implements Route {
     // Set the title
     vm.put("title", "Game");
 
-    // Get currentPlayer
+    // Get currentPlayer and opponentPlayer
     Player currentPlayer = currentSession.attribute(CURRENT_PLAYER_KEY);
-    Player opponentPlayer = currentSession.attribute(CURRENT_PLAYER_KEY);
 
     // If game isn't in progress then return
     Game game = gameInProgress(request, response, currentPlayer);
@@ -75,22 +74,26 @@ public class GetGameRoute implements Route {
       return null;
     }
 
+    // Setup Opponent
+    Player opponentPlayer = setOpponent(currentPlayer, game, currentSession);
+
     // Now that we know a game is in progress let's render the game
     Board board = game.getBoard();
 
     vm.put(CURRENT_PLAYER_KEY, currentPlayer);
+
     if (game.getPlayerColor(currentPlayer) == Color.RED) {
-      vm.put("redPlayer", currentPlayer);
-      vm.put("whitePlayer", opponentPlayer);
+      vm.put(RED_PLAYER_KEY, currentPlayer);
+      vm.put(WHITE_PLAYER_KEY, opponentPlayer);
       board.fillRed();
     } else if (game.getPlayerColor(currentPlayer) == Color.WHITE) {
-      vm.put("redPlayer", opponentPlayer);
-      vm.put("whitePlayer", currentPlayer);
+      vm.put(RED_PLAYER_KEY, opponentPlayer);
+      vm.put(WHITE_PLAYER_KEY, currentPlayer);
       board.fillWhite();
     }
 
     vm.put("viewMode", viewModes.PLAY);
-    vm.put("activeColor", Color.RED);
+    vm.put("activeColor", game.getActiveColor());
 
     // TODO movement
     /*if (board.getTurn().equals("OPPONENT")) {
@@ -137,8 +140,6 @@ public class GetGameRoute implements Route {
     // Give freemarker the board
     vm.put(BOARD_KEY, board);
 
-    // Render the Game View
-    currentSession.attribute(BOARD_KEY, board);
     return templateEngine.render(new ModelAndView(vm, "game.ftl"));
   }
 
@@ -149,11 +150,15 @@ public class GetGameRoute implements Route {
     // Get the gameID as a string
     String gameIDString = request.queryParams(GAME_ID_KEY);
 
+    // TODO: As of now we return null which causes the if statement above to redirect to home, and
+    // then home redirects us to game with the proper gameID. Need to think about how to improve
+    // this.
+
     // If gameID is not given then redirect to the game
     if (gameIDString == null) {
       // The NullPointerException should never occur because we already know that the currentPlayer
       // is in a game, meaning the game should be found and every game has a gameID.
-      response.redirect(GAME_URL + "?gameID=" + GameCenter.getGame(currentPlayer).getGameID());
+      // response.redirect(GAME_URL + "?gameID=" + GameCenter.getGame(currentPlayer).getGameID());
       return null;
     }
 
@@ -178,5 +183,16 @@ public class GetGameRoute implements Route {
     if (!currentPlayer.inGame()) return false; // IDE might tell you to simplify, don't!
 
     return true;
+  }
+
+  private Player setOpponent(Player currentPlayer, Game game, Session currentSession) {
+    Player opponentPlayer = currentSession.attribute(OPPONENT_PLAYER_KEY);
+
+    if (opponentPlayer == null) {
+      opponentPlayer = game.getOpponent(currentPlayer);
+      currentSession.attribute(OPPONENT_PLAYER_KEY, opponentPlayer);
+    }
+
+    return opponentPlayer;
   }
 }
