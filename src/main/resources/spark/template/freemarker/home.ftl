@@ -37,7 +37,7 @@
                   </#if>
                 to choose! </p>
                 <#list currentPlayers as player>
-                  <form action="/startGame" method="GET">
+                  <form action="/startGame" method="POST">
                     <button class="button" type="submit" name="opponent"
                             value="${player}">${player}</button>
                   </form>

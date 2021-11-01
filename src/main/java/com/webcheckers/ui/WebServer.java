@@ -48,6 +48,7 @@ public class WebServer {
     //
     public static final String SIGNIN_URL = "/signin";
     public static final String SIGNOUT_URL = "/signout";
+    public static final String GAME_START_URL = "/startGame";
     public static final String GAME_URL = "/game";
     public static final String RESIGN = "/resignGame";
     private static final Logger LOG = Logger.getLogger(WebServer.class.getName());
@@ -133,6 +134,7 @@ public class WebServer {
         get(SIGNIN_URL, new GetSignInRoute(templateEngine));
         post(SIGNIN_URL, new PostSignInRoute(templateEngine));
         post(SIGNOUT_URL, new PostSignOutRoute(templateEngine));
+        post(GAME_START_URL, new PostStartGameRoute());
         get(GAME_URL, new GetGameRoute(templateEngine));
         post(RESIGN, new PostResignRoute());
         //   post(VALIDATE_URL, new PostValidateMoveRoute(templateEngine));
