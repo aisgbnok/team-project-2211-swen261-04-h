@@ -1,8 +1,6 @@
 package com.webcheckers.ui;
 
-import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
-import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
 import spark.Request;
@@ -13,7 +11,7 @@ import spark.Session;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER;
+import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER_KEY;
 
 /**
  * The UI Controller to POST the resign route.
@@ -45,7 +43,7 @@ public class PostResignRoute implements Route {
         LOG.finer("PostResignRoute is invoked.");
 
         final Session httpSession = request.session();
-        Player player = httpSession.attribute(CURRENT_PLAYER);
+        Player player = httpSession.attribute(CURRENT_PLAYER_KEY);
 
         // TODO actually implement player resignation
         // For now player is signed out
@@ -54,7 +52,7 @@ public class PostResignRoute implements Route {
 
        player.setGame(false);
 
-       Objects.requireNonNull(GameCenter.findGame(player)).active = false;
+       Objects.requireNonNull(GameCenter.getGame(player)).active = false;
         response.redirect(WebServer.HOME_URL);
         return Message.info("true");
     }

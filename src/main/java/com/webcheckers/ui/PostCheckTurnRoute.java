@@ -2,7 +2,7 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
-import com.webcheckers.model.BoardView;
+import com.webcheckers.model.Board;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
 import spark.*;
@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER;
+import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER_KEY;
 
 /**
  * The UI Controller to GET the Login page.
@@ -49,9 +49,9 @@ public class PostCheckTurnRoute implements Route {
         Map<String, Object> vm = new HashMap<>();
         Gson gson = new Gson();
         Message message;
-        BoardView board = httpSession.attribute("BOARD");
-        Player player = httpSession.attribute(CURRENT_PLAYER);
-        if(!Objects.requireNonNull(GameCenter.findGame(player)).active){
+        Board board = httpSession.attribute("BOARD");
+        Player player = httpSession.attribute(CURRENT_PLAYER_KEY);
+        if(!Objects.requireNonNull(GameCenter.getGame(player)).active){
             player.setGame(false);
             response.redirect(WebServer.HOME_URL);
         }

@@ -1,6 +1,6 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.model.BoardView;
+import com.webcheckers.model.Board;
 import com.webcheckers.model.Message;
 import spark.*;
 
@@ -43,7 +43,7 @@ public class PostSubmitTurnRoute implements Route {
         //
         Map<String, Object> vm = new HashMap<>();
 
-        BoardView board = httpSession.attribute("BOARD");
+        Board board = httpSession.attribute("BOARD");
         board.makeMove(board.proposedMove);
         board.proposedMove = null;
         board.setTurn("OPPONENT");

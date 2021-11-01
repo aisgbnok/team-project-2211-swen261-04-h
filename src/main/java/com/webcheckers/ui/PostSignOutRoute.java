@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER;
+import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER_KEY;
 import static spark.Spark.halt;
 
 /**
@@ -48,9 +48,9 @@ public class PostSignOutRoute implements Route {
         LOG.finer("PostSignOutRoute is invoked.");
         final Session httpSession = request.session();
 
-        Player currentPlayer = httpSession.attribute(CURRENT_PLAYER);
+        Player currentPlayer = httpSession.attribute(CURRENT_PLAYER_KEY);
         PlayerLobby.removePlayer(currentPlayer);
-        httpSession.removeAttribute(CURRENT_PLAYER);
+        httpSession.removeAttribute(CURRENT_PLAYER_KEY);
         Map<String, Object> vm = new HashMap<>();
         response.redirect(WebServer.HOME_URL);
         halt();
