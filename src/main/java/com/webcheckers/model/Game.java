@@ -6,77 +6,78 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class Game {
-    private static int gameIDCounter = 0;
-    private final int gameID;
-    public boolean active;
-    private final Player currentUser;
-    private final viewModes viewMode;
-    private Map<String, Object> modeOptionsAsJSON;
-    private final Player redPlayer;
-    private final Player whitePlayer;
-    private final colors activeColor;
-    private final Board board;
-    private Message message;
-    public Game(Player redPlayer, Player whitePlayer, Board board) {
-        // Set gameID
-        this.gameID = gameIDCounter++;
+  private static int gameIDCounter = 0;
+  private final int gameID;
+  public boolean active;
+  private final Player currentUser;
+  private final viewModes viewMode;
+  private Map<String, Object> modeOptionsAsJSON;
+  private final Player redPlayer;
+  private final Player whitePlayer;
+  private final colors activeColor;
+  private final Board board;
+  private Message message;
 
-        // Set Board
-        this.board = board;
+  public Game(Player redPlayer, Player whitePlayer) {
+    // Set gameID
+    this.gameID = gameIDCounter++;
 
-        // Set Players
-        this.redPlayer = redPlayer;
-        this.whitePlayer = whitePlayer;
+    // Create a new board
+    this.board = new Board();
 
-        // RED is always the starting Player and color
-        this.currentUser = redPlayer;
-        this.activeColor = colors.RED;
+    // Set Players
+    this.redPlayer = redPlayer;
+    this.whitePlayer = whitePlayer;
 
-        // For all the MVP stories this variable must be set to PLAY.
-        this.viewMode = viewModes.PLAY;
+    // RED is always the starting Player and color
+    this.currentUser = redPlayer;
+    this.activeColor = colors.RED;
+
+    // For all the MVP stories this variable must be set to PLAY.
+    this.viewMode = viewModes.PLAY;
+  }
+
+  public ArrayList<Player> getPlayers() {
+    ArrayList<Player> players = new ArrayList<>();
+    players.add(redPlayer);
+    players.add(whitePlayer);
+    return players;
+  }
+
+  public Player getOppositePlayer(Player player) {
+    if (player.equals(redPlayer)) {
+      return whitePlayer;
+    } else if (player.equals(whitePlayer)) {
+      return redPlayer;
     }
+    return null;
+  }
 
-    public ArrayList<Player> getPlayers() {
-        ArrayList<Player> players = new ArrayList<>();
-        players.add(redPlayer);
-        players.add(whitePlayer);
-        return players;
+  public Color getPlayerColor(Player player) {
+    if (player.equals(redPlayer)) {
+      return Color.RED;
+    } else if (player.equals(whitePlayer)) {
+      return Color.WHITE;
     }
+    return null;
+  }
 
-    public Player getOppositePlayer(Player player) {
-        if (player.equals(redPlayer)) {
-            return whitePlayer;
-        } else if (player.equals(whitePlayer)) {
-            return redPlayer;
-        }
-        return null;
-    }
+  public Board getBoard() {
+    return board;
+  }
 
-    public Color getPlayerColor(Player player) {
-        if (player.equals(redPlayer)) {
-            return Color.RED;
-        } else if (player.equals(whitePlayer)) {
-            return Color.WHITE;
-        }
-        return null;
-    }
+  public int getGameID() {
+    return gameID;
+  }
 
-    public Board getBoard() {
-        return board;
-    }
+  public enum viewModes {
+    PLAY,
+    SPECTATOR,
+    REPLAY
+  }
 
-    public int getGameID() {
-        return gameID;
-    }
-
-    public enum viewModes {
-        PLAY,
-        SPECTATOR,
-        REPLAY
-    }
-
-    public enum colors {
-        RED,
-        WHITE
-    }
+  public enum colors {
+    RED,
+    WHITE
+  }
 }
