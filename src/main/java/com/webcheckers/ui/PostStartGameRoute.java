@@ -53,7 +53,6 @@ public class PostStartGameRoute implements Route {
     // Check to see if canGameStart is false, if it is false we can't start a new game
     if (!canGameStart(request, currentPlayer)) {
       halt("Conditions aren't met for game start.");
-
       return null;
     }
 
@@ -71,8 +70,12 @@ public class PostStartGameRoute implements Route {
     // We can't start a game if there is no currentPlayer
     if (currentPlayer == null) return false;
 
+    // We shouldn't start a new game if the currentPlayer is already in a game
+    if(currentPlayer.inGame()) return false;
+
     // We can't start a game if there is no opponent QueryParameter key
     if (request.queryParams(OPPONENT_PLAYER_KEY).isEmpty()) return false;
+
 
     // TODO: Check to see if opponent QueryParameter matches with a Player in PlayerLobby
 
