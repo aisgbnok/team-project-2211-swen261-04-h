@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER;
 import static spark.Spark.halt;
 
+import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
@@ -58,6 +59,7 @@ public class PostStartGameRoute implements Route {
 
     setupGame(currentSession,currentPlayer, opponentPlayer);
 
+    response.redirect("/");
     return null;
   }
 
@@ -86,6 +88,12 @@ public class PostStartGameRoute implements Route {
     // Set the opponent attribute
     currentSession.attribute(OPPONENT_PLAYER_KEY, opponentPlayer);
 
+    // Register Game with GameCenter
+    GameCenter.addGame(newGame);
 
+    // TODO eventually have GameCenter handle adding and removing player inGame status
+    // Set currentPlayer and opponentPlayer as inGame
+    currentPlayer.setGame(true);
+    opponentPlayer.setGame(true);
   }
 }
