@@ -8,7 +8,7 @@ import java.util.UUID;
 public class Game {
   private final UUID gameID;
   public boolean active;
-  private final Player currentUser;
+  private final Player currentPlayer;
   private final viewModes viewMode;
   private Map<String, Object> modeOptionsAsJSON;
   private final Player redPlayer;
@@ -40,7 +40,7 @@ public class Game {
     this.whitePlayer = whitePlayer;
 
     // RED is always the starting Player and color
-    this.currentUser = redPlayer;
+    this.currentPlayer = redPlayer;
     this.activeColor = colors.RED;
 
     // For all the MVP stories this variable must be set to PLAY.
@@ -52,11 +52,8 @@ public class Game {
   }
 
   public Color getPlayerColor(Player player) {
-    if (player.equals(redPlayer)) {
-      return Color.RED;
-    } else if (player.equals(whitePlayer)) {
-      return Color.WHITE;
-    }
+    if (player.equals(redPlayer)) return Color.RED;
+    if (player.equals(whitePlayer)) return Color.WHITE;
     return null;
   }
 
@@ -66,5 +63,15 @@ public class Game {
 
   public UUID getGameID() {
     return gameID;
+  }
+
+  public colors getActiveColor() {
+    return activeColor;
+  }
+
+  public Player getOpponent(Player currentPlayer) {
+    if (currentPlayer.equals(redPlayer)) return whitePlayer;
+    if (currentPlayer.equals(whitePlayer)) return redPlayer;
+    return null;
   }
 }
