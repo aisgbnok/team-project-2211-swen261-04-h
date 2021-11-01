@@ -51,7 +51,7 @@ public class PostCheckTurnRoute implements Route {
         Message message;
         Board board = httpSession.attribute("BOARD");
         Player player = httpSession.attribute(CURRENT_PLAYER_KEY);
-        if(!Objects.requireNonNull(GameCenter.findGame(player)).active){
+        if(!Objects.requireNonNull(GameCenter.getGame(player)).active){
             player.setGame(false);
             response.redirect(WebServer.HOME_URL);
         }

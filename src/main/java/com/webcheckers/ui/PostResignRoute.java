@@ -52,7 +52,7 @@ public class PostResignRoute implements Route {
 
        player.setGame(false);
 
-       Objects.requireNonNull(GameCenter.findGame(player)).active = false;
+       Objects.requireNonNull(GameCenter.getGame(player)).active = false;
         response.redirect(WebServer.HOME_URL);
         return Message.info("true");
     }

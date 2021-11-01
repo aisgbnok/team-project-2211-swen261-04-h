@@ -64,7 +64,7 @@ public class GetHomeRoute implements Route {
         // If a user is signed in and is in a game
         if (currentPlayer != null && currentPlayer.inGame()) {
             response.redirect(
-                    WebServer.GAME_URL + "?gameID=" + GameCenter.findGame(currentPlayer).getGameID());
+                    WebServer.GAME_URL + "?gameID=" + GameCenter.getGame(currentPlayer).getGameID());
             return null;
         }
 

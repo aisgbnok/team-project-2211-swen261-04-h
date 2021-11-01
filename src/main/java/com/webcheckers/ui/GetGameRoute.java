@@ -153,7 +153,7 @@ public class GetGameRoute implements Route {
     if (gameIDString == null) {
       // The NullPointerException should never occur because we already know that the currentPlayer
       // is in a game, meaning the game should be found and every game has a gameID.
-      response.redirect(GAME_URL + "?gameID=" + GameCenter.findGame(currentPlayer).getGameID());
+      response.redirect(GAME_URL + "?gameID=" + GameCenter.getGame(currentPlayer).getGameID());
       return false;
     }
 

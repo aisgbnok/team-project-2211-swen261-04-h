@@ -4,6 +4,7 @@ import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * The application GameCenter. GameCenter keeps track of the server's games.
@@ -48,27 +49,12 @@ public class GameCenter {
   }
 
   /**
-   * Gets a specific Game from GameCenter using the given gameID.
-   *
-   * @param gameID Game ID used to find Game.
-   * @return Game with matching gameID or null if gameID not found.
-   */
-  public static Game getGame(int gameID) {
-    for (Game game : games) {
-      if (game.getGameID() == gameID) {
-        return game;
-      }
-    }
-    return null;
-  }
-
-  /**
    * Finds a game in GameCenter using gameID lookup
    *
    * @param gameID Game ID used to find Game.
    * @return Game with the matching gameID, or null if it doesn't exist.
    */
-  public static Game findGame(String gameID) {
+  public static Game getGame(UUID gameID) {
     for (Game game : games) {
       if (game.getGameID().equals(gameID)) {
         return game;
@@ -83,7 +69,7 @@ public class GameCenter {
    * @param player Player used to find Game.
    * @return Game with the matching player, or null if it doesn't exist.
    */
-  public static Game findGame(Player player) {
+  public static Game getGame(Player player) {
     for (Game game : games) {
       if (game.hasPlayer(player)) {
         return game;
