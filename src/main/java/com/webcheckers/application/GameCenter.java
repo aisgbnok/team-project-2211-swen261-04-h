@@ -45,7 +45,7 @@ public class GameCenter {
      *
      * @param game Game to be removed from GameCenter.
      */
-    public static void removePlayer(Game game) {
+    public static void removeGame(Game game) {
         games.remove(game);
     }
 
