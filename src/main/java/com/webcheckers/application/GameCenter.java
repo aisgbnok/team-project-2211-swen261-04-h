@@ -85,7 +85,7 @@ public class GameCenter {
    */
   public static Game findGame(Player player) {
     for (Game game : games) {
-      if (game.getPlayers().contains(player)) {
+      if (game.hasPlayer(player)) {
         return game;
       }
     }

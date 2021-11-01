@@ -37,11 +37,8 @@ public class Game {
     this.viewMode = viewModes.PLAY;
   }
 
-  public ArrayList<Player> getPlayers() {
-    ArrayList<Player> players = new ArrayList<>();
-    players.add(redPlayer);
-    players.add(whitePlayer);
-    return players;
+  public boolean hasPlayer(Player player) {
+    return redPlayer.equals(player) || whitePlayer.equals(player);
   }
 
   public Color getPlayerColor(Player player) {
