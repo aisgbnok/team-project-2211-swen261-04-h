@@ -2,7 +2,7 @@ package com.webcheckers.ui;
 
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
-import com.webcheckers.model.BoardView;
+import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Game.viewModes;
 import com.webcheckers.model.Message;
@@ -26,119 +26,117 @@ import static com.webcheckers.ui.GetHomeRoute.MESSAGE;
  */
 public class GetGameRoute implements Route {
 
-    static final String GAME_KEY = "game";
-    static final String BOARD_KEY = "board";
-    static final String OPPONENT_KEY = "opponent";
-    // Console Logger
-    private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
-    private static final String PLAYER_IN_GAME = " is already in a game, choose someone else!";
-    // TemplateEngine used for HTML page rendering
-    private final TemplateEngine templateEngine;
+  static final String GAME_KEY = "game";
+  static final String BOARD_KEY = "board";
+  static final String OPPONENT_KEY = "opponent";
+  // Console Logger
+  private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
+  private static final String PLAYER_IN_GAME = " is already in a game, choose someone else!";
+  // TemplateEngine used for HTML page rendering
+  private final TemplateEngine templateEngine;
 
-    /**
-     * Create the Spark Route (UI controller) to handle all {@code GET /game} HTTP requests.
-     *
-     * @param templateEngine the HTML template rendering engine
-     */
-    public GetGameRoute(final TemplateEngine templateEngine) {
-        this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
+  /**
+   * Create the Spark Route (UI controller) to handle all {@code GET /game} HTTP requests.
+   *
+   * @param templateEngine the HTML template rendering engine
+   */
+  public GetGameRoute(final TemplateEngine templateEngine) {
+    this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
 
-        LOG.config("GetGameRoute is initialized.");
+    LOG.config("GetGameRoute is initialized.");
+  }
+
+  /**
+   * Render the WebCheckers Game page.
+   *
+   * @param request the HTTP request
+   * @param response the HTTP response
+   * @return the rendered HTML for the Game page
+   */
+  @Override
+  public Object handle(Request request, Response response) {
+    LOG.finer("GetGameRoute is invoked.");
+    final Session httpSession = request.session();
+    Map<String, Object> vm = new HashMap<>();
+
+    // Set the title
+    vm.put("title", "Game");
+
+    // TODO: Should these be private global variables?
+    // Get currentPlayer
+    Player currentPlayer = httpSession.attribute(CURRENT_PLAYER);
+
+    // If user isn't signed in then return home
+    if (currentPlayer == null) {
+      // If playerName is empty, notify the user.
+      response.redirect(WebServer.HOME_URL);
+      return null;
     }
 
-    /**
-     * Render the WebCheckers Game page.
-     *
-     * @param request  the HTTP request
-     * @param response the HTTP response
-     * @return the rendered HTML for the Game page
-     */
-    @Override
-    public Object handle(Request request, Response response) {
-        LOG.finer("GetGameRoute is invoked.");
-        final Session httpSession = request.session();
-        Map<String, Object> vm = new HashMap<>();
+    // Initialize Opponent
+    Player opponent = null;
 
-        // Set the title
-        vm.put("title", "Game");
+    // Initialize Game and Board
+    Game game = null;
+    Board board = null;
 
+    // If the opponent query param is found then this is game setup
+    if (request.queryParams(OPPONENT_KEY) != null) {
 
+      opponent = PlayerLobby.getPlayer(request.queryParams(OPPONENT_KEY));
+      if (opponent.inGame()) {
+        httpSession.attribute(MESSAGE, Message.error(opponent.getName() + PLAYER_IN_GAME));
+        response.redirect(WebServer.HOME_URL);
+        return null;
+      }
+      httpSession.attribute(OPPONENT_KEY, opponent);
 
-        // TODO: Should these be private global variables?
-        // Get currentPlayer
-        Player currentPlayer = httpSession.attribute(CURRENT_PLAYER);
+      game = new Game(currentPlayer, opponent);
+      board = game.getBoard();
+      GameCenter.addGame(game);
+      httpSession.attribute(BOARD_KEY, board);
+      httpSession.attribute(GAME_KEY, game);
 
-        // If user isn't signed in then return home
-        if (currentPlayer == null) {
-            // If playerName is empty, notify the user.
-            response.redirect(WebServer.HOME_URL);
-            return null;
-        }
+      response.redirect(WebServer.GAME_URL + "?gameID=" + game.getGameID());
+      return null;
+    }
 
-        // Initialize Opponent
-        Player opponent = null;
+    if (request.queryParams("gameID") != null) {
+      game = GameCenter.getGame(Integer.parseInt(request.queryParams("gameID")));
+      board = game.getBoard();
+      httpSession.attribute(GAME_KEY, game);
+      httpSession.attribute(BOARD_KEY, board);
 
-        // Initialize Game and Board
-        Game game = null;
-        BoardView board = null;
+      opponent = httpSession.attribute(OPPONENT_KEY);
 
-        // If the opponent query param is found then this is game setup
-        if (request.queryParams(OPPONENT_KEY) != null) {
+      if (opponent == null) {
+        opponent = game.getOppositePlayer(currentPlayer);
+        httpSession.attribute(OPPONENT_KEY, opponent);
+      }
+    } else {
+      board = new Board();
+    }
 
-            opponent = PlayerLobby.getPlayer(request.queryParams(OPPONENT_KEY));
-            if (opponent.inGame()) {
-                httpSession.attribute(MESSAGE, Message.error(opponent.getName() + PLAYER_IN_GAME));
-                response.redirect(WebServer.HOME_URL);
-                return null;
-            }
-            httpSession.attribute(OPPONENT_KEY, opponent);
+    // Set both players to  be in game
+    currentPlayer.setGame(true);
+    opponent.setGame(true);
 
-            board = new BoardView();
-            game = new Game(currentPlayer, opponent, board);
-            GameCenter.addGame(game);
-            httpSession.attribute(BOARD_KEY, board);
-            httpSession.attribute(GAME_KEY, game);
+    vm.put(CURRENT_PLAYER, currentPlayer);
 
-            response.redirect(WebServer.GAME_URL + "?gameID=" + game.getGameID());
-            return null;
-        }
+    if (game.getPlayerColor(currentPlayer) == Color.RED) {
+      vm.put("redPlayer", currentPlayer);
+      vm.put("whitePlayer", opponent);
+      board.fillRed();
+    } else if (game.getPlayerColor(currentPlayer) == Color.WHITE) {
+      vm.put("redPlayer", opponent);
+      vm.put("whitePlayer", currentPlayer);
+      board.fillWhite();
+    }
 
-        if (request.queryParams("gameID") != null) {
-            game = GameCenter.getGame(Integer.parseInt(request.queryParams("gameID")));
-            board = game.getBoard();
-            httpSession.attribute(GAME_KEY, game);
-            httpSession.attribute(BOARD_KEY, board);
+    vm.put("viewMode", viewModes.PLAY);
+    vm.put("activeColor", Color.RED);
 
-            opponent = httpSession.attribute(OPPONENT_KEY);
-
-            if (opponent == null) {
-                opponent = game.getOppositePlayer(currentPlayer);
-                httpSession.attribute(OPPONENT_KEY, opponent);
-            }
-        } else {
-            board = new BoardView();
-        }
-
-        // Set both players to  be in game
-        currentPlayer.setGame(true);
-        opponent.setGame(true);
-
-        vm.put(CURRENT_PLAYER, currentPlayer);
-
-        if (game.getPlayerColor(currentPlayer) == Color.RED) {
-            vm.put("redPlayer", currentPlayer);
-            vm.put("whitePlayer", opponent);
-            board.fillRed();
-        } else if (game.getPlayerColor(currentPlayer) == Color.WHITE) {
-            vm.put("redPlayer", opponent);
-            vm.put("whitePlayer", currentPlayer);
-            board.fillWhite();
-        }
-
-        vm.put("viewMode", viewModes.PLAY);
-        vm.put("activeColor", Color.RED);
-
-        // TODO movement
+    // TODO movement
     /*if (board.getTurn().equals("OPPONENT")) {
       vm.put("activeColor", Color.RED);
     } else {
@@ -180,11 +178,11 @@ public class GetGameRoute implements Route {
     board.getValidMoves();
      */
 
-        // Give freemarker the board
-        vm.put(BOARD_KEY, board);
+    // Give freemarker the board
+    vm.put(BOARD_KEY, board);
 
-        // Render the Game View
-        httpSession.attribute(BOARD_KEY, board);
-        return templateEngine.render(new ModelAndView(vm, "game.ftl"));
-    }
+    // Render the Game View
+    httpSession.attribute(BOARD_KEY, board);
+    return templateEngine.render(new ModelAndView(vm, "game.ftl"));
+  }
 }
