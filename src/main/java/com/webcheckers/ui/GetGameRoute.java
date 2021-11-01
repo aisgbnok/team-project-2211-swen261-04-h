@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER;
+import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER_KEY;
 import static com.webcheckers.ui.GetHomeRoute.MESSAGE;
 
 /**
@@ -26,9 +26,7 @@ import static com.webcheckers.ui.GetHomeRoute.MESSAGE;
  */
 public class GetGameRoute implements Route {
 
-  static final String GAME_KEY = "game";
-  static final String BOARD_KEY = "board";
-  static final String OPPONENT_KEY = "opponent";
+
   // Console Logger
   private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
   private static final String PLAYER_IN_GAME = " is already in a game, choose someone else!";
@@ -62,13 +60,12 @@ public class GetGameRoute implements Route {
     // Set the title
     vm.put("title", "Game");
 
-    // TODO: Should these be private global variables?
     // Get currentPlayer
-    Player currentPlayer = httpSession.attribute(CURRENT_PLAYER);
+    Player currentPlayer = httpSession.attribute(CURRENT_PLAYER_KEY);
+    Player opponentPlayer = httpSession.attribute(CURRENT_PLAYER_KEY);
 
     // If user isn't signed in then return home
     if (currentPlayer == null) {
-      // If playerName is empty, notify the user.
       response.redirect(WebServer.HOME_URL);
       return null;
     }
@@ -121,7 +118,7 @@ public class GetGameRoute implements Route {
     currentPlayer.setGame(true);
     opponent.setGame(true);
 
-    vm.put(CURRENT_PLAYER, currentPlayer);
+    vm.put(CURRENT_PLAYER_KEY, currentPlayer);
 
     if (game.getPlayerColor(currentPlayer) == Color.RED) {
       vm.put("redPlayer", currentPlayer);

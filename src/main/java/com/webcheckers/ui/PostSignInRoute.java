@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER;
+import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER_KEY;
 
 /**
  * The UI Controller to POST the user sign in.
@@ -90,7 +90,7 @@ public class PostSignInRoute implements Route {
         PlayerLobby.addPlayer(currentPlayer);
 
         // Set the httpSession CURRENT_USER attribute to the currentPlayer
-        httpSession.attribute(CURRENT_PLAYER, currentPlayer);
+        httpSession.attribute(CURRENT_PLAYER_KEY, currentPlayer);
 
         // TODO: This needs to be implemented much better, before actually including!
         // This seems to set the session timeout to 120 seconds (2 minutes). This is great; however, we

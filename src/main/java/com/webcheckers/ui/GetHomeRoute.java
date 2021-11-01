@@ -23,9 +23,9 @@ import java.util.logging.Logger;
 public class GetHomeRoute implements Route {
     // HTTP Attribute Keys
     public static final String MESSAGE = "message";
-    public static final String CURRENT_PLAYER = "currentPlayer";
-    public static final String CURRENT_PLAYERS = "currentPlayers";
-    public static final String PLAYER_COUNT = "playerCount";
+    public static final String CURRENT_PLAYER_KEY = "currentPlayer";
+    public static final String CURRENT_PLAYERS_KEY = "currentPlayers";
+    public static final String PLAYER_COUNT_KEY = "playerCount";
     // Console Logger
     private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
     // User Welcome Message
@@ -59,7 +59,7 @@ public class GetHomeRoute implements Route {
         Map<String, Object> vm = new HashMap<>();
 
         // Get the currentPlayer from the CURRENT_USER attribute
-        Player currentPlayer = httpSession.attribute(CURRENT_PLAYER);
+        Player currentPlayer = httpSession.attribute(CURRENT_PLAYER_KEY);
 
         // If a user is signed in and is in a game
         if (currentPlayer != null && currentPlayer.inGame()) {
@@ -94,13 +94,13 @@ public class GetHomeRoute implements Route {
         }
 
         // Set the CURRENT_PLAYER to the currentPlayer name
-        vm.put(CURRENT_PLAYER, currentPlayer);
+        vm.put(CURRENT_PLAYER_KEY, currentPlayer);
 
         // Set the PLAYER_COUNT to playersHTML size
-        vm.put(PLAYER_COUNT, playersHTML.size());
+        vm.put(PLAYER_COUNT_KEY, playersHTML.size());
 
         // Set PLAYER_LIST to the playersHTML list
-        vm.put(CURRENT_PLAYERS, playersHTML);
+        vm.put(CURRENT_PLAYERS_KEY, playersHTML);
 
         // Render the Home page view
         return templateEngine.render(new ModelAndView(vm, "home.ftl"));

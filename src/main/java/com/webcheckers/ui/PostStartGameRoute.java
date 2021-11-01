@@ -1,7 +1,6 @@
 package com.webcheckers.ui;
 
-import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER;
-import static com.webcheckers.ui.WebServer.GAME_URL;
+import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER_KEY;
 import static com.webcheckers.ui.WebServer.HOME_URL;
 import static spark.Spark.halt;
 
@@ -48,7 +47,7 @@ public class PostStartGameRoute implements Route {
 
     final Session currentSession = request.session();
 
-    Player currentPlayer = currentSession.attribute(CURRENT_PLAYER);
+    Player currentPlayer = currentSession.attribute(CURRENT_PLAYER_KEY);
 
     // Check to see if canGameStart is false, if it is false we can't start a new game
     if (!canGameStart(request, currentPlayer)) {

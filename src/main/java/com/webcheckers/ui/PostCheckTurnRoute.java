@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER;
+import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER_KEY;
 
 /**
  * The UI Controller to GET the Login page.
@@ -50,7 +50,7 @@ public class PostCheckTurnRoute implements Route {
         Gson gson = new Gson();
         Message message;
         Board board = httpSession.attribute("BOARD");
-        Player player = httpSession.attribute(CURRENT_PLAYER);
+        Player player = httpSession.attribute(CURRENT_PLAYER_KEY);
         if(!Objects.requireNonNull(GameCenter.findGame(player)).active){
             player.setGame(false);
             response.redirect(WebServer.HOME_URL);
