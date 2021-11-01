@@ -62,7 +62,7 @@ public class GetGameRoute implements Route {
         // Set the title
         vm.put("title", "Game");
 
-        // TODO improve this in the next sprint. Very janky code.
+
 
         // TODO: Should these be private global variables?
         // Get currentPlayer
