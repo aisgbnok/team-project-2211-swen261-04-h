@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-  <meta http-equiv="refresh" content="10">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta http-equiv="refresh" content="5">
   <title>Web Checkers | ${title}</title>
   <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
@@ -27,10 +27,15 @@
     -->
     <div class="player-info">
       <h2>Players Online</h2>
-        <#if currentUser??>
-            <#if currentPlayers??>
-              <p>Click on any player to start a game against them. There are ${playerCount} players
-                to choose!</p>
+        <#if currentPlayer??>
+            <#if (currentPlayers?size > 0)>
+              <p>Click on any player to start a game against them. There
+                  <#if (playerCount > 1)>
+                    are ${playerCount} players
+                  <#else>
+                    is ${playerCount} player
+                  </#if>
+                to choose! </p>
                 <#list currentPlayers as player>
                   <form action="/game" method="GET">
                     <button class="button" type="submit" name="opponent"
@@ -42,9 +47,15 @@
             </#if>
         <#else>
             <#if playerCount=0>
-              There are no other players online!
+              <p>There are no other players online!</p>
             <#else>
-              There are ${playerCount} players online. Sign in to see who they are!
+              <p>There
+                  <#if (playerCount > 1)>
+                    are ${playerCount} players
+                  <#else>
+                    is ${playerCount} player
+                  </#if>
+                online! Sign in to see who they are!</p>
             </#if>
         </#if>
     </div>

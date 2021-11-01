@@ -1,6 +1,7 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <title>${title} | Web Checkers</title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/game.css">
@@ -8,7 +9,7 @@
   <script>
     window.gameData = {
       "gameID": ${gameID!'null'},
-      "currentUser": "${currentUser.name}",
+      "currentUser": "${currentPlayer.name}",
       "viewMode": "${viewMode}",
       "modeOptions": ${modeOptionsAsJSON!'{}'},
       "redPlayer": "${redPlayer.name}",

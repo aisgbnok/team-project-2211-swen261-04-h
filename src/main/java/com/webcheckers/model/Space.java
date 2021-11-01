@@ -2,52 +2,52 @@ package com.webcheckers.model;
 
 public class Space {
 
-  private int cellIdx;
-  private boolean isValid;
-  private Piece piece;
-  private int row;
-  private int cell;
+    private final int cellIdx;
+    private boolean isValid;
+    private Piece piece;
+    private int row;
+    private int cell;
 
-  public int getRow() {
-    return row;
-  }
+    protected Space(int cellIdx) {
+        this.cellIdx = cellIdx;
+        this.isValid = false;
+        this.piece = null;
+    }
 
-  public void setRow(int row) {
-    this.row = row;
-  }
+    public int getRow() {
+        return row;
+    }
 
-  public int getCell() {
-    return cell;
-  }
+    public void setRow(int row) {
+        this.row = row;
+    }
 
-  public void setCell(int cell) {
-    this.cell = cell;
-  }
+    public int getCell() {
+        return cell;
+    }
 
-  protected Space(int cellIdx) {
-    this.cellIdx = cellIdx;
-    this.isValid = true;
-    this.piece = null;
-  }
+    public void setCell(int cell) {
+        this.cell = cell;
+    }
 
-  public int getCellIdx() {
-    return cellIdx;
-  }
+    public int getCellIdx() {
+        return cellIdx;
+    }
 
-  public boolean isValid() {
-    return isValid;
-  }
+    public boolean isValid() {
+        return isValid;
+    }
 
-  public Piece getPiece() {
-    return piece;
-  }
+    public void setValid(boolean valid) {
+        this.isValid = valid;
+    }
 
-  public void setValid(boolean valid) {
-    this.isValid = valid;
-  }
+    public Piece getPiece() {
+        return piece;
+    }
 
-  public void setPiece(Piece newPiece) {
-    this.piece = newPiece;
-    this.isValid = false;
-  }
+    public void setPiece(Piece newPiece) {
+        this.piece = newPiece;
+        this.isValid = false;
+    }
 }

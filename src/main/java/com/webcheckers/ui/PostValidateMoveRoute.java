@@ -62,12 +62,9 @@ public class PostValidateMoveRoute implements Route {
 
         Message message;
         if (board.getValidMoves().contains(newMove)) {
-            //TODO: RETURN TRUE JSON
             message = Message.info("true");
-
-            board.setTurn("OPPONENT");
+            board.proposedMove = newMove;
         } else {
-            //TODO: RETURN FALSE JSON
             message = Message.info("false");
         }
         return gson.toJson(message);

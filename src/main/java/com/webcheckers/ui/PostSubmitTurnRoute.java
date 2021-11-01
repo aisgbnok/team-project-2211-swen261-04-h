@@ -1,9 +1,7 @@
 package com.webcheckers.ui;
 
-import com.google.gson.Gson;
 import com.webcheckers.model.BoardView;
 import com.webcheckers.model.Message;
-import com.webcheckers.model.Move;
 import spark.*;
 
 import java.util.HashMap;
@@ -46,6 +44,10 @@ public class PostSubmitTurnRoute implements Route {
         Map<String, Object> vm = new HashMap<>();
 
         BoardView board = httpSession.attribute("BOARD");
-        return null;
+        board.makeMove(board.proposedMove);
+        board.proposedMove = null;
+        board.setTurn("OPPONENT");
+
+        return Message.info("Success");
     }
 }

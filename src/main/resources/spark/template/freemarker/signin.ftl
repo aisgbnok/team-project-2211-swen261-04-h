@@ -1,32 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-  <title>Login | Web Checkers</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <title>Web Checkers | ${title}</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<div class="page">
+<div class="page sign-in">
   <h1>Web Checkers | ${title}</h1>
   <div class="body">
     <!-- Provide a message to the user, if supplied. -->
       <#include "message.ftl" />
-    <form action="./signin" method="POST">
-      <div id="username__entry">
-        <label for="playerName" id="name-label">Who do you want to log in as?</label>
-        <input name="playerName" id="name" value="" autofocus>
-      </div>
-      <div id="sign-in_controls">
-        <button class="button" id="sign-in">
-          <span><!---->Log In<!----></span>
+    <div id="player-name">
+      <label id="player-name--label" for="player-name--input">Choose a Player Name:</label>
+      <input id="player-name--input" type="text" placeholder="Player Name" name="playerName"
+             form="sign-in-form" autofocus>
+    </div>
+    <div id="sign-in__actions">
+      <form id="sign-in-form" method="POST">
+        <button class="button" id="sign-in-button">
+          <span><!---->Sign In<!----></span>
         </button>
-        <button class="button" id="cancel" name="cancel">
+      </form>
+      <form id="cancel-form" action="/" method="GET">
+        <button class="button" id="cancel-button">
           <span><!---->Cancel<!----></span>
         </button>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
-
 </div>
 </body>
 </html>

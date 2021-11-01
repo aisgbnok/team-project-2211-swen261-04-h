@@ -1,21 +1,25 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.application.GameCenter;
 import com.webcheckers.model.BoardView;
 import com.webcheckers.model.Message;
-import com.webcheckers.model.Move;
+import com.webcheckers.model.Player;
 import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Logger;
+
+import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER;
 
 /**
  * The UI Controller to GET the Login page.
  *
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
-public class PostResignGameRoute implements Route {
+public class PostCheckTurnRoute implements Route {
     private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
 
 
@@ -42,24 +46,18 @@ public class PostResignGameRoute implements Route {
         final Session httpSession = request.session();
 
         LOG.finer("GetSignInRoute is invoked.");
-        //
         Map<String, Object> vm = new HashMap<>();
-
-        String param = request.queryParams("actionData");
         Gson gson = new Gson();
-        Move newMove = gson.fromJson(param, Move.class);
-
-
-        BoardView board = httpSession.attribute("BOARD");
-
         Message message;
-        if (board.getValidMoves().contains(newMove)) {
-            //TODO: RETURN TRUE JSON
+        BoardView board = httpSession.attribute("BOARD");
+        Player player = httpSession.attribute(CURRENT_PLAYER);
+        if(!Objects.requireNonNull(GameCenter.findGame(player)).active){
+            player.setGame(false);
+            response.redirect(WebServer.HOME_URL);
+        }
+        if (Objects.equals(board.getTurn(), "SELF")) {
             message = Message.info("true");
-
-            board.setTurn("OPPONENT");
         } else {
-            //TODO: RETURN FALSE JSON
             message = Message.info("false");
         }
         return gson.toJson(message);
