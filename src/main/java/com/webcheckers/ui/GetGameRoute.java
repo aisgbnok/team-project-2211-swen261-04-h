@@ -20,6 +20,7 @@ import static com.webcheckers.ui.GetHomeRoute.MESSAGE;
 import static com.webcheckers.ui.PostStartGameRoute.OPPONENT_PLAYER_KEY;
 import static com.webcheckers.ui.PostStartGameRoute.BOARD_KEY;
 import static com.webcheckers.ui.PostStartGameRoute.GAME_KEY;
+import static com.webcheckers.ui.WebServer.GAME_URL;
 
 /**
  * The UI Controller to GET the Game page.
@@ -29,8 +30,9 @@ import static com.webcheckers.ui.PostStartGameRoute.GAME_KEY;
  */
 public class GetGameRoute implements Route {
 
-  final static String RED_PLAYER_KEY = "redPlayer";
-  final static String WHITE_PLAYER_KEY = "whitePlayer";
+  static final String RED_PLAYER_KEY = "redPlayer";
+  static final String WHITE_PLAYER_KEY = "whitePlayer";
+  static final String GAME_ID_KEY = "gameID";
 
   // Console Logger
   private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
@@ -69,8 +71,8 @@ public class GetGameRoute implements Route {
     Player currentPlayer = currentSession.attribute(CURRENT_PLAYER_KEY);
     Player opponentPlayer = currentSession.attribute(CURRENT_PLAYER_KEY);
 
-    // If game isn't in progress then return home
-    if (!gameInProgress(currentPlayer)) {
+    // If game isn't in progress then return
+    if (!gameInProgress(request, response, currentPlayer)) {
       response.redirect(WebServer.HOME_URL);
       return null;
     }
@@ -143,10 +145,26 @@ public class GetGameRoute implements Route {
     return templateEngine.render(new ModelAndView(vm, "game.ftl"));
   }
 
-  private boolean gameInProgress(Player currentPlayer) {
+  private boolean gameInProgress(Request request, Response response, Player currentPlayer) {
+    // Check if the current Player is in a game
+    if (!currentPlayerInGame(currentPlayer)) return false;
+
+    // If "gameID" is not given then redirect to the game
+    if (request.queryParams(GAME_ID_KEY) == null) {
+      // The NullPointerException should never occur because we already know that the currentPlayer
+      // is in a game, meaning the game should be found and every game has a gameID.
+      response.redirect(GAME_URL + "?gameID=" + GameCenter.findGame(currentPlayer).getGameID());
+      return false;
+    }
+
+
+    return true;
+  }
+
+  private boolean currentPlayerInGame(Player currentPlayer) {
     if (currentPlayer == null) return false;
 
-    if (!currentPlayer.inGame()) return false;
+    if (!currentPlayer.inGame()) return false; // IDE might tell you to simplify, don't!
 
     return true;
   }
