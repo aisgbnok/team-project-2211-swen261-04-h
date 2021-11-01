@@ -17,6 +17,9 @@ import java.util.logging.Logger;
 
 import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER_KEY;
 import static com.webcheckers.ui.GetHomeRoute.MESSAGE;
+import static com.webcheckers.ui.PostStartGameRoute.OPPONENT_PLAYER_KEY;
+import static com.webcheckers.ui.PostStartGameRoute.BOARD_KEY;
+import static com.webcheckers.ui.PostStartGameRoute.GAME_KEY;
 
 /**
  * The UI Controller to GET the Game page.
@@ -26,6 +29,8 @@ import static com.webcheckers.ui.GetHomeRoute.MESSAGE;
  */
 public class GetGameRoute implements Route {
 
+  final static String RED_PLAYER_KEY = "redPlayer";
+  final static String WHITE_PLAYER_KEY = "whitePlayer";
 
   // Console Logger
   private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
@@ -54,78 +59,33 @@ public class GetGameRoute implements Route {
   @Override
   public Object handle(Request request, Response response) {
     LOG.finer("GetGameRoute is invoked.");
-    final Session httpSession = request.session();
+    final Session currentSession = request.session();
     Map<String, Object> vm = new HashMap<>();
 
     // Set the title
     vm.put("title", "Game");
 
     // Get currentPlayer
-    Player currentPlayer = httpSession.attribute(CURRENT_PLAYER_KEY);
-    Player opponentPlayer = httpSession.attribute(CURRENT_PLAYER_KEY);
+    Player currentPlayer = currentSession.attribute(CURRENT_PLAYER_KEY);
+    Player opponentPlayer = currentSession.attribute(CURRENT_PLAYER_KEY);
 
-    // If user isn't signed in then return home
-    if (currentPlayer == null) {
+    // If game isn't in progress then return home
+    if (!gameInProgress(currentPlayer)) {
       response.redirect(WebServer.HOME_URL);
       return null;
     }
 
-    // Initialize Opponent
-    Player opponent = null;
-
-    // Initialize Game and Board
-    Game game = null;
-    Board board = null;
-
-    // If the opponent query param is found then this is game setup
-    if (request.queryParams(OPPONENT_KEY) != null) {
-
-      opponent = PlayerLobby.getPlayer(request.queryParams(OPPONENT_KEY));
-      if (opponent.inGame()) {
-        httpSession.attribute(MESSAGE, Message.error(opponent.getName() + PLAYER_IN_GAME));
-        response.redirect(WebServer.HOME_URL);
-        return null;
-      }
-      httpSession.attribute(OPPONENT_KEY, opponent);
-
-      game = new Game(currentPlayer, opponent);
-      board = game.getBoard();
-      GameCenter.addGame(game);
-      httpSession.attribute(BOARD_KEY, board);
-      httpSession.attribute(GAME_KEY, game);
-
-      response.redirect(WebServer.GAME_URL + "?gameID=" + game.getGameID());
-      return null;
-    }
-
-    if (request.queryParams("gameID") != null) {
-      game = GameCenter.getGame(Integer.parseInt(request.queryParams("gameID")));
-      board = game.getBoard();
-      httpSession.attribute(GAME_KEY, game);
-      httpSession.attribute(BOARD_KEY, board);
-
-      opponent = httpSession.attribute(OPPONENT_KEY);
-
-      if (opponent == null) {
-        opponent = game.getOppositePlayer(currentPlayer);
-        httpSession.attribute(OPPONENT_KEY, opponent);
-      }
-    } else {
-      board = new Board();
-    }
-
-    // Set both players to  be in game
-    currentPlayer.setGame(true);
-    opponent.setGame(true);
+    // Now that we know a game is in progress let's render the game
+    Game game = currentSession.attribute(GAME_KEY);
+    Board board = game.getBoard();
 
     vm.put(CURRENT_PLAYER_KEY, currentPlayer);
-
     if (game.getPlayerColor(currentPlayer) == Color.RED) {
       vm.put("redPlayer", currentPlayer);
-      vm.put("whitePlayer", opponent);
+      vm.put("whitePlayer", opponentPlayer);
       board.fillRed();
     } else if (game.getPlayerColor(currentPlayer) == Color.WHITE) {
-      vm.put("redPlayer", opponent);
+      vm.put("redPlayer", opponentPlayer);
       vm.put("whitePlayer", currentPlayer);
       board.fillWhite();
     }
@@ -179,7 +139,15 @@ public class GetGameRoute implements Route {
     vm.put(BOARD_KEY, board);
 
     // Render the Game View
-    httpSession.attribute(BOARD_KEY, board);
+    currentSession.attribute(BOARD_KEY, board);
     return templateEngine.render(new ModelAndView(vm, "game.ftl"));
+  }
+
+  private boolean gameInProgress(Player currentPlayer) {
+    if (currentPlayer == null) return false;
+
+    if (!currentPlayer.inGame()) return false;
+
+    return true;
   }
 }

@@ -44,15 +44,6 @@ public class Game {
     return players;
   }
 
-  public Player getOppositePlayer(Player player) {
-    if (player.equals(redPlayer)) {
-      return whitePlayer;
-    } else if (player.equals(whitePlayer)) {
-      return redPlayer;
-    }
-    return null;
-  }
-
   public Color getPlayerColor(Player player) {
     if (player.equals(redPlayer)) {
       return Color.RED;

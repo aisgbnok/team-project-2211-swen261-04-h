@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER_KEY;
+import static com.webcheckers.ui.WebServer.GAME_URL;
 import static com.webcheckers.ui.WebServer.HOME_URL;
 import static spark.Spark.halt;
 
@@ -59,8 +60,8 @@ public class PostStartGameRoute implements Route {
     Player opponentPlayer = PlayerLobby.getPlayer(request.queryParams(OPPONENT_PLAYER_KEY));
     setupGame(currentSession, currentPlayer, opponentPlayer);
 
-    // Redirect to home
-    response.redirect(HOME_URL);
+    // Redirect to game
+    response.redirect(GAME_URL);
     return null;
   }
 
@@ -86,9 +87,9 @@ public class PostStartGameRoute implements Route {
     // Create new Game Model
     Game newGame = new Game(currentPlayer, opponentPlayer);
 
-    // Set Game and Board Session attributes
+    // Set Game session attribute
     currentSession.attribute(GAME_KEY, newGame);
-    currentSession.attribute(BOARD_KEY, newGame.getBoard());
+    //currentSession.attribute(BOARD_KEY, newGame.getBoard());
 
     // Set the opponent attribute
     currentSession.attribute(OPPONENT_PLAYER_KEY, opponentPlayer);
