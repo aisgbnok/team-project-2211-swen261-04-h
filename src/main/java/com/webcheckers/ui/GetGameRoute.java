@@ -69,13 +69,13 @@ public class GetGameRoute implements Route {
     Player opponentPlayer = currentSession.attribute(CURRENT_PLAYER_KEY);
 
     // If game isn't in progress then return
-    if (!gameInProgress(request, response, currentPlayer)) {
+    Game game = gameInProgress(request, response, currentPlayer);
+    if (game == null) {
       response.redirect(WebServer.HOME_URL);
       return null;
     }
 
     // Now that we know a game is in progress let's render the game
-    Game game = currentSession.attribute(GAME_KEY);
     Board board = game.getBoard();
 
     vm.put(CURRENT_PLAYER_KEY, currentPlayer);
@@ -142,9 +142,9 @@ public class GetGameRoute implements Route {
     return templateEngine.render(new ModelAndView(vm, "game.ftl"));
   }
 
-  private boolean gameInProgress(Request request, Response response, Player currentPlayer) {
+  private Game gameInProgress(Request request, Response response, Player currentPlayer) {
     // Check if the current Player is in a game
-    if (!currentPlayerInGame(currentPlayer)) return false;
+    if (!currentPlayerInGame(currentPlayer)) return null;
 
     // Get the gameID as a string
     String gameIDString = request.queryParams(GAME_ID_KEY);
@@ -154,22 +154,22 @@ public class GetGameRoute implements Route {
       // The NullPointerException should never occur because we already know that the currentPlayer
       // is in a game, meaning the game should be found and every game has a gameID.
       response.redirect(GAME_URL + "?gameID=" + GameCenter.getGame(currentPlayer).getGameID());
-      return false;
+      return null;
     }
 
     // gameID must be given, so now validate that the gameID is a UUID
     UUID gameID;
-    try{
-       gameID = UUID.fromString(gameIDString);
+    try {
+      gameID = UUID.fromString(gameIDString);
 
-    } catch (IllegalArgumentException exception){
+    } catch (IllegalArgumentException exception) {
       // gameID is not a valid UUID so we redirect home.
       // TODO: we should eventually give user error message
-      return false;
+      return null;
     }
 
-
-    return true;
+    // gameID is given, and it is a valid UUID, so return game from UUID
+    return GameCenter.getGame(gameID);
   }
 
   private boolean currentPlayerInGame(Player currentPlayer) {
