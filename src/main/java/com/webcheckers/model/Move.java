@@ -6,36 +6,37 @@ package com.webcheckers.model;
  * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
  */
 public class Move {
+
   // Fields
-  private final Space start;
-  private final Space end;
+  private final Position start;
+  private final Position end;
 
   /**
-   * Constructor for Move that takes in a start and an end space.
+   * Constructor for Move that takes in a start position and an end position.
    *
-   * @param start Starting space
-   * @param end Ending space
+   * @param start Move's starting position
+   * @param end Move's ending position
    */
-  public Move(Space start, Space end) {
+  public Move(Position start, Position end) {
     this.start = start;
     this.end = end;
   }
 
   /**
-   * Getter for starting space
+   * Getter for starting position
    *
-   * @return Starting space
+   * @return Move's starting position
    */
-  public Space getStart() {
+  public Position getStart() {
     return start;
   }
 
   /**
-   * Getter for ending space
+   * Getter for ending position
    *
-   * @return Ending space
+   * @return Move's ending position
    */
-  public Space getEnd() {
+  public Position getEnd() {
     return end;
   }
 }
