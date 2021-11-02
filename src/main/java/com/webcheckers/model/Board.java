@@ -4,35 +4,35 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Board model for handling board related actions.
+ *
+ * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
+ */
 public class Board implements Iterable<Row> {
 
+    // Fields
+    public static final int ROW_LENGTH = 8;
+    public static final int COL_LENGTH = 8;
+
+    private final ArrayList<Row> rows;
+
+    // TODO Review
     public Move proposedMove;
     public Move lastMove;
-    private final List<Row> rows;
-    private final int length = 8;
-    private String turn;
-    private ArrayList<Move> validMoves;
+    //private ArrayList<Move> validMoves;
 
     public Board() {
-        this.turn = "SELF";
         this.rows = new ArrayList<>();
 
-        for (int i = 0; i < length; i++) {
-            rows.add(new Row(i, length));
+        for (int i = 0; i < ROW_LENGTH; i++) {
+            rows.add(new Row(i));
         }
     }
 
-    public void addValidMove(Move move) {
+/*    public void addValidMove(Move move) {
         validMoves.add(move);
-    }
-
-    public String getTurn() {
-        return turn;
-    }
-
-    public void setTurn(String turn) {
-        this.turn = turn;
-    }
+    }*/
 
     public void fillRed() {
         for (Row row : rows) {
@@ -65,11 +65,7 @@ public class Board implements Iterable<Row> {
         return rows.iterator();
     }
 
-    public List<Row> getRows() {
-        return rows;
-    }
-
-    public Space getPieceAtPosition(int x, int y) {
+/*    public Space getPieceAtPosition(int x, int y) {
         for (Row row : rows) {
             for (Space space : row.getSpaces()) {
                 if (space.getCell() == x && space.getRow() == y) {
@@ -78,9 +74,9 @@ public class Board implements Iterable<Row> {
             }
         }
         return null; // space not found
-    }
+    }*/
 
-    public ArrayList<Move> getValidMoves() {
+/*    public ArrayList<Move> getValidMoves() {
         ArrayList<Move> moves = new ArrayList<>();
         for (Row row : rows) {
             for (Space space : row) {
@@ -99,9 +95,9 @@ public class Board implements Iterable<Row> {
             }
         }
         return moves;
-    }
+    }*/
 
-    public void undoMove(Move proposedMove) {
+/*    public void undoMove(Move proposedMove) {
         for (Row row : rows) {
             for (Space space : row) {
                 if (proposedMove.getStart() == space) {
@@ -117,9 +113,9 @@ public class Board implements Iterable<Row> {
                 }
             }
         }
-    }
+    }*/
 
-    public void makeMove(Move proposedMove) {
+/*    public void makeMove(Move proposedMove) {
         for (Row row : rows) {
             for (Space space : row) {
                 if (proposedMove.getStart() == space) {
@@ -136,5 +132,5 @@ public class Board implements Iterable<Row> {
                 }
             }
         }
-    }
+    }*/
 }
