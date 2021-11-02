@@ -1,8 +1,8 @@
 package com.webcheckers.model;
 
 /**
- * This is the Position data type. This is used by the Move data type to track starting position and
- * ending position during a move.
+ * This is the {@link Position} data type. This is used by the {@link Move} data type to track
+ * starting position and ending position during a move.
  *
  * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
  */
