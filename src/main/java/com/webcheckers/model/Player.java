@@ -32,14 +32,14 @@ public class Player {
     return name;
   }
 
-    /**
-     * Sets whether the player is in a game or not.
-     *
-     * @param inGame Boolean used to set whether player is in a game or not.
-     */
-    public void setGame(boolean inGame) {
-        this.inGame = inGame;
-    }
+  /**
+   * Sets whether the player is in a game or not.
+   *
+   * @param inGame Boolean used to set whether player is in a game or not.
+   */
+  public void inGame(boolean inGame) {
+    this.inGame = inGame;
+  }
 
   /**
    * Returns value of inGame;
