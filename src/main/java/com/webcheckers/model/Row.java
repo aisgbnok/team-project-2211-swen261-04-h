@@ -22,44 +22,44 @@ public class Row implements Iterable<Space> {
         }
     }
 
-    public void fillRed() {
-        for (Space space : spaces) {
-            if (index % 2 == 0) {
-                if (space.getCellIdx() % 2 == 1) {
-                    space.setPiece(new Piece(Type.SINGLE, Color.RED));
-                }
-            } else {
-                if (space.getCellIdx() % 2 == 0) {
-                    space.setPiece(new Piece(Type.SINGLE, Color.RED));
-                }
-            }
+  public void fillRed() {
+    for (Space space : spaces) {
+      if (index % 2 == 0) {
+        if (space.getCellIdx() % 2 == 1) {
+          space.setPiece(new Piece(Type.SINGLE, Color.RED));
         }
-    }
-
-    public void fillWhite() {
-        for (Space space : spaces) {
-            if (index % 2 == 0) {
-                if (space.getCellIdx() % 2 == 1) {
-                    space.setPiece(new Piece(Type.SINGLE, Color.WHITE));
-                }
-            } else {
-                if (space.getCellIdx() % 2 == 0) {
-                    space.setPiece(new Piece(Type.SINGLE, Color.WHITE));
-                }
-            }
+      } else {
+        if (space.getCellIdx() % 2 == 0) {
+          space.setPiece(new Piece(Type.SINGLE, Color.RED));
         }
+      }
     }
+  }
 
-    public int getIndex() {
-        return index;
+  public void fillWhite() {
+    for (Space space : spaces) {
+      if (index % 2 == 0) {
+        if (space.getCellIdx() % 2 == 1) {
+          space.setPiece(new Piece(Type.SINGLE, Color.WHITE));
+        }
+      } else {
+        if (space.getCellIdx() % 2 == 0) {
+          space.setPiece(new Piece(Type.SINGLE, Color.WHITE));
+        }
+      }
     }
+  }
 
-    @Override
-    public Iterator<Space> iterator() {
-        return spaces.iterator();
-    }
+  public int getIndex() {
+    return index;
+  }
 
-    public ArrayList<Space> getSpaces() {
-        return spaces;
-    }
+  @Override
+  public Iterator<Space> iterator() {
+    return spaces.iterator();
+  }
+
+  public ArrayList<Space> getSpaces() {
+    return spaces;
+  }
 }
