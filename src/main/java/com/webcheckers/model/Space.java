@@ -1,53 +1,47 @@
 package com.webcheckers.model;
 
+/**
+ * Space on the board.
+ *
+ * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
+ */
 public class Space {
 
-    private final int cellIdx;
-    private boolean isValid;
-    private Piece piece;
-    private int row;
-    private int cell;
+  // Fields
+  private final int cellIdx;
+  private boolean isValid;
+  private Piece piece;
 
-    protected Space(int cellIdx) {
-        this.cellIdx = cellIdx;
-        this.isValid = false;
-        this.piece = null;
-    }
+  protected Space(int cellIdx) {
+    this.cellIdx = cellIdx;
+    this.isValid = false;
+    this.piece = null;
+  }
 
-    public int getRow() {
-        return row;
-    }
+  protected Space(int cellIdx, boolean isValid) {
+    this.cellIdx = cellIdx;
+    this.isValid = isValid;
+    this.piece = null;
+  }
 
-    public void setRow(int row) {
-        this.row = row;
-    }
+  public int getCellIdx() {
+    return cellIdx;
+  }
 
-    public int getCell() {
-        return cell;
-    }
+  public boolean isValid() {
+    return isValid;
+  }
 
-    public void setCell(int cell) {
-        this.cell = cell;
-    }
+  public Piece getPiece() {
+    return piece;
+  }
 
-    public int getCellIdx() {
-        return cellIdx;
-    }
+  public void setValid(boolean valid) {
+    this.isValid = valid;
+  }
 
-    public boolean isValid() {
-        return isValid;
-    }
-
-    public void setValid(boolean valid) {
-        this.isValid = valid;
-    }
-
-    public Piece getPiece() {
-        return piece;
-    }
-
-    public void setPiece(Piece newPiece) {
-        this.piece = newPiece;
-        this.isValid = false;
-    }
+  public void setPiece(Piece newPiece) {
+    this.piece = newPiece;
+    this.isValid = false;
+  }
 }
