@@ -1,27 +1,38 @@
 package com.webcheckers.model;
 
+/**
+ * This is the Move data type.
+ *
+ * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
+ */
 public class Move {
-    private Space start;
-    private Space end;
+  // Fields
+  private final Space start;
+  private final Space end;
 
-    public Move(Space space, Space space2) {
-        start = space;
-        end = space2;
-    }
+  /**
+   * Constructor for Move that takes in a start and an end space.
+   * @param start Starting space
+   * @param end Ending space
+   */
+  public Move(Space start, Space end) {
+    this.start = start;
+    this.end = end;
+  }
 
-    public Space getStart() {
-        return start;
-    }
+  /**
+   * Getter for starting space
+   * @return Starting space
+   */
+  public Space getStart() {
+    return start;
+  }
 
-    public void setStart(Space start) {
-        this.start = start;
-    }
-
-    public Space getEnd() {
-        return end;
-    }
-
-    public void setEnd(Space end) {
-        this.end = end;
-    }
+  /**
+   * Getter for ending space
+   * @return Ending space
+   */
+  public Space getEnd() {
+    return end;
+  }
 }
