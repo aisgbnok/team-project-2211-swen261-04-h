@@ -4,7 +4,7 @@ import com.webcheckers.application.GameCenter;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Game.viewModes;
-import com.webcheckers.model.Piece.Color;
+import com.webcheckers.model.Game.Color;
 import com.webcheckers.model.Player;
 import java.util.UUID;
 import spark.*;

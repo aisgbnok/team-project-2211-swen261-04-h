@@ -2,7 +2,7 @@ package com.webcheckers.model;
 
 import static com.webcheckers.model.Board.COL_LENGTH;
 
-import com.webcheckers.model.Piece.Color;
+import com.webcheckers.model.Game.Color;
 import com.webcheckers.model.Piece.Type;
 
 import java.util.ArrayList;

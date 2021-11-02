@@ -1,11 +1,10 @@
 package com.webcheckers.model;
 
-import com.webcheckers.model.Piece.Color;
-
 import java.util.Map;
 import java.util.UUID;
 
 public class Game {
+  // Fields
   private final UUID gameID;
   public boolean active;
   private final Player currentPlayer;
@@ -13,17 +12,18 @@ public class Game {
   private Map<String, Object> modeOptionsAsJSON;
   private final Player redPlayer;
   private final Player whitePlayer;
-  private final colors activeColor;
+  private final Color activeColor;
   private final Board board;
   private Message message;
 
+  // Enumerations
   public enum viewModes {
     PLAY,
     SPECTATOR,
     REPLAY
   }
 
-  public enum colors {
+  public enum Color {
     RED,
     WHITE
   }
@@ -41,7 +41,7 @@ public class Game {
 
     // RED is always the starting Player and color
     this.currentPlayer = redPlayer;
-    this.activeColor = colors.RED;
+    this.activeColor = Color.RED;
 
     // For all the MVP stories this variable must be set to PLAY.
     this.viewMode = viewModes.PLAY;
@@ -65,7 +65,7 @@ public class Game {
     return gameID;
   }
 
-  public colors getActiveColor() {
+  public Color getActiveColor() {
     return activeColor;
   }
 

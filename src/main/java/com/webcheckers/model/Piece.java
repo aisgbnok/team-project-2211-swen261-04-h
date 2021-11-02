@@ -1,16 +1,13 @@
 package com.webcheckers.model;
 
+import com.webcheckers.model.Game.Color;
+
 public class Piece {
 
   // Enumerations
   public enum Type {
     SINGLE,
     KING
-  }
-
-  public enum Color {
-    RED,
-    WHITE
   }
 
   // Fields
