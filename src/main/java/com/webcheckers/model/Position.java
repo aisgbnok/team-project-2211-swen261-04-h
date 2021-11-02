@@ -1,7 +1,8 @@
 package com.webcheckers.model;
 
 /**
- * This is the Position data type.
+ * This is the Position data type. This is used by the Move data type to track starting position and
+ * ending position during a move.
  *
  * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
  */
@@ -12,10 +13,10 @@ public class Position {
   private final int cell;
 
   /**
-   * Constructor for Position that takes in a row index and a cell index.
+   * Constructor for Position data type. Holds a row index and a cell index.
    *
-   * @param row Position's row index, must be integer from zero to seven
-   * @param cell Position's cell index, must be integer from zero to seven
+   * @param row Position's row index, must be integer from zero to seven.
+   * @param cell Position's cell index, must be integer from zero to seven.
    */
   public Position(int row, int cell) {
     // Check to ensure row is from 0 to 7
@@ -34,18 +35,18 @@ public class Position {
   }
 
   /**
-   * Getter for row index
+   * Getter for the row index of this position.
    *
-   * @return Row index
+   * @return Position's row index, integer from zero to seven.
    */
   public int getRow() {
     return row;
   }
 
   /**
-   * Getter for cell index
+   * Getter for the cell (column) index of this position.
    *
-   * @return Cell index
+   * @return Position's cell index, integer from zero to seven.
    */
   public int getCell() {
     return cell;

@@ -12,7 +12,7 @@ public class Move {
   private final Position end;
 
   /**
-   * Constructor for Move that takes in a start position and an end position.
+   * Constructor for Move data type. Holds a start position and an end position.
    *
    * @param start Move's starting position
    * @param end Move's ending position
@@ -23,7 +23,7 @@ public class Move {
   }
 
   /**
-   * Getter for starting position
+   * Getter for the starting position of the move.
    *
    * @return Move's starting position
    */
@@ -32,7 +32,7 @@ public class Move {
   }
 
   /**
-   * Getter for ending position
+   * Getter for the ending position of the move.
    *
    * @return Move's ending position
    */
