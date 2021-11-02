@@ -12,6 +12,7 @@ public class Move {
 
   /**
    * Constructor for Move that takes in a start and an end space.
+   *
    * @param start Starting space
    * @param end Ending space
    */
@@ -22,6 +23,7 @@ public class Move {
 
   /**
    * Getter for starting space
+   *
    * @return Starting space
    */
   public Space getStart() {
@@ -30,6 +32,7 @@ public class Move {
 
   /**
    * Getter for ending space
+   *
    * @return Ending space
    */
   public Space getEnd() {
