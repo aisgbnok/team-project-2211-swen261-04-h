@@ -61,13 +61,13 @@ public class PostValidateMoveRoute implements Route {
         Board board = httpSession.attribute("BOARD");
 
         Message message;
-        if (board.getValidMoves().contains(newMove)) {
-            message = Message.info("true");
-            board.proposedMove = newMove;
-        } else {
-            message = Message.info("false");
-        }
-        return gson.toJson(message);
+//        if (board.getValidMoves().contains(newMove)) {
+//            message = Message.info("true");
+//            board.proposedMove = newMove;
+//        } else {
+//            message = Message.info("false");
+//        }
+        return null; //gson.toJson(message);
 
     }
 }

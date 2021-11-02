@@ -44,9 +44,9 @@ public class PostSubmitTurnRoute implements Route {
         Map<String, Object> vm = new HashMap<>();
 
         Board board = httpSession.attribute("BOARD");
-        board.makeMove(board.proposedMove);
+       // board.makeMove(board.proposedMove);
         board.proposedMove = null;
-        board.setTurn("OPPONENT");
+        //board.setTurn("OPPONENT");
 
         return Message.info("Success");
     }

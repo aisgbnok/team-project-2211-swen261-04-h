@@ -55,12 +55,12 @@ public class PostCheckTurnRoute implements Route {
             player.inGame(false);
             response.redirect(WebServer.HOME_URL);
         }
-        if (Objects.equals(board.getTurn(), "SELF")) {
-            message = Message.info("true");
-        } else {
-            message = Message.info("false");
-        }
-        return gson.toJson(message);
+//        if (Objects.equals(board.getTurn(), "SELF")) {
+//            message = Message.info("true");
+//        } else {
+//            message = Message.info("false");
+//        }
+        return null; //gson.toJson(message);
 
     }
 }
