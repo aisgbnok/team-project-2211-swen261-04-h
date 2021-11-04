@@ -23,7 +23,7 @@ public class Row implements Iterable<Space> {
     spaces = new ArrayList<>();
 
     for (int i = 0; i < COL_LENGTH; i++) {
-      if ((index % 2 == 0 && i % 2 == 0) || (index % 2 == 1 && i % 2 == 1)) {
+      if ((index % 2 == 0 && i % 2 == 1) || (index % 2 == 1 && i % 2 == 0)) {
         spaces.add(new Space(i, true));
       } else {
         spaces.add(new Space(i));
