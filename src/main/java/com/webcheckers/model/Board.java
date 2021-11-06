@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * Board model for handling board related actions.
+ * Board model for generating a board and handling board related actions.
  *
  * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
  */
@@ -22,6 +22,7 @@ public class Board implements Iterable<Row> {
   // public Move lastMove;
   // private ArrayList<Move> validMoves;
 
+  /** Creates a board. */
   public Board() {
     this.rows = new ArrayList<>();
 
@@ -37,6 +38,13 @@ public class Board implements Iterable<Row> {
     */
   }
 
+  /**
+   * Sets up the board layout by generating and placing starter pieces. Sets the orientation of
+   * piece placement based on provided currentColor parameter. If currentColor is RED then red
+   * pieces will be on the bottom and white on the top, and flipped if currentColor is WHITE.
+   *
+   * @param currentColor Sets which color pieces to place on the bottom of the board.
+   */
   public void fill(Color currentColor) {
     Color otherColor = currentColor.equals(Color.RED) ? Color.WHITE : Color.RED;
 
@@ -55,9 +63,7 @@ public class Board implements Iterable<Row> {
       validMoves.add(move);
   }*/
 
-  //TODO rewrite board iteration to output iterable list but not be iterable. Right now we use a
-  // single board but oddly and somehow refill the board to display the correct user pieces. I'm
-  // confused.
+  /*TODO rewrite board iteration to output iterable list but not be iterable. Right now we use a single board but oddly and somehow refill the board to display the correct user pieces. I'm confused.*/
 
   @Override
   public Iterator<Row> iterator() {
