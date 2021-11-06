@@ -28,6 +28,13 @@ public class Board implements Iterable<Row> {
     for (int i = 0; i < ROW_LENGTH; i++) {
       rows.add(new Row(i));
     }
+
+    /*
+    TODO Implement after rewriting board iteration.
+    this.rows = (ArrayList<Row>) Stream.generate(Row::new)
+    .limit(ROW_LENGTH)
+    .collect(Collectors.toList());
+    */
   }
 
   public void fill(Color currentColor) {
@@ -47,6 +54,10 @@ public class Board implements Iterable<Row> {
   /*    public void addValidMove(Move move) {
       validMoves.add(move);
   }*/
+
+  //TODO rewrite board iteration to output iterable list but not be iterable. Right now we use a
+  // single board but oddly and somehow refill the board to display the correct user pieces. I'm
+  // confused.
 
   @Override
   public Iterator<Row> iterator() {
