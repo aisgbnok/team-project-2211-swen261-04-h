@@ -20,7 +20,7 @@ public class Row implements Iterable<Space> {
   private final int index;
 
   /**
-   * Constructs a row.
+   * Creates a board row for the given index.
    *
    * @param index - Row index on the board.
    */
@@ -43,24 +43,41 @@ public class Row implements Iterable<Space> {
     }
   }
 
+  /**
+   * Fills the row with the given color pieces.
+   *
+   * @param color Pieces color enum, WHITE or RED.
+   */
   public void fill(Color color) {
     for (Space space : spaces) {
+      // Calculates which spaces are black and places pieces on them
+      // (rowIndex + ColIndex) % 2 == 1: If row is odd and col is even or vice versa.
       if ((index + space.getCellIdx()) % 2 == 1) {
         space.setPiece(new Piece(Type.SINGLE, color));
       }
     }
   }
 
+  /**
+   * Getter for the row index.
+   *
+   * @return Row index
+   */
   public int getIndex() {
     return index;
+  }
+
+  /**
+   * Getter for the row spaces.
+   *
+   * @return ArrayList of all the spaces in the row.
+   */
+  public ArrayList<Space> getSpaces() {
+    return spaces;
   }
 
   @Override
   public Iterator<Space> iterator() {
     return spaces.iterator();
-  }
-
-  public ArrayList<Space> getSpaces() {
-    return spaces;
   }
 }
