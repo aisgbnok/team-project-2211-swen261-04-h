@@ -95,11 +95,18 @@ public class Space {
    * @throws IllegalArgumentException if space is already taken or not valid.
    */
   public void setPiece(Piece newPiece) {
-    if (isValid) {
-      this.piece = newPiece;
-      this.setValid();
-    } else {
-      throw new IllegalArgumentException("Space already has a piece.");
-    }
+    this.piece = newPiece;
+    this.setValid();
+
+    /*
+    TODO we can't have this check right now because we only have one board and we oddly refill it every time we display it with the correct colors depending on the currentPlayer color. Need to look into this.
+
+        if (isValid) {
+          this.piece = newPiece;
+          this.setValid();
+        } else {
+          throw new IllegalArgumentException("Space already has a piece.");
+        }
+    */
   }
 }
