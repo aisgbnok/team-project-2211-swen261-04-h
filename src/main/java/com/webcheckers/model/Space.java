@@ -12,40 +12,88 @@ public class Space {
   private boolean isValid;
   private Piece piece;
 
+  /**
+   * Creates a game board space. Sets cell index to given cellIdx, space validity to false, and
+   * piece to null.
+   *
+   * @param cellIdx Space column index
+   */
   protected Space(int cellIdx) {
     this(cellIdx, false, null);
   }
 
+  /**
+   * Creates a game board space. Sets cell index to given cellIdx, space validity to given isValid,
+   * and piece to null.
+   *
+   * @param cellIdx Space column index
+   * @param isValid Space validity
+   */
   protected Space(int cellIdx, boolean isValid) {
     this(cellIdx, isValid, null);
   }
 
+  /**
+   * Creates a game board space. Sets cell index to given cellIdx, space validity to given isValid,
+   * and piece to given piece.
+   *
+   * @param cellIdx Space column index
+   * @param isValid Space validity
+   * @param piece Piece on this space or null if space is empty.
+   */
   protected Space(int cellIdx, boolean isValid, Piece piece) {
     this.cellIdx = cellIdx;
     this.isValid = isValid;
     this.piece = piece;
   }
 
+  /**
+   * Getter for the cell (column) index of this position.
+   *
+   * @return Cell (column) index
+   */
   public int getCellIdx() {
     return cellIdx;
   }
 
+  /**
+   * Getter for validity of space.
+   *
+   * @return True if space is valid, or false if space is not valid or is occupied.
+   */
   public boolean isValid() {
     return isValid;
   }
 
+  /**
+   * Getter for space's piece.
+   *
+   * @return Piece on this space, or null if space is empty.
+   */
   public Piece getPiece() {
     return piece;
   }
 
+  /**
+   * Set the space's validity.
+   *
+   * @param valid Space validity
+   */
   public void setValid(boolean valid) {
     this.isValid = valid;
   }
 
+  /** Toggles space validity. */
   public void setValid() {
     this.isValid = !this.isValid;
   }
 
+  /**
+   * Places a piece on the valid and empty space.
+   *
+   * @param newPiece Piece to place on the empty space.
+   * @throws IllegalArgumentException if space is already taken or not valid.
+   */
   public void setPiece(Piece newPiece) {
     if (isValid) {
       this.piece = newPiece;
