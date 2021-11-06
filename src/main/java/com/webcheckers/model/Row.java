@@ -15,17 +15,29 @@ import java.util.Iterator;
  */
 public class Row implements Iterable<Space> {
 
+  // Fields
   private final ArrayList<Space> spaces;
   private final int index;
 
+  /**
+   * Constructs a row.
+   *
+   * @param index - Row index on the board.
+   */
   public Row(int index) {
     this.index = index;
     spaces = new ArrayList<>();
 
+    // Generates row spaces
     for (int i = 0; i < COL_LENGTH; i++) {
+
+      // Calculates which spaces are black and sets them as valid spaces
+      // (rowIndex + ColIndex) % 2 == 1: If row is odd and col is even or vice versa.
       if ((index + i) % 2 == 1) {
+        // Add the next space as a valid space
         spaces.add(new Space(i, true));
       } else {
+        // Add the next space
         spaces.add(new Space(i));
       }
     }
