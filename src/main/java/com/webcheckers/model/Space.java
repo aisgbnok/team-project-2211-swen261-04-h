@@ -47,7 +47,11 @@ public class Space {
   }
 
   public void setPiece(Piece newPiece) {
-    this.piece = newPiece;
-    this.setValid();
+    if (isValid) {
+      this.piece = newPiece;
+      this.setValid();
+    } else {
+      throw new IllegalArgumentException("Space already has a piece.");
+    }
   }
 }
