@@ -13,15 +13,17 @@ public class Space {
   private Piece piece;
 
   protected Space(int cellIdx) {
-    this.cellIdx = cellIdx;
-    this.isValid = false;
-    this.piece = null;
+    this(cellIdx, false, null);
   }
 
   protected Space(int cellIdx, boolean isValid) {
+    this(cellIdx, isValid, null);
+  }
+
+  protected Space(int cellIdx, boolean isValid, Piece piece) {
     this.cellIdx = cellIdx;
     this.isValid = isValid;
-    this.piece = null;
+    this.piece = piece;
   }
 
   public int getCellIdx() {
@@ -40,8 +42,12 @@ public class Space {
     this.isValid = valid;
   }
 
+  public void setValid() {
+    this.isValid = !this.isValid;
+  }
+
   public void setPiece(Piece newPiece) {
     this.piece = newPiece;
-    this.isValid = false;
+    this.setValid();
   }
 }
