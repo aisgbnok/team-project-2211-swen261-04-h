@@ -85,12 +85,12 @@ public class GetGameRoute implements Route {
     if (game.getPlayerColor(currentPlayer) == Color.RED) {
       vm.put(RED_PLAYER_KEY, currentPlayer);
       vm.put(WHITE_PLAYER_KEY, opponentPlayer);
-      board.fillRed();
     } else if (game.getPlayerColor(currentPlayer) == Color.WHITE) {
       vm.put(RED_PLAYER_KEY, opponentPlayer);
       vm.put(WHITE_PLAYER_KEY, currentPlayer);
-      board.fillWhite();
     }
+
+    board.fill(game.getPlayerColor(currentPlayer));
 
     vm.put("viewMode", viewModes.PLAY);
     vm.put("activeColor", game.getActiveColor());

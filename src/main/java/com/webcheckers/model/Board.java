@@ -30,35 +30,23 @@ public class Board implements Iterable<Row> {
         }
     }
 
-/*    public void addValidMove(Move move) {
-        validMoves.add(move);
-    }*/
+  public void fill(Color currentColor) {
+    Color otherColor = currentColor.equals(Color.RED) ? Color.WHITE : Color.RED;
 
-    public void fillRed() {
-        for (Row row : rows) {
-            int index = row.getIndex();
-            if (index <= 2) {
-                row.fillWhite();
-            } else if (index <= 4) {
+    for (Row row : rows) {
+      int index = row.getIndex();
 
-            } else {
-                row.fillRed();
-            }
-        }
+      if (index <= 2) {
+        row.fill(otherColor);
+      } else if (index >= 5) {
+        row.fill(currentColor);
+      }
     }
+  }
 
-    public void fillWhite() {
-        for (Row row : rows) {
-            int index = row.getIndex();
-            if (index <= 2) {
-                row.fillRed();
-            } else if (index <= 4) {
-
-            } else {
-                row.fillWhite();
-            }
-        }
-    }
+  /*    public void addValidMove(Move move) {
+      validMoves.add(move);
+  }*/
 
     @Override
     public Iterator<Row> iterator() {

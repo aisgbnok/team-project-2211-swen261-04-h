@@ -31,30 +31,10 @@ public class Row implements Iterable<Space> {
     }
   }
 
-  public void fillRed() {
+  public void fill(Color color) {
     for (Space space : spaces) {
-      if (index % 2 == 0) {
-        if (space.getCellIdx() % 2 == 1) {
-          space.setPiece(new Piece(Type.SINGLE, Color.RED));
-        }
-      } else {
-        if (space.getCellIdx() % 2 == 0) {
-          space.setPiece(new Piece(Type.SINGLE, Color.RED));
-        }
-      }
-    }
-  }
-
-  public void fillWhite() {
-    for (Space space : spaces) {
-      if (index % 2 == 0) {
-        if (space.getCellIdx() % 2 == 1) {
-          space.setPiece(new Piece(Type.SINGLE, Color.WHITE));
-        }
-      } else {
-        if (space.getCellIdx() % 2 == 0) {
-          space.setPiece(new Piece(Type.SINGLE, Color.WHITE));
-        }
+      if ((index + space.getCellIdx()) % 2 == 1) {
+        space.setPiece(new Piece(Type.SINGLE, color));
       }
     }
   }
