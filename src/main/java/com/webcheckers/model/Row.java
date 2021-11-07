@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * Row on the board.
+ * Row of spaces on the game board for the given row index.
  *
  * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
  */
@@ -20,14 +20,21 @@ public class Row implements Iterable<Space> {
   private final int index;
 
   /**
-   * Creates a board row for the given index.
+   * Creates a row of empty spaces for the given row index on the board.
    *
-   * @param index - Row index on the board.
+   * @param index Row index on the board.
    */
   public Row(int index) {
     this(index, (Piece) null);
   }
 
+  /**
+   * Creates a row of spaces filled with pieces of the given color for the given row index on the
+   * board.
+   *
+   * @param index Row index on the board.
+   * @param color Color of pieces being placed on valid spaces.
+   */
   public Row(int index, Color color) {
     this(index, new Piece(Type.SINGLE, color));
   }
