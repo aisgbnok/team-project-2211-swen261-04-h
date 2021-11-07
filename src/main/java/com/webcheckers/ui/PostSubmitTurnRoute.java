@@ -37,17 +37,18 @@ public class PostSubmitTurnRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
 
-        final Session httpSession = request.session();
+    // final Session httpSession = request.session();
 
-        LOG.finer("GetSignInRoute is invoked.");
-        //
-        Map<String, Object> vm = new HashMap<>();
+    // LOG.finer("GetSignInRoute is invoked.");
+    //
+    // Map<String, Object> vm = new HashMap<>();
 
-        Board board = httpSession.attribute("BOARD");
-       // board.makeMove(board.proposedMove);
-        board.proposedMove = null;
-        //board.setTurn("OPPONENT");
+    // Board board = httpSession.attribute("BOARD");
+    // board.makeMove(board.proposedMove);
+    // board.proposedMove = null;
+    // board.setTurn("OPPONENT");
 
-        return Message.info("Success");
-    }
+    // return Message.info("Success");
+    return null;
+  }
 }

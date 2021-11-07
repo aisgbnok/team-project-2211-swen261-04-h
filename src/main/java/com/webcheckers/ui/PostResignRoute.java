@@ -50,10 +50,11 @@ public class PostResignRoute implements Route {
        // PlayerLobby.removePlayer(player);
        // httpSession.removeAttribute(CURRENT_PLAYER);
 
-       player.inGame(false);
+    // player.inGame(false);
 
-       Objects.requireNonNull(GameCenter.getGame(player)).active = false;
-        response.redirect(WebServer.HOME_URL);
-        return Message.info("true");
-    }
+    // Objects.requireNonNull(GameCenter.getGame(player)).active = false;
+    // response.redirect(WebServer.HOME_URL);
+    // return Message.info("true");
+    return null;
+  }
 }

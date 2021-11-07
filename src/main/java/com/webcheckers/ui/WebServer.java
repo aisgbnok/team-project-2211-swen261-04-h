@@ -129,20 +129,22 @@ public class WebServer {
         //// Create separate Route classes to handle each route; this keeps your
         //// code clean; using small classes.
 
-        // Shows the Checkers game Home page.
-        get(HOME_URL, new GetHomeRoute(templateEngine));
-        get(SIGNIN_URL, new GetSignInRoute(templateEngine));
-        post(SIGNIN_URL, new PostSignInRoute(templateEngine));
-        post(SIGNOUT_URL, new PostSignOutRoute(templateEngine));
-        post(GAME_START_URL, new PostStartGameRoute());
-        get(GAME_URL, new GetGameRoute(templateEngine));
-        post(RESIGN, new PostResignRoute());
-        //   post(VALIDATE_URL, new PostValidateMoveRoute(templateEngine));
-        post("/submit_turn", new PostSubmitTurnRoute());
-        post("/resignGame", new PostResignRoute());
-        post("/checkTurn", new PostCheckTurnRoute());
-        PlayerLobby.initPlayers();
-        GameCenter.initGames();
+    // Shows the Checkers game Home page.
+    get(HOME_URL, new GetHomeRoute(templateEngine));
+    get(SIGNIN_URL, new GetSignInRoute(templateEngine));
+    post(SIGNIN_URL, new PostSignInRoute(templateEngine));
+    post(SIGNOUT_URL, new PostSignOutRoute(templateEngine));
+    post(GAME_START_URL, new PostStartGameRoute());
+    get(GAME_URL, new GetGameRoute(templateEngine));
+    post(RESIGN, new PostResignRoute());
+
+/*    post(VALIDATE_URL, new PostValidateMoveRoute(templateEngine));
+    post("/submit_turn", new PostSubmitTurnRoute());
+    post("/resignGame", new PostResignRoute());
+    post("/checkTurn", new PostCheckTurnRoute());*/
+
+    PlayerLobby.initPlayers();
+    GameCenter.initGames();
 
         LOG.config("WebServer is initialized.");
     }
