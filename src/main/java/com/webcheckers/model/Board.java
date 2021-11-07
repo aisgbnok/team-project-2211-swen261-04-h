@@ -26,19 +26,30 @@ public class Board implements Iterable<Row> {
     for (int i = 0; i < ROW_LENGTH; i++) {
       rows.add(new Row(i));
     }
-    }
-
-    public Board getBoard() {
-      return this;
-    }
-
-    /*
-    TODO Implement after rewriting board iteration.
-    this.rows = (ArrayList<Row>) Stream.generate(Row::new)
-    .limit(ROW_LENGTH)
-    .collect(Collectors.toList());
-    */
   }
+
+  public Board(Board board) {
+    this.rows = new ArrayList<>(board.rows);
+  }
+
+  public Board getBoard(Color color) {
+    Board newBoard = new Board(this);
+    if(color.equals(Color.WHITE)) {
+
+      newBoard.rows.forEach((row) -> {
+        row.
+      });
+    }
+    return newBoard;
+  }
+
+
+  /*
+  TODO Implement after rewriting board iteration.
+  this.rows = (ArrayList<Row>) Stream.generate(Row::new)
+  .limit(ROW_LENGTH)
+  .collect(Collectors.toList());
+  */
 
   /**
    * Sets up the board layout by generating and placing starter pieces. Sets the orientation of
@@ -62,10 +73,6 @@ public class Board implements Iterable<Row> {
     }
   }
 
-
-
-
-
   @Override
   public Iterator<Row> iterator() {
     ArrayList<Row> newArray = new ArrayList<>(rows);
@@ -73,9 +80,7 @@ public class Board implements Iterable<Row> {
     return newArray.iterator();
   }
 
-
-
-    /*    public void addValidMove(Move move) {
+  /*    public void addValidMove(Move move) {
       validMoves.add(move);
   }*/
 
