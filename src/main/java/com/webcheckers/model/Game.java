@@ -62,12 +62,8 @@ public class Game {
     return null;
   }
 
-/*  public Board getBoard(Color color) {
-    return board.getBoard(color);
-  }*/
-
   public Board getBoard() {
-    return board;
+    return new Board(board);
   }
 
   public UUID getGameID() {
@@ -95,6 +91,8 @@ public class Game {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     Game game = (Game) o;
-    return redPlayer.equals(game.redPlayer) && whitePlayer.equals(game.whitePlayer);
+    return gameID.equals(game.gameID)
+        && redPlayer.equals(game.redPlayer)
+        && whitePlayer.equals(game.whitePlayer);
   }
 }
