@@ -62,8 +62,12 @@ public class Game {
     return null;
   }
 
-  public Board getBoard(Color color) {
+/*  public Board getBoard(Color color) {
     return board.getBoard(color);
+  }*/
+
+  public Board getBoard() {
+    return board;
   }
 
   public UUID getGameID() {
