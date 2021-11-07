@@ -58,6 +58,23 @@ public class Row implements Iterable<Space> {
     }
   }
 
+  private Row(Row row) {
+    this.index = row.index;
+    spaces = new ArrayList<>(row.spaces);
+  }
+
+  protected Row getColorInverted() {
+    Row colorInvertedRow = new Row(this);
+
+    for(Space space: colorInvertedRow.spaces) {
+      if(space.getPiece() != null) {
+        space.setPiece(space.getPiece().getColorInverted());
+      }
+    }
+
+    return colorInvertedRow;
+  }
+
   /**
    * Getter for the row index.
    *
