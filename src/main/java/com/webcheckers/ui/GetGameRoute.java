@@ -90,7 +90,7 @@ public class GetGameRoute implements Route {
       vm.put(WHITE_PLAYER_KEY, currentPlayer);
     }
 
-    board.fill(game.getPlayerColor(currentPlayer));
+    //board.fill(game.getPlayerColor(currentPlayer));
 
     vm.put("viewMode", viewModes.PLAY);
     vm.put("activeColor", game.getActiveColor());

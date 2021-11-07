@@ -34,12 +34,12 @@ public class Board implements Iterable<Row> {
 
     }
   }
-
+/*
   public Board(Board board) {
     this.rows = new ArrayList<>(board.rows);
   }
 
-  public Board getBoard(Color color) {
+ public Board getBoard(Color color) {
     Board newBoard = new Board(this);
     if(color.equals(Color.WHITE)) {
 
@@ -48,15 +48,7 @@ public class Board implements Iterable<Row> {
       });
     }
     return newBoard;
-  }
-
-
-  /*
-  TODO Implement after rewriting board iteration.
-  this.rows = (ArrayList<Row>) Stream.generate(Row::new)
-  .limit(ROW_LENGTH)
-  .collect(Collectors.toList());
-  */
+  }*/
 
   /**
    * Sets up the board layout by generating and placing starter pieces. Sets the orientation of
@@ -65,9 +57,8 @@ public class Board implements Iterable<Row> {
    *
    * @param currentColor Sets which color pieces to place on the bottom of the board.
    */
-  public void fill(Color currentColor) {
-    // Color otherColor = currentColor.equals(Color.RED) ? Color.WHITE : Color.RED;
-    Color otherColor = Color.WHITE;
+/*  public void fill(Color currentColor) {
+    Color otherColor = currentColor.equals(Color.RED) ? Color.WHITE : Color.RED;
 
     for (Row row : rows) {
       int index = row.getIndex();
@@ -78,7 +69,7 @@ public class Board implements Iterable<Row> {
         row.fill(Color.RED);
       }
     }
-  }
+  }*/
 
   @Override
   public Iterator<Row> iterator() {
