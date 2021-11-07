@@ -78,13 +78,14 @@ public class GetGameRoute implements Route {
     Player opponentPlayer = setOpponent(currentPlayer, game, currentSession);
 
     // Now that we know a game is in progress let's render the game
-    Board board = game.getBoard();
+    Board board = game.getBoard(game.getPlayerColor(currentPlayer));;
 
     vm.put(CURRENT_PLAYER_KEY, currentPlayer);
 
     if (game.getPlayerColor(currentPlayer) == Color.RED) {
       vm.put(RED_PLAYER_KEY, currentPlayer);
       vm.put(WHITE_PLAYER_KEY, opponentPlayer);
+
     } else if (game.getPlayerColor(currentPlayer) == Color.WHITE) {
       vm.put(RED_PLAYER_KEY, opponentPlayer);
       vm.put(WHITE_PLAYER_KEY, currentPlayer);
