@@ -25,6 +25,14 @@ public class Row implements Iterable<Space> {
    * @param index - Row index on the board.
    */
   public Row(int index) {
+    this(index, (Piece) null);
+  }
+
+  public Row(int index, Color color) {
+    this(index, new Piece(Type.SINGLE, color));
+  }
+
+  private Row(int index, Piece piece) {
     this.index = index;
     spaces = new ArrayList<>();
 
@@ -35,25 +43,10 @@ public class Row implements Iterable<Space> {
       // (rowIndex + ColIndex) % 2 == 1: If row is odd and col is even or vice versa.
       if ((index + i) % 2 == 1) {
         // Add the next space as a valid space
-        spaces.add(new Space(i, true));
+        spaces.add(new Space(i, true, piece));
       } else {
         // Add the next space
         spaces.add(new Space(i));
-      }
-    }
-  }
-
-  /**
-   * Fills the row with the given color pieces.
-   *
-   * @param color Pieces color enum, WHITE or RED.
-   */
-  public void fill(Color color) {
-    for (Space space : spaces) {
-      // Calculates which spaces are black and places pieces on them
-      // (rowIndex + ColIndex) % 2 == 1: If row is odd and col is even or vice versa.
-      if ((index + space.getCellIdx()) % 2 == 1) {
-        space.setPiece(new Piece(Type.SINGLE, color));
       }
     }
   }
