@@ -24,7 +24,14 @@ public class Board implements Iterable<Row> {
     this.rows = new ArrayList<>(ROW_LENGTH);
 
     for (int i = 0; i < ROW_LENGTH; i++) {
-      rows.add(new Row(i));
+      if (i <= 2) {
+        rows.add(new Row(i, Color.WHITE));
+      } else if (i >= 5) {
+        rows.add(new Row(i, Color.RED));
+      } else {
+        rows.add(new Row(i));
+      }
+
     }
   }
 
