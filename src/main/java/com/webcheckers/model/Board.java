@@ -33,13 +33,13 @@ public class Board implements Iterable<Row> {
 
     Color otherColor = color.equals(Color.RED) ? Color.WHITE : Color.RED;
 
-    for (int i = 0; i < ROWS; i++) {
-      if (i <= 2) {
-        rows.add(new Row(i, otherColor));
-      } else if (i >= 5) {
-        rows.add(new Row(i, color));
+    for (int rowIndex = 0; rowIndex < ROWS; rowIndex++) {
+      if (rowIndex <= 2) {
+        rows.add(new Row(rowIndex, otherColor));
+      } else if (rowIndex >= 5) {
+        rows.add(new Row(rowIndex, color));
       } else {
-        rows.add(new Row(i));
+        rows.add(new Row(rowIndex));
       }
     }
   }
