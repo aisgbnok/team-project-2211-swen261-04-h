@@ -14,41 +14,47 @@ import java.util.Iterator;
 public class Board implements Iterable<Row> {
 
   // Fields
-  public static final int ROW_LENGTH = 8;
-  public static final int COL_LENGTH = 8;
+  public static final int ROWS = 8;
+  public static final int COLS = 8;
 
   private final ArrayList<Row> rows;
 
   /** Creates a board. */
   public Board() {
-    this.rows = new ArrayList<>(ROW_LENGTH);
-
-    for (int i = 0; i < ROW_LENGTH; i++) {
-      if (i <= 2) {
-        rows.add(new Row(i, Color.WHITE));
-      } else if (i >= 5) {
-        rows.add(new Row(i, Color.RED));
-      } else {
-        rows.add(new Row(i));
-      }
-
-    }
+    this(Color.RED);
   }
-/*
+
   public Board(Board board) {
     this.rows = new ArrayList<>(board.rows);
   }
 
- public Board getBoard(Color color) {
-    Board newBoard = new Board(this);
-    if(color.equals(Color.WHITE)) {
+  private Board(Color color) {
+    this.rows = new ArrayList<>(ROWS);
 
-      newBoard.rows.forEach((row) -> {
-        row.
-      });
+    Color otherColor = color.equals(Color.RED) ? Color.WHITE : Color.RED;
+
+    for (int i = 0; i < ROWS; i++) {
+      if (i <= 2) {
+        rows.add(new Row(i, otherColor));
+      } else if (i >= 5) {
+        rows.add(new Row(i, color));
+      } else {
+        rows.add(new Row(i));
+      }
     }
-    return newBoard;
-  }*/
+  }
+
+  /*
+  public Board getBoard(Color color) {
+     Board newBoard = new Board(this);
+     if(color.equals(Color.WHITE)) {
+
+       newBoard.rows.forEach((row) -> {
+         row.
+       });
+     }
+     return newBoard;
+   }*/
 
   /**
    * Sets up the board layout by generating and placing starter pieces. Sets the orientation of
@@ -57,7 +63,7 @@ public class Board implements Iterable<Row> {
    *
    * @param currentColor Sets which color pieces to place on the bottom of the board.
    */
-/*  public void fill(Color currentColor) {
+  /*  public void fill(Color currentColor) {
     Color otherColor = currentColor.equals(Color.RED) ? Color.WHITE : Color.RED;
 
     for (Row row : rows) {

@@ -1,6 +1,6 @@
 package com.webcheckers.model;
 
-import static com.webcheckers.model.Board.COL_LENGTH;
+import static com.webcheckers.model.Board.COLS;
 
 import com.webcheckers.model.Game.Color;
 import com.webcheckers.model.Piece.Type;
@@ -44,7 +44,7 @@ public class Row implements Iterable<Space> {
     spaces = new ArrayList<>();
 
     // Generates row spaces
-    for (int i = 0; i < COL_LENGTH; i++) {
+    for (int i = 0; i < COLS; i++) {
 
       // Calculates which spaces are black and sets them as valid spaces
       // (rowIndex + ColIndex) % 2 == 1: If row is odd and col is even or vice versa.
