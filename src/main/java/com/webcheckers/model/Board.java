@@ -1,9 +1,7 @@
 package com.webcheckers.model;
 
-import com.webcheckers.application.GameCenter;
 import com.webcheckers.model.Game.Color;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 
 /**
@@ -28,6 +26,13 @@ public class Board implements Iterable<Row> {
     this.rows = new ArrayList<>(board.rows);
   }
 
+  /**
+   * Sets up the board layout by generating and placing starter pieces. Sets the orientation of *
+   * piece placement based on provided currentColor parameter. If currentColor is RED then red *
+   * pieces will be on the bottom and white on the top, and flipped if currentColor is WHITE.
+   *
+   * @param color Sets which color pieces to place on the bottom of the board.
+   */
   private Board(Color color) {
     this.rows = new ArrayList<>(ROWS);
 
@@ -44,38 +49,19 @@ public class Board implements Iterable<Row> {
     }
   }
 
-  /*
-  public Board getBoard(Color color) {
-     Board newBoard = new Board(this);
-     if(color.equals(Color.WHITE)) {
+public  Board getBoard(Color color) {
+    Board newBoard = new Board(this);
 
-       newBoard.rows.forEach((row) -> {
-         row.
-       });
-     }
-     return newBoard;
-   }*/
+  if(color.equals(Color.WHITE)) {
 
-  /**
-   * Sets up the board layout by generating and placing starter pieces. Sets the orientation of
-   * piece placement based on provided currentColor parameter. If currentColor is RED then red
-   * pieces will be on the bottom and white on the top, and flipped if currentColor is WHITE.
-   *
-   * @param currentColor Sets which color pieces to place on the bottom of the board.
-   */
-  /*  public void fill(Color currentColor) {
-    Color otherColor = currentColor.equals(Color.RED) ? Color.WHITE : Color.RED;
-
-    for (Row row : rows) {
-      int index = row.getIndex();
-
-      if (index <= 2) {
-        row.fill(otherColor);
-      } else if (index >= 5) {
-        row.fill(Color.RED);
-      }
+    for(Row row: newBoard.rows) {
+      row = row.getColorInverted();
     }
-  }*/
+  }
+
+  return newBoard;
+
+}
 
   @Override
   public Iterator<Row> iterator() {
