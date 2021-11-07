@@ -51,10 +51,10 @@ public class PostCheckTurnRoute implements Route {
         Message message;
         Board board = httpSession.attribute("BOARD");
         Player player = httpSession.attribute(CURRENT_PLAYER_KEY);
-        if(!Objects.requireNonNull(GameCenter.getGame(player)).active){
+        /*if(!Objects.requireNonNull(GameCenter.getGame(player)).active){
             player.inGame(false);
             response.redirect(WebServer.HOME_URL);
-        }
+        }*/
 //        if (Objects.equals(board.getTurn(), "SELF")) {
 //            message = Message.info("true");
 //        } else {

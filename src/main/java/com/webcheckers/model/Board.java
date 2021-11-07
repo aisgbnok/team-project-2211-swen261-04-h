@@ -11,7 +11,7 @@ import java.util.Iterator;
  *
  * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
  */
-public class Board {
+public class Board implements Iterable<Row> {
 
   // Fields
   public static final int ROW_LENGTH = 8;
@@ -19,17 +19,17 @@ public class Board {
 
   private final ArrayList<Row> rows;
 
-  // TODO Review
-  public Move proposedMove;
-  // public Move lastMove;
-  // private ArrayList<Move> validMoves;
-
   /** Creates a board. */
   public Board() {
     this.rows = new ArrayList<>(ROW_LENGTH);
 
     for (int i = 0; i < ROW_LENGTH; i++) {
       rows.add(new Row(i));
+    }
+    }
+
+    public Board getBoard() {
+      return this;
     }
 
     /*
@@ -48,7 +48,7 @@ public class Board {
    * @param currentColor Sets which color pieces to place on the bottom of the board.
    */
   public void fill(Color currentColor) {
-    //Color otherColor = currentColor.equals(Color.RED) ? Color.WHITE : Color.RED;
+    // Color otherColor = currentColor.equals(Color.RED) ? Color.WHITE : Color.RED;
     Color otherColor = Color.WHITE;
 
     for (Row row : rows) {
@@ -62,22 +62,22 @@ public class Board {
     }
   }
 
-  /*    public void addValidMove(Move move) {
-      validMoves.add(move);
-  }*/
-
-  /*TODO rewrite board iteration to output iterable list but not be iterable. Right now we use a single board but oddly and somehow refill the board to display the correct user pieces. I'm confused.*/
 
 
-  public Iterator<Row> iterator(Player currentPlayer) {
+
+
+  @Override
+  public Iterator<Row> iterator() {
     ArrayList<Row> newArray = new ArrayList<>(rows);
-
-    if(GameCenter.getGame(currentPlayer).getPlayerColor(currentPlayer).equals(Color.RED)) {
-      Collections.reverse(newArray);
-    }
 
     return newArray.iterator();
   }
+
+
+
+    /*    public void addValidMove(Move move) {
+      validMoves.add(move);
+  }*/
 
   /*    public Space getPieceAtPosition(int x, int y) {
       for (Row row : rows) {

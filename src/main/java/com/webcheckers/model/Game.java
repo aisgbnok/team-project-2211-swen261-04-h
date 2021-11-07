@@ -1,12 +1,13 @@
 package com.webcheckers.model;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 public class Game {
+
   // Fields
   private final UUID gameID;
-  public boolean active;
   private final Player currentPlayer;
   private final viewModes viewMode;
   private Map<String, Object> modeOptionsAsJSON;
@@ -45,6 +46,10 @@ public class Game {
 
     // For all the MVP stories this variable must be set to PLAY.
     this.viewMode = viewModes.PLAY;
+
+    // Sets up the modeOptionsAsJSON
+    this.modeOptionsAsJSON = new HashMap<>(2);
+    modeOptionsAsJSON.put("isGameOver", false);
   }
 
   public boolean hasPlayer(Player player) {
@@ -57,8 +62,8 @@ public class Game {
     return null;
   }
 
-  public Board getBoard() {
-    return board;
+  public Board getBoard(Color color) {
+    return board.getBoard(color);
   }
 
   public UUID getGameID() {
@@ -73,5 +78,19 @@ public class Game {
     if (currentPlayer.equals(redPlayer)) return whitePlayer;
     if (currentPlayer.equals(whitePlayer)) return redPlayer;
     return null;
+  }
+
+  /**
+   * Checks if two games are the same game
+   *
+   * @param o Object to check equality
+   * @return True if the games are equal, false if different.
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Game game = (Game) o;
+    return redPlayer.equals(game.redPlayer) && whitePlayer.equals(game.whitePlayer);
   }
 }

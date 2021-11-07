@@ -72,7 +72,7 @@ public class GetHomeRoute implements Route {
       return null;
     }
 
-    // Generate Player List
+    // Initialize Player List
     ArrayList<String> playersHTML = new ArrayList<>();
 
     // For each player in player lobby that isn't the current user add them to the playersHTML list
