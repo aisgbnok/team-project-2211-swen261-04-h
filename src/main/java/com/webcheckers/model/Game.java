@@ -66,6 +66,10 @@ public class Game {
     return new Board(board);
   }
 
+  public Board getBoard(Color color) {
+    return board.getBoard(color);
+  }
+
   public UUID getGameID() {
     return gameID;
   }
