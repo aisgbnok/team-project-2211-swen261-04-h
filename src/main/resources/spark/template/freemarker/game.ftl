@@ -62,7 +62,7 @@
       <div class="game-board">
         <table id="game-board">
           <tbody>
-          <#list board.iterator(currentPlayer) as row>
+          <#list board.iterator() as row>
             <tr data-row="${row.index}">
                 <#list row.iterator() as space>
                   <td data-cell="${space.cellIdx}"
