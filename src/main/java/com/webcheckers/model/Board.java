@@ -1,7 +1,9 @@
 package com.webcheckers.model;
 
+import com.webcheckers.application.GameCenter;
 import com.webcheckers.model.Game.Color;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 /**
@@ -9,7 +11,7 @@ import java.util.Iterator;
  *
  * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
  */
-public class Board implements Iterable<Row> {
+public class Board {
 
   // Fields
   public static final int ROW_LENGTH = 8;
@@ -24,7 +26,7 @@ public class Board implements Iterable<Row> {
 
   /** Creates a board. */
   public Board() {
-    this.rows = new ArrayList<>();
+    this.rows = new ArrayList<>(ROW_LENGTH);
 
     for (int i = 0; i < ROW_LENGTH; i++) {
       rows.add(new Row(i));
@@ -46,7 +48,8 @@ public class Board implements Iterable<Row> {
    * @param currentColor Sets which color pieces to place on the bottom of the board.
    */
   public void fill(Color currentColor) {
-    Color otherColor = currentColor.equals(Color.RED) ? Color.WHITE : Color.RED;
+    //Color otherColor = currentColor.equals(Color.RED) ? Color.WHITE : Color.RED;
+    Color otherColor = Color.WHITE;
 
     for (Row row : rows) {
       int index = row.getIndex();
@@ -54,7 +57,7 @@ public class Board implements Iterable<Row> {
       if (index <= 2) {
         row.fill(otherColor);
       } else if (index >= 5) {
-        row.fill(currentColor);
+        row.fill(Color.RED);
       }
     }
   }
@@ -65,9 +68,15 @@ public class Board implements Iterable<Row> {
 
   /*TODO rewrite board iteration to output iterable list but not be iterable. Right now we use a single board but oddly and somehow refill the board to display the correct user pieces. I'm confused.*/
 
-  @Override
-  public Iterator<Row> iterator() {
-    return rows.iterator();
+
+  public Iterator<Row> iterator(Player currentPlayer) {
+    ArrayList<Row> newArray = new ArrayList<>(rows);
+
+    if(GameCenter.getGame(currentPlayer).getPlayerColor(currentPlayer).equals(Color.RED)) {
+      Collections.reverse(newArray);
+    }
+
+    return newArray.iterator();
   }
 
   /*    public Space getPieceAtPosition(int x, int y) {
