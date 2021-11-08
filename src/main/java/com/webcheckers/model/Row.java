@@ -6,7 +6,6 @@ import com.webcheckers.model.Game.Color;
 import com.webcheckers.model.Piece.Type;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 
 /**
@@ -16,12 +15,11 @@ import java.util.Iterator;
  */
 public class Row implements Iterable<Space> {
 
-  // Fields
-  private final ArrayList<Space> spaces;
-  private final int index;
+  private final int index; // Row index on the board.
+  private final ArrayList<Space> spaces; // Contains all spaces in a row in order.
 
   /**
-   * Creates a row of empty spaces for the given row index on the board.
+   * Constructs a row of empty spaces for the given row index on the board.
    *
    * @param index Row index on the board.
    */
@@ -30,7 +28,7 @@ public class Row implements Iterable<Space> {
   }
 
   /**
-   * Creates a row of spaces filled with pieces of the given color for the given row index on the
+   * Constructs a row of spaces filled with pieces of the given color for the given row index on the
    * board.
    *
    * @param index Row index on the board.
@@ -62,22 +60,6 @@ public class Row implements Iterable<Space> {
     for (int colIndex = (COLS - 1); colIndex >= 0; colIndex--) {
       spaces.add(new Space(row.spaces.get(colIndex)));
     }
-  }
-
-/*  protected Row getColorInverted() {
-    Row colorInvertedRow = new Row(this);
-
-    for(Space space: colorInvertedRow.spaces) {
-      if(space.getPiece() != null) {
-        space.setPiece(space.getPiece().getColorInverted());
-      }
-    }
-
-    return colorInvertedRow;
-  }*/
-
-  protected void reverse() {
-    Collections.reverse(spaces);
   }
 
   /**
