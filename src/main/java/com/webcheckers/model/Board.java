@@ -49,8 +49,20 @@ public class Board implements Iterable<Row> {
     }
   }
 
+  private Board(Board board, boolean reflection) {
+    this.rows = new ArrayList<>(ROWS);
+
+    for (int rowIndex = 0; rowIndex < ROWS; rowIndex++) {
+      rows.add(board.rows.get((ROWS - 1) - rowIndex));
+    }
+
+  }
+
+
+
 public  Board getBoard(Color color) {
-    Board newBoard = new Board(this);
+    // This is bad code. This just inverts the color we need to do like matrix reflection instead.
+/*    Board newBoard = new Board(this);
 
   if(color.equals(Color.WHITE)) {
 
@@ -59,7 +71,9 @@ public  Board getBoard(Color color) {
     }
   }
 
-  return newBoard;
+  return newBoard;*/
+
+  return new Board(this, true);
 
 }
 
