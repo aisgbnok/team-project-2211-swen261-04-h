@@ -105,4 +105,10 @@ public class Space {
       throw new IllegalArgumentException("Space already has a piece.");
     }
   }
+
+  /** Removes a piece from the space. */
+  public void removePiece() {
+    this.piece = null;
+    this.setValid();
+  }
 }
