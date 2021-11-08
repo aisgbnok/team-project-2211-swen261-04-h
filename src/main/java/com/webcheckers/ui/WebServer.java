@@ -1,14 +1,15 @@
 package com.webcheckers.ui;
 
+import static spark.Spark.get;
+import static spark.Spark.post;
+import static spark.Spark.staticFileLocation;
+
 import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
-import spark.TemplateEngine;
-
 import java.util.Objects;
 import java.util.logging.Logger;
-
-import static spark.Spark.*;
+import spark.TemplateEngine;
 
 /**
  * The server that initializes the set of HTTP request handlers. This defines the <em>web
@@ -38,19 +39,23 @@ import static spark.Spark.*;
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
 public class WebServer {
-  /** The URL pattern to request the Home page. */
-  public static final String HOME_URL = "/";
+
+  /** The URL patterns to request different pages. */
+  public static final String HOME_URL = "/"; // Home Page
+
+  public static final String SIGNIN_URL = "/signin"; // Sign In Page
+  public static final String SIGNOUT_URL = "/signout"; // Sign Out
+
+  public static final String GAME_START_URL = "/startGame"; // Start Game
+  public static final String GAME_URL = "/game"; // Game Page
+
+  public static final String RESIGN_URL = "/resignGame"; // Resign Game
 
   //
   // Constants
   //
-  public static final String SIGNIN_URL = "/signin";
-  public static final String SIGNOUT_URL = "/signout";
-  public static final String GAME_START_URL = "/startGame";
-  public static final String GAME_URL = "/game";
-  public static final String RESIGN = "/resignGame";
+
   private static final Logger LOG = Logger.getLogger(WebServer.class.getName());
-  // private static final String VALIDATE_URL = "/validateMove";
 
   //
   // Attributes
@@ -127,23 +132,28 @@ public class WebServer {
     //// Create separate Route classes to handle each route; this keeps your
     //// code clean; using small classes.
 
-    // Shows the Checkers game Home page.
+    // Home Page
     get(HOME_URL, new GetHomeRoute(templateEngine));
+
+    // Sign In/Out
     get(SIGNIN_URL, new GetSignInRoute(templateEngine));
     post(SIGNIN_URL, new PostSignInRoute(templateEngine));
     post(SIGNOUT_URL, new PostSignOutRoute(templateEngine));
+
+    // Game
     post(GAME_START_URL, new PostStartGameRoute());
     get(GAME_URL, new GetGameRoute(templateEngine));
-    post(RESIGN, new PostResignRoute());
 
 /*    post(VALIDATE_URL, new PostValidateMoveRoute(templateEngine));
     post("/submit_turn", new PostSubmitTurnRoute());
     post("/resignGame", new PostResignRoute());
     post("/checkTurn", new PostCheckTurnRoute());*/
 
+    // Setup Application Layer
     PlayerLobby.initPlayers();
     GameCenter.initGames();
 
+    // WebSever is set up
     LOG.config("WebServer is initialized.");
   }
 }
