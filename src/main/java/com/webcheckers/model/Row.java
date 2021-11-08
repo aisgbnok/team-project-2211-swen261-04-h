@@ -26,7 +26,7 @@ public class Row implements Iterable<Space> {
    * @param index Row index on the board.
    */
   public Row(int index) {
-    this(index, (Piece) null);
+    this(index, null);
   }
 
   /**
@@ -37,18 +37,8 @@ public class Row implements Iterable<Space> {
    * @param color Color of pieces being placed on valid spaces.
    */
   public Row(int index, Color color) {
-    this(index, new Piece(Type.SINGLE, color));
-  }
-
-  private Row(int index, Piece piece) {
     this.index = index;
-    spaces = new ArrayList<>();
-
-    // If piece is not null then generate a new copy piece to place in the space.
-    // We generate a new piece because we don't want to place the same piece in every space.
-    if(piece != null) {
-      piece = new Piece(piece);
-    }
+    this.spaces = new ArrayList<>(COLS);
 
     // Generates row spaces
     for (int i = 0; i < COLS; i++) {
