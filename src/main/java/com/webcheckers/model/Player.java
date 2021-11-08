@@ -26,6 +26,15 @@ public class Player {
   }
 
   /**
+   * Getter for the playerID.
+   *
+   * @return The player's ID in UUIDv4.
+   */
+  public UUID getPlayerID() {
+    return playerID;
+  }
+
+  /**
    * Get the name of the {@link Player}.
    *
    * @return Player username
