@@ -6,6 +6,7 @@ import com.webcheckers.model.Game.Color;
 import com.webcheckers.model.Piece.Type;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 /**
@@ -63,7 +64,7 @@ public class Row implements Iterable<Space> {
     spaces = new ArrayList<>(row.spaces);
   }
 
-  protected Row getColorInverted() {
+/*  protected Row getColorInverted() {
     Row colorInvertedRow = new Row(this);
 
     for(Space space: colorInvertedRow.spaces) {
@@ -73,6 +74,10 @@ public class Row implements Iterable<Space> {
     }
 
     return colorInvertedRow;
+  }*/
+
+  protected void reverse() {
+    Collections.reverse(spaces);
   }
 
   /**

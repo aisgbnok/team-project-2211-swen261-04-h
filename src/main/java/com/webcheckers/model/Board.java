@@ -2,6 +2,7 @@ package com.webcheckers.model;
 
 import com.webcheckers.model.Game.Color;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 /**
@@ -50,32 +51,23 @@ public class Board implements Iterable<Row> {
   }
 
   private Board(Board board, boolean reflection) {
-    this.rows = new ArrayList<>(ROWS);
+    this.rows = new ArrayList<>(board.rows);
 
-    for (int rowIndex = 0; rowIndex < ROWS; rowIndex++) {
-      rows.add(board.rows.get((ROWS - 1) - rowIndex));
-    }
+    // These are possibly costly actions maybe look into this later.
 
+    // For each
+    this.rows.forEach(Row::reverse);
+
+    Collections.reverse(this.rows);
   }
 
-
-
-public  Board getBoard(Color color) {
-    // This is bad code. This just inverts the color we need to do like matrix reflection instead.
-/*    Board newBoard = new Board(this);
-
-  if(color.equals(Color.WHITE)) {
-
-    for(Row row: newBoard.rows) {
-      row = row.getColorInverted();
+  public Board getBoard(Color color) {
+    if (color.equals(Color.WHITE)) {
+      return new Board(this, true);
     }
+
+    return new Board(this);
   }
-
-  return newBoard;*/
-
-  return new Board(this, true);
-
-}
 
   @Override
   public Iterator<Row> iterator() {
