@@ -47,7 +47,7 @@ public class Row implements Iterable<Space> {
       // (rowIndex + ColIndex) % 2 == 1: If row is odd and col is even or vice versa.
       if ((index + i) % 2 == 1) {
         // Add the next space as a valid space
-        spaces.add(new Space(i, true, piece));
+        spaces.add(new Space(i, true, color));
       } else {
         // Add the next space
         spaces.add(new Space(i));
