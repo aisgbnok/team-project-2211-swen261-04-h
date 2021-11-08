@@ -35,7 +35,7 @@ public class Board implements Iterable<Row> {
     // Set the otherColor to WHITE if color is RED, or vice versa
     Color otherColor = color.equals(Color.RED) ? Color.WHITE : Color.RED;
 
-    // Loop from 0 to ROWS, placing pieces along the way
+    // Loop from 0 to ROWS, placing rows along the way
     for (int rowIndex = 0; rowIndex < ROWS; rowIndex++) {
       // If the rowIndex is <= 2 then place pieces of the otherColor
       if (rowIndex <= 2) {
@@ -90,77 +90,4 @@ public class Board implements Iterable<Row> {
   public Iterator<Row> iterator() {
     return new Board(this).rows.iterator();
   }
-
-  /*    public void addValidMove(Move move) {
-      validMoves.add(move);
-  }*/
-
-  /*    public Space getPieceAtPosition(int x, int y) {
-      for (Row row : rows) {
-          for (Space space : row.getSpaces()) {
-              if (space.getCell() == x && space.getRow() == y) {
-                  return space;
-              }
-          }
-      }
-      return null; // space not found
-  }*/
-
-  /*    public ArrayList<Move> getValidMoves() {
-      ArrayList<Move> moves = new ArrayList<>();
-      for (Row row : rows) {
-          for (Space space : row) {
-              if (space.getPiece() != null) {
-                  if (space.getPiece().getColor() == Piece.Color.RED) {
-                      for (Row row2 : rows) {
-                          for (Space space2 : row2) {
-                              if (space.getPiece() == null) {
-                                  moves.add(new Move(space, space2));
-                                  space2.setValid(true);
-                              }
-                          }
-                      }
-                  }
-              }
-          }
-      }
-      return moves;
-  }*/
-
-  /*    public void undoMove(Move proposedMove) {
-      for (Row row : rows) {
-          for (Space space : row) {
-              if (proposedMove.getStart() == space) {
-                  space.setPiece(proposedMove.getStart().getPiece());
-                  for (Row row2 : rows) {
-                      for (Space space2 : row2) {
-                          if (proposedMove.getEnd() == space2) {
-                              space2.setPiece(proposedMove.getEnd().getPiece());
-                              lastMove = proposedMove;
-                          }
-                      }
-                  }
-              }
-          }
-      }
-  }*/
-
-  /*    public void makeMove(Move proposedMove) {
-      for (Row row : rows) {
-          for (Space space : row) {
-              if (proposedMove.getStart() == space) {
-                  Piece temp = space.getPiece();
-                  space.setPiece(null);
-                  for (Row row2 : rows) {
-                      for (Space space2 : row2) {
-                          if (proposedMove.getEnd() == space2) {
-                              space2.setPiece(temp);
-                              lastMove = proposedMove;
-                          }
-                      }
-                  }
-              }
-          }
-      }
-  }*/
 }
