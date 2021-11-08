@@ -72,6 +72,6 @@ public class Player {
     if (this == o) return true;
     if (!(o instanceof Player)) return false;
     Player player = (Player) o;
-    return this.name.equals(player.name);
+    return this.playerID.equals(player.playerID) && this.name.equals(player.name);
   }
 }
