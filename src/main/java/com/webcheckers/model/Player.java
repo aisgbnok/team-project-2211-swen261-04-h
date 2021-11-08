@@ -1,20 +1,18 @@
 package com.webcheckers.model;
 
-import java.util.Objects;
-
 /**
- * The Player model used for instantiating players and holding their data.
+ * Player representation used for holding their information.
  *
  * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
  * @author <a href='mailto:jwd2488@rit.edu'>Jake Downie</a>
  */
 public class Player {
 
-  private final String name;
-  private boolean inGame;
+  private final String name; // Player's name
+  private boolean inGame; // Player is in a game or not
 
   /**
-   * Creates a new Player. Sets the player name to the given name, and initializes inGame as false.
+   * Constructs a Player with given name, and sets inGame to false.
    *
    * @param name Player username
    */
@@ -61,16 +59,6 @@ public class Player {
     if (this == o) return true;
     if (!(o instanceof Player)) return false;
     Player player = (Player) o;
-    return Objects.equals(getName(), player.getName());
-  }
-
-  /**
-   * Generates {@link Player} hashcode.
-   *
-   * @return Player hashcode
-   */
-  @Override
-  public int hashCode() {
-    return Objects.hash(getName());
+    return this.name.equals(player.name);
   }
 }
