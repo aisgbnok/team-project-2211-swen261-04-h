@@ -2,7 +2,6 @@ package com.webcheckers.model;
 
 import com.webcheckers.model.Game.Color;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 
 /**
@@ -12,36 +11,25 @@ import java.util.Iterator;
  */
 public class Board implements Iterable<Row> {
 
-  // Defines Board Size
   public static final int ROWS = 8; // How many rows in a board
   public static final int COLS = 8; // How many columns in a board
 
-  // ArrayList containing all rows in the board in order. (0 to ROWS)
-  private final ArrayList<Row> rows;
+  private final ArrayList<Row> rows; // Contains all rows in a board in order.
 
-  /**
-   * Constructs a new board.
-   *
-   * <p>Rows 0-2: White Pieces
-   *
-   * <p>Rows 3-4: Empty Spaces
-   *
-   * <p>Rows 5-7: Red Pieces
-   */
+  /** Constructs a new board in the default orientation. Red pieces are generated at the bottom. */
   public Board() {
     // Calls private board constructor providing color that will be on bottom of board.
     this(Color.RED);
   }
 
   /**
-   * Constructs a board. Board orientation determined by the currentColor parameter. If currentColor
-   * is RED then red pieces will be on the bottom and white on the top, and flipped if currentColor
-   * is WHITE.
+   * Constructs a new board with a variable orientation. Color given determines which pieces are
+   * generated at the bottom.
    *
-   * @param color Sets which color pieces to place on the bottom of the board.
+   * @param color Color of pieces to place on the bottom of the board.
    */
   private Board(Color color) {
-    // Create a new list of rows and preset size to ROWS
+    // Create a new list of rows with default size of ROWS
     this.rows = new ArrayList<>(ROWS);
 
     // Set the otherColor to WHITE if color is RED, or vice versa
@@ -65,24 +53,35 @@ public class Board implements Iterable<Row> {
   }
 
   /**
-   * Constructs a copy of a given board. Public Copy Constructor.
+   * Constructs a duplicate of a given board.
    *
-   * @param board Board to copy
+   * @param board Board to duplicate
    */
   public Board(Board board) {
     this(board, false);
   }
 
+  /**
+   * Constructs a duplicate of a given board. It will reflect the board during duplication (180°
+   * rotation) if reflection is true.
+   *
+   * @param board Board to duplicate
+   * @param reflection Will generated a reflected board if true.
+   */
   public Board(Board board, boolean reflection) {
+    // Create a new list of rows with default size of ROWS
     this.rows = new ArrayList<>(ROWS);
 
+    // If the board should be reflected along x-axis and y-axis:
     if (reflection) {
+      // Generate new rows, adding them to the board in reverse order
       for (int rowIndex = (ROWS - 1); rowIndex >= 0; rowIndex--) {
-        this.rows.add(new Row(board.rows.get(rowIndex), reflection));
+        this.rows.add(new Row(board.rows.get(rowIndex), true));
       }
     } else {
+      // Generate new rows, adding them to the board in the same order
       for (int rowIndex = 0; rowIndex < ROWS; rowIndex++) {
-        this.rows.add(new Row(board.rows.get(rowIndex), reflection));
+        this.rows.add(new Row(board.rows.get(rowIndex), false));
       }
     }
   }
