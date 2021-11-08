@@ -87,16 +87,6 @@ public class Board implements Iterable<Row> {
     }
   }
 
-  // Might keep or consolidate this.
-  //TODO: probably consolidate this into game.getboard and instead make reflective board construction public.
-  public Board getBoard(Color color) {
-    if (color.equals(Color.WHITE)) {
-      return new Board(this, true);
-    }
-
-    return new Board(this);
-  }
-
   @Override
   public Iterator<Row> iterator() {
     // TODO change to deep copy.
