@@ -55,9 +55,13 @@ public class Row implements Iterable<Space> {
     }
   }
 
-  private Row(Row row) {
+  public Row(Row row, Boolean reflection) {
     this.index = row.index;
-    spaces = new ArrayList<>(row.spaces);
+    this.spaces = new ArrayList<>(COLS);
+
+    for (int colIndex = (COLS - 1); colIndex >= 0; colIndex--) {
+      spaces.add(new Space(row.spaces.get(colIndex)));
+    }
   }
 
 /*  protected Row getColorInverted() {

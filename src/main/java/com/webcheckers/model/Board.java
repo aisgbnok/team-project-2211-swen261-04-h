@@ -77,14 +77,12 @@ public class Board implements Iterable<Row> {
 
 
   private Board(Board board, boolean reflection) {
-    this.rows = new ArrayList<>(board.rows);
-
-    // These are possibly costly actions maybe look into this later.
+    this.rows = new ArrayList<>(ROWS);
 
     // For each
-    this.rows.forEach(Row::reverse);
-
-    Collections.reverse(this.rows);
+    for(int rowIndex = (ROWS - 1); rowIndex >= 0 ; rowIndex--) {
+      this.rows.add(new Row(board.rows.get(rowIndex), true));
+    }
   }
 
   // Might keep or consolidate this.
