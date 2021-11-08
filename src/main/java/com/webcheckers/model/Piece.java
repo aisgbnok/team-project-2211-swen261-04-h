@@ -7,12 +7,6 @@ package com.webcheckers.model;
  */
 public class Piece {
 
-  // Enumerations
-  public enum Type {
-    SINGLE,
-    KING
-  }
-
   private final Type type; // Piece type enum, SINGLE or KING.
   private final Color color; // Piece color enum, WHITE or RED.
 
@@ -53,5 +47,11 @@ public class Piece {
    */
   public Color getColor() {
     return color;
+  }
+
+  // Enumerations
+  public enum Type {
+    SINGLE,
+    KING
   }
 }

@@ -10,15 +10,6 @@ public enum Color {
   WHITE;
 
   /**
-   * Returns the opposite color.
-   *
-   * @return Opposite color; RED if object is WHITE or vice versa.
-   */
-  public Color opposite() {
-    return getOppositeColor(this);
-  }
-
-  /**
    * Returns the opposite color of the given color.
    *
    * @param color Color to get opposite color of
@@ -26,5 +17,14 @@ public enum Color {
    */
   public static Color getOppositeColor(Color color) {
     return color.equals(RED) ? RED : WHITE;
+  }
+
+  /**
+   * Returns the opposite color.
+   *
+   * @return Opposite color; RED if object is WHITE or vice versa.
+   */
+  public Color opposite() {
+    return getOppositeColor(this);
   }
 }

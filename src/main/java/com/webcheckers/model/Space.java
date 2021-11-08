@@ -74,6 +74,15 @@ public class Space {
     return isValid;
   }
 
+  /**
+   * Set the space's validity.
+   *
+   * @param valid Space validity
+   */
+  public void setValid(boolean valid) {
+    this.isValid = valid;
+  }
+
   /** Toggles space validity. */
   public void setValid() {
     this.isValid = !this.isValid;
@@ -86,15 +95,6 @@ public class Space {
    */
   public Piece getPiece() {
     return piece;
-  }
-
-  /**
-   * Set the space's validity.
-   *
-   * @param valid Space validity
-   */
-  public void setValid(boolean valid) {
-    this.isValid = valid;
   }
 
   /**
