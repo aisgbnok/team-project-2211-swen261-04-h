@@ -11,12 +11,11 @@ import com.webcheckers.model.Piece.Type;
 public class Space {
 
   private final int cellIdx; // Space column index
-  private boolean isValid; // Space is valid or not
+  private boolean isValid; // Space is black and empty
   private Piece piece; // Piece on the space, or null if empty
 
   /**
-   * Constructs a game board space. Sets cell index to given cellIdx, space validity to false, and
-   * piece to null.
+   * Constructs a space. Space is not valid and empty.
    *
    * @param cellIdx Space column index
    */
@@ -25,8 +24,17 @@ public class Space {
   }
 
   /**
-   * Constructs a board space. Sets cell index to given cellIdx, space validity to given
-   * isValid, and piece to given piece color.
+   * Constructs a space. Space validity is determined by given validity, and is empty.
+   *
+   * @param cellIdx Space column index
+   * @param isValid Space validity
+   */
+  public Space(int cellIdx, boolean isValid) {
+    this(cellIdx, isValid, null);
+  }
+
+  /**
+   * Constructs a space. Space generates a piece if color is given, and sets validity appropriately.
    *
    * @param cellIdx Space column index
    * @param isValid Space validity
@@ -39,9 +47,9 @@ public class Space {
   }
 
   /**
-   * Constructs a copy of a given board space. Public Copy Constructor.
+   * Constructs a duplicate of a space.
    *
-   * @param space Space to copy
+   * @param space Space to duplicate
    */
   public Space(Space space) {
     this.cellIdx = space.cellIdx;
@@ -61,7 +69,7 @@ public class Space {
   /**
    * Getter for validity of space.
    *
-   * @return True if space is valid, or false if space is not valid or is occupied.
+   * @return True if space is valid, or false if space is not valid.
    */
   public boolean isValid() {
     return isValid;
@@ -94,7 +102,7 @@ public class Space {
    * Places a piece on the valid and empty space.
    *
    * @param newPiece Piece to place on the empty space.
-   * @throws IllegalArgumentException if space is already taken or not valid.
+   * @throws IllegalArgumentException if space is not valid.
    */
   public void setPiece(Piece newPiece) {
     if (isValid) {
