@@ -1,5 +1,8 @@
 package com.webcheckers.model;
 
+import com.webcheckers.model.Game.Color;
+import com.webcheckers.model.Piece.Type;
+
 /**
  * Space on the board.
  *
@@ -7,13 +10,12 @@ package com.webcheckers.model;
  */
 public class Space {
 
-  // Fields
-  private final int cellIdx;
-  private boolean isValid;
-  private Piece piece;
+  private final int cellIdx; // Space column index
+  private boolean isValid; // Space is valid or not
+  private Piece piece; // Piece on the space, or null if empty
 
   /**
-   * Creates a game board space. Sets cell index to given cellIdx, space validity to false, and
+   * Constructs a game board space. Sets cell index to given cellIdx, space validity to false, and
    * piece to null.
    *
    * @param cellIdx Space column index
@@ -23,28 +25,17 @@ public class Space {
   }
 
   /**
-   * Creates a game board space. Sets cell index to given cellIdx, space validity to given isValid,
-   * and piece to null.
+   * Constructs a game board space. Sets cell index to given cellIdx, space validity to given
+   * isValid, and piece to given piece color.
    *
    * @param cellIdx Space column index
    * @param isValid Space validity
+   * @param color Color of piece on this space, or null if space is empty.
    */
-  protected Space(int cellIdx, boolean isValid) {
-    this(cellIdx, isValid, null);
-  }
-
-  /**
-   * Creates a game board space. Sets cell index to given cellIdx, space validity to given isValid,
-   * and piece to given piece.
-   *
-   * @param cellIdx Space column index
-   * @param isValid Space validity
-   * @param piece Piece on this space or null if space is empty.
-   */
-  protected Space(int cellIdx, boolean isValid, Piece piece) {
+  protected Space(int cellIdx, boolean isValid, Color color) {
     this.cellIdx = cellIdx;
     this.isValid = isValid;
-    this.piece = piece;
+    this.piece = (color == null) ? null : new Piece(Type.SINGLE, color);
   }
 
   /**
@@ -95,18 +86,12 @@ public class Space {
    * @throws IllegalArgumentException if space is already taken or not valid.
    */
   public void setPiece(Piece newPiece) {
-    this.piece = newPiece;
-    this.setValid();
-
-    /*
-    TODO we can't have this check right now because we only have one board and we oddly refill it every time we display it with the correct colors depending on the currentPlayer color. Need to look into this.
-
-        if (isValid) {
-          this.piece = newPiece;
-          this.setValid();
-        } else {
-          throw new IllegalArgumentException("Space already has a piece.");
-        }
-    */
+    if (isValid) {
+      this.piece = newPiece;
+      this.setValid();
+    } else {
+      // TODO is this smelly code?
+      throw new IllegalArgumentException("Space already has a piece.");
+    }
   }
 }
