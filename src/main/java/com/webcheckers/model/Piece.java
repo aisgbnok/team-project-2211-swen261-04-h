@@ -3,7 +3,7 @@ package com.webcheckers.model;
 import com.webcheckers.model.Game.Color;
 
 /**
- * Piece on a space.
+ * Game Piece placed on a Board Space.
  *
  * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
  */
@@ -19,7 +19,7 @@ public class Piece {
   private final Color color; // Piece color enum, WHITE or RED.
 
   /**
-   * Creates a board piece. Sets the type to the given type and the color to the given color.
+   * Constructs a game piece. Piece type and color is determined by given type and color.
    *
    * @param type Piece type enum, SINGLE or KING.
    * @param color Piece color enum, WHITE or RED.
@@ -30,9 +30,9 @@ public class Piece {
   }
 
   /**
-   * Constructs a copy of a given board piece. Public Copy Constructor.
+   * Constructs a duplicate of a game piece.
    *
-   * @param piece Piece to copy
+   * @param piece Piece to duplicate
    */
   public Piece(Piece piece) {
     this.type = piece.type;
