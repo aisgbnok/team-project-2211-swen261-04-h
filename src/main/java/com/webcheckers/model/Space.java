@@ -20,22 +20,33 @@ public class Space {
    *
    * @param cellIdx Space column index
    */
-  protected Space(int cellIdx) {
+  public Space(int cellIdx) {
     this(cellIdx, false, null);
   }
 
   /**
-   * Constructs a game board space. Sets cell index to given cellIdx, space validity to given
+   * Constructs a board space. Sets cell index to given cellIdx, space validity to given
    * isValid, and piece to given piece color.
    *
    * @param cellIdx Space column index
    * @param isValid Space validity
    * @param color Color of piece on this space, or null if space is empty.
    */
-  protected Space(int cellIdx, boolean isValid, Color color) {
+  public Space(int cellIdx, boolean isValid, Color color) {
     this.cellIdx = cellIdx;
     this.isValid = isValid;
     this.piece = (color == null) ? null : new Piece(Type.SINGLE, color);
+  }
+
+  /**
+   * Constructs a copy of a given board space. Public Copy Constructor.
+   *
+   * @param space Space to copy
+   */
+  public Space(Space space) {
+    this.cellIdx = space.cellIdx;
+    this.isValid = space.isValid;
+    this.piece = new Piece(space.piece);
   }
 
   /**
@@ -56,6 +67,11 @@ public class Space {
     return isValid;
   }
 
+  /** Toggles space validity. */
+  public void setValid() {
+    this.isValid = !this.isValid;
+  }
+
   /**
    * Getter for space's piece.
    *
@@ -72,11 +88,6 @@ public class Space {
    */
   public void setValid(boolean valid) {
     this.isValid = valid;
-  }
-
-  /** Toggles space validity. */
-  public void setValid() {
-    this.isValid = !this.isValid;
   }
 
   /**
