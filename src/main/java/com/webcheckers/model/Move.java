@@ -1,18 +1,17 @@
 package com.webcheckers.model;
 
 /**
- * This is the Move data type.
+ * Move action that happens to a piece on a game board.
  *
  * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
  */
 public class Move {
 
-  // Fields
-  private final Position start;
-  private final Position end;
+  private final Position start; // Move's starting position
+  private final Position end; // Move's ending position
 
   /**
-   * Constructor for Move data type. Holds a start position and an end position.
+   * Constructs a Move. Holds a start position and an end position for the move.
    *
    * @param start Move's starting position
    * @param end Move's ending position
