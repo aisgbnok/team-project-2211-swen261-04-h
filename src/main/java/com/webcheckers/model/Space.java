@@ -46,7 +46,7 @@ public class Space {
   public Space(Space space) {
     this.cellIdx = space.cellIdx;
     this.isValid = space.isValid;
-    this.piece = new Piece(space.piece);
+    this.piece = (space.piece == null) ? null : new Piece(space.piece);
   }
 
   /**
