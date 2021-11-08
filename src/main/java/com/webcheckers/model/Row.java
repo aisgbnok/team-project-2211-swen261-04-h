@@ -57,8 +57,14 @@ public class Row implements Iterable<Space> {
     this.index = row.index;
     this.spaces = new ArrayList<>(COLS);
 
-    for (int colIndex = (COLS - 1); colIndex >= 0; colIndex--) {
-      spaces.add(new Space(row.spaces.get(colIndex)));
+    if (reflection) {
+      for (int colIndex = (COLS - 1); colIndex >= 0; colIndex--) {
+        spaces.add(new Space(row.spaces.get(colIndex)));
+      }
+    } else {
+      for (int colIndex = 0; colIndex < COLS; colIndex++) {
+        spaces.add(new Space(row.spaces.get(colIndex)));
+      }
     }
   }
 

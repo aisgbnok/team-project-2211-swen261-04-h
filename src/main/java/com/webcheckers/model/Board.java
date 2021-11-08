@@ -76,12 +76,17 @@ public class Board implements Iterable<Row> {
   }
 
 
-  private Board(Board board, boolean reflection) {
+  public Board(Board board, boolean reflection) {
     this.rows = new ArrayList<>(ROWS);
 
-    // For each
-    for(int rowIndex = (ROWS - 1); rowIndex >= 0 ; rowIndex--) {
-      this.rows.add(new Row(board.rows.get(rowIndex), true));
+    if (reflection) {
+      for (int rowIndex = (ROWS - 1); rowIndex >= 0; rowIndex--) {
+        this.rows.add(new Row(board.rows.get(rowIndex), reflection));
+      }
+    } else {
+      for (int rowIndex = 0; rowIndex < ROWS; rowIndex++) {
+        this.rows.add(new Row(board.rows.get(rowIndex), reflection));
+      }
     }
   }
 
