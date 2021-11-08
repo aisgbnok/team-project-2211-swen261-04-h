@@ -15,9 +15,8 @@ public class Piece {
     KING
   }
 
-  // Fields
-  private final Type type;
-  private final Color color;
+  private final Type type; // Piece type enum, SINGLE or KING.
+  private final Color color; // Piece color enum, WHITE or RED.
 
   /**
    * Creates a board piece. Sets the type to the given type and the color to the given color.
@@ -28,6 +27,16 @@ public class Piece {
   public Piece(Type type, Color color) {
     this.type = type;
     this.color = color;
+  }
+
+  /**
+   * Constructs a copy of a given board piece. Public Copy Constructor.
+   *
+   * @param piece Piece to copy
+   */
+  public Piece(Piece piece) {
+    this.type = piece.type;
+    this.color = piece.color;
   }
 
   /**
@@ -46,11 +55,5 @@ public class Piece {
    */
   public Color getColor() {
     return color;
-  }
-
-  protected Piece getColorInverted() {
-    Color invertedColor = this.color.equals(Color.RED) ? Color.WHITE : Color.RED;
-
-    return new Piece(this.type, invertedColor);
   }
 }
