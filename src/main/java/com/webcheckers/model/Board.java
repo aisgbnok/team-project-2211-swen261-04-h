@@ -12,43 +12,69 @@ import java.util.Iterator;
  */
 public class Board implements Iterable<Row> {
 
-  // Fields
-  public static final int ROWS = 8;
-  public static final int COLS = 8;
+  // Defines Board Size
+  public static final int ROWS = 8; // How many rows in a board
+  public static final int COLS = 8; // How many columns in a board
 
+  // ArrayList containing all rows in the board in order. (0 to ROWS)
   private final ArrayList<Row> rows;
 
-  /** Creates a board. */
+  /**
+   * Constructs a new board.
+   *
+   * <p>Rows 0-2: White Pieces
+   *
+   * <p>Rows 3-4: Empty Spaces
+   *
+   * <p>Rows 5-7: Red Pieces
+   */
   public Board() {
+    // Calls private board constructor providing color that will be on bottom of board.
     this(Color.RED);
   }
 
+  /**
+   * Constructs a copy of a given board. Public Copy Constructor.
+   *
+   * @param board Board to copy
+   */
   public Board(Board board) {
+    // This is a shallow copy which is bad. Only used for testing.
+    // TODO change to deep copy.
     this.rows = new ArrayList<>(board.rows);
   }
 
   /**
-   * Sets up the board layout by generating and placing starter pieces. Sets the orientation of *
-   * piece placement based on provided currentColor parameter. If currentColor is RED then red *
-   * pieces will be on the bottom and white on the top, and flipped if currentColor is WHITE.
+   * Constructs a board. Board orientation determined by the currentColor parameter. If currentColor
+   * is RED then red pieces will be on the bottom and white on the top, and flipped if currentColor
+   * is WHITE.
    *
    * @param color Sets which color pieces to place on the bottom of the board.
    */
   private Board(Color color) {
+    // Create a new list of rows and preset size to ROWS
     this.rows = new ArrayList<>(ROWS);
 
+    // Set the otherColor to WHITE if color is RED, or vice versa
     Color otherColor = color.equals(Color.RED) ? Color.WHITE : Color.RED;
 
+    // Loop from 0 to ROWS, placing pieces along the way
     for (int rowIndex = 0; rowIndex < ROWS; rowIndex++) {
+      // If the rowIndex is <= 2 then place pieces of the otherColor
       if (rowIndex <= 2) {
         rows.add(new Row(rowIndex, otherColor));
-      } else if (rowIndex >= 5) {
+      }
+      // If the rowIndex is >= 5 then place pieces of the given color
+      else if (rowIndex >= 5) {
         rows.add(new Row(rowIndex, color));
-      } else {
+      }
+      // Every other row has empty spaces
+      else {
         rows.add(new Row(rowIndex));
       }
     }
   }
+
 
   private Board(Board board, boolean reflection) {
     this.rows = new ArrayList<>(board.rows);
@@ -61,6 +87,8 @@ public class Board implements Iterable<Row> {
     Collections.reverse(this.rows);
   }
 
+  // Might keep or consolidate this.
+  //TODO: probably consolidate this into game.getboard and instead make reflective board construction public.
   public Board getBoard(Color color) {
     if (color.equals(Color.WHITE)) {
       return new Board(this, true);
@@ -71,6 +99,7 @@ public class Board implements Iterable<Row> {
 
   @Override
   public Iterator<Row> iterator() {
+    // TODO change to deep copy.
     ArrayList<Row> newArray = new ArrayList<>(rows);
 
     return newArray.iterator();
