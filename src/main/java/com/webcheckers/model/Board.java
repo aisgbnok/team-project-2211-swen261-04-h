@@ -34,17 +34,6 @@ public class Board implements Iterable<Row> {
   }
 
   /**
-   * Constructs a copy of a given board. Public Copy Constructor.
-   *
-   * @param board Board to copy
-   */
-  public Board(Board board) {
-    // This is a shallow copy which is bad. Only used for testing.
-    // TODO change to deep copy.
-    this.rows = new ArrayList<>(board.rows);
-  }
-
-  /**
    * Constructs a board. Board orientation determined by the currentColor parameter. If currentColor
    * is RED then red pieces will be on the bottom and white on the top, and flipped if currentColor
    * is WHITE.
@@ -75,6 +64,14 @@ public class Board implements Iterable<Row> {
     }
   }
 
+  /**
+   * Constructs a copy of a given board. Public Copy Constructor.
+   *
+   * @param board Board to copy
+   */
+  public Board(Board board) {
+    this(board, false);
+  }
 
   public Board(Board board, boolean reflection) {
     this.rows = new ArrayList<>(ROWS);

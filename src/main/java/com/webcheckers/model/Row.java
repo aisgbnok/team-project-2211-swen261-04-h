@@ -53,6 +53,10 @@ public class Row implements Iterable<Space> {
     }
   }
 
+  public Row(Row row) {
+    this(row, false);
+  }
+
   public Row(Row row, Boolean reflection) {
     this.index = row.index;
     this.spaces = new ArrayList<>(COLS);
