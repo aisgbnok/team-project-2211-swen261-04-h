@@ -34,7 +34,7 @@ public class Space {
    */
   public Space(int cellIdx, boolean isValid, Color color) {
     this.cellIdx = cellIdx;
-    this.isValid = isValid;
+    this.isValid = (color == null) && isValid;
     this.piece = (color == null) ? null : new Piece(Type.SINGLE, color);
   }
 
