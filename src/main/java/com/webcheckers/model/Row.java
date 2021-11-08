@@ -44,6 +44,12 @@ public class Row implements Iterable<Space> {
     this.index = index;
     spaces = new ArrayList<>();
 
+    // If piece is not null then generate a new copy piece to place in the space.
+    // We generate a new piece because we don't want to place the same piece in every space.
+    if(piece != null) {
+      piece = new Piece(piece);
+    }
+
     // Generates row spaces
     for (int i = 0; i < COLS; i++) {
 
