@@ -67,7 +67,7 @@ public class Game {
   }
 
   public Board getBoard(Color color) {
-    return board.getBoard(color);
+    return new Board(board, color.equals(Color.WHITE));
   }
 
   public UUID getGameID() {
