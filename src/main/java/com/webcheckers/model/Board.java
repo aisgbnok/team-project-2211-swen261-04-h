@@ -89,10 +89,7 @@ public class Board implements Iterable<Row> {
 
   @Override
   public Iterator<Row> iterator() {
-    // TODO change to deep copy.
-    ArrayList<Row> newArray = new ArrayList<>(rows);
-
-    return newArray.iterator();
+    return new Board(this).rows.iterator();
   }
 
   /*    public void addValidMove(Move move) {

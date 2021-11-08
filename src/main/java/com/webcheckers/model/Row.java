@@ -83,6 +83,6 @@ public class Row implements Iterable<Space> {
 
   @Override
   public Iterator<Space> iterator() {
-    return spaces.iterator();
+    return new Row(this).spaces.iterator();
   }
 }
