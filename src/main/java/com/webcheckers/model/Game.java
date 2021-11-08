@@ -24,11 +24,6 @@ public class Game {
     REPLAY
   }
 
-  public enum Color {
-    RED,
-    WHITE
-  }
-
   public Game(Player redPlayer, Player whitePlayer) {
     // Set gameID
     this.gameID = UUID.randomUUID();

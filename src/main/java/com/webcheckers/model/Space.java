@@ -1,6 +1,5 @@
 package com.webcheckers.model;
 
-import com.webcheckers.model.Game.Color;
 import com.webcheckers.model.Piece.Type;
 
 /**

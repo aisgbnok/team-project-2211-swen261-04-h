@@ -2,9 +2,9 @@ package com.webcheckers.ui;
 
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.model.Board;
+import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Game.viewModes;
-import com.webcheckers.model.Game.Color;
 import com.webcheckers.model.Player;
 import java.util.UUID;
 import spark.*;
@@ -78,7 +78,7 @@ public class GetGameRoute implements Route {
     Player opponentPlayer = setOpponent(currentPlayer, game, currentSession);
 
     // Now that we know a game is in progress let's render the game
-    Board board = game.getBoard(game.getPlayerColor(currentPlayer));;
+    Board board = game.getBoard(game.getPlayerColor(currentPlayer));
 
     vm.put(CURRENT_PLAYER_KEY, currentPlayer);
 
@@ -91,7 +91,7 @@ public class GetGameRoute implements Route {
       vm.put(WHITE_PLAYER_KEY, currentPlayer);
     }
 
-    //board.fill(game.getPlayerColor(currentPlayer));
+    // board.fill(game.getPlayerColor(currentPlayer));
 
     vm.put("viewMode", viewModes.PLAY);
     vm.put("activeColor", game.getActiveColor());

@@ -2,8 +2,6 @@ package com.webcheckers.model;
 
 import static com.webcheckers.model.Board.COLS;
 
-import com.webcheckers.model.Game.Color;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 

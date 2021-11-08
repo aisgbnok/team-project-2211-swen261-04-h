@@ -1,7 +1,5 @@
 package com.webcheckers.model;
 
-import com.webcheckers.model.Game.Color;
-
 /**
  * Game Piece placed on a Board Space.
  *
