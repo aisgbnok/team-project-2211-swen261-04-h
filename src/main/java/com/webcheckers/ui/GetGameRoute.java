@@ -1,22 +1,27 @@
 package com.webcheckers.ui;
 
+import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER_KEY;
+import static com.webcheckers.ui.PostStartGameRoute.BOARD_KEY;
+import static com.webcheckers.ui.PostStartGameRoute.OPPONENT_PLAYER_KEY;
+
+import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Game.viewModes;
 import com.webcheckers.model.Player;
-import java.util.UUID;
-import spark.*;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.logging.Logger;
-
-import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER_KEY;
-import static com.webcheckers.ui.PostStartGameRoute.BOARD_KEY;
-import static com.webcheckers.ui.PostStartGameRoute.OPPONENT_PLAYER_KEY;
+import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
+import spark.Route;
+import spark.Session;
+import spark.TemplateEngine;
 
 /**
  * The UI Controller to GET the Game page.
@@ -91,53 +96,9 @@ public class GetGameRoute implements Route {
       vm.put(WHITE_PLAYER_KEY, currentPlayer);
     }
 
-    // board.fill(game.getPlayerColor(currentPlayer));
-
     vm.put("viewMode", viewModes.PLAY);
     vm.put("activeColor", game.getActiveColor());
     vm.put("modeOptionsAsJSON", new Gson().toJson(game.getModeOptions()));
-
-    // TODO movement
-    /*if (board.getTurn().equals("OPPONENT")) {
-      vm.put("activeColor", Color.RED);
-    } else {
-      vm.put("activeColor", Color.WHITE);
-    }
-
-    LOG.finer(request.queryParams("opponent"));
-    if (request.queryParams("opponent") != null) {
-      opponent = PlayerLobby.getPlayer(request.queryParams("opponent"));
-      vm.put("whitePlayer", opponent);
-    }
-
-    /*
-    for (Row row : board.getRows()) {
-      for (Space space : row.getSpaces()) {
-        int x = space.getCell();
-        int y = space.getRow();
-        Space space2 = board.getPieceAtPosition(x + 1, y + 1);
-        if (space2 != null) {
-          if (space2.getPiece() == null) {
-            Move newMove = new Move();
-            newMove.setStart(space);
-            newMove.setEnd(space2);
-            board.addValidMove(newMove);
-          }
-        }
-      }
-    }
-
-    /*
-    String current_turn = board.getTurn();
-    if (current_turn == currentPlayer.getName()){
-      vm.put("turn", "YOUR TURN");
-    } else {
-      vm.put("turn", "OPPONENTS TURN");
-    }
-
-
-    board.getValidMoves();
-     */
 
     // Give freemarker the board
     vm.put(BOARD_KEY, board);
