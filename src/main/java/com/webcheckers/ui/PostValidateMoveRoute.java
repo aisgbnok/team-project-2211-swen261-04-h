@@ -43,8 +43,10 @@ public class PostValidateMoveRoute implements Route {
     UUID uuid = gson.fromJson(request.queryParams("gameID"), UUID.class);
 
     Game game = GameCenter.getGame(uuid);
+    // Board board = game.getBoard();
 
     // TODO validate move
+    game.validateMove(move);
 
     return new Gson().toJson(Message.info("Move Successful!"));
   }
