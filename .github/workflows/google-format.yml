@@ -17,10 +17,10 @@ name: Java Google Format
 on:
   # Pull request into the master or main branch
   pull_request:
-    branches: [master, main]
-  # release is created
-  release:
-    types: [created]
+    branches: [ master, main ]
+    # release is created
+    #release:
+    # types: [created]
 
 
 ###############
@@ -32,7 +32,7 @@ jobs:
     name: Google Java Formatter
     # Set the agent to run on
     runs-on: ubuntu-latest
-    
+
     ##################
     # Load all steps #
     ##################
@@ -45,5 +45,5 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
       - uses: axel-op/googlejavaformat-action@v3
         with:
-          args: "--skip-removing-unused-imports --skip-reflowing-long-strings --skip-javadoc-formatting --replace"
+          args: "--skip-removing-unused-imports --skip-reflowing-long-strings --skip-javadoc-formatting --replace --set-exit-if-changed"
           commitMessage: "Google Java Formatter"
