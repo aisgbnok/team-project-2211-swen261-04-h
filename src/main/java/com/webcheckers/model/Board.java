@@ -85,6 +85,27 @@ public class Board implements Iterable<Row> {
     }
   }
 
+  public boolean validateMove(Move move) {
+    Position startPos = move.getStart();
+    Position endPos = move.getEnd();
+
+    Space startSpace = this.getSpace(startPos);
+    Space endSpace = this.getSpace(endPos);
+
+    Piece startPiece = startSpace.getPiece();
+    Piece endPiece = endSpace.getPiece();
+
+    // Validate End Space is valid
+    if(endSpace.isValid()) {
+      return false;
+    }
+
+
+
+    //
+    return true;
+  }
+
   private Space getSpace(Position position) {
     return rows.get(position.getRow()).getSpace(position.getCell());
   }
