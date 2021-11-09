@@ -3,8 +3,10 @@ package com.webcheckers.ui;
 import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER_KEY;
 
 import com.google.gson.Gson;
+import com.webcheckers.application.GameCenter;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
+import java.util.UUID;
 import java.util.logging.Logger;
 import spark.Request;
 import spark.Response;
@@ -36,11 +38,22 @@ public class PostResignRoute implements Route {
   public Object handle(Request request, Response response) {
     LOG.finer("PostResignRoute is invoked.");
 
+    // Setup new Gson
+    Gson gson = new Gson();
+
+    // currentPlayer that wants to resign
     Player player = request.session().attribute(CURRENT_PLAYER_KEY);
 
-    // TODO set game to finished
-    // TODO remove players from game
+    // Message
+    String messageText = player.getName() + " has resigned.";
+    Message message = Message.info(messageText);
 
-    return new Gson().toJson(Message.info("Resignation Successful!"));
+    // Get the gameID UUID from queryParam
+    UUID gameID = gson.fromJson(request.queryParams("gameID"), UUID.class);
+
+    // Signal to GameCenter that the game is over and why
+    GameCenter.gameOver(gameID, messageText);
+
+    return gson.toJson(message);
   }
 }
