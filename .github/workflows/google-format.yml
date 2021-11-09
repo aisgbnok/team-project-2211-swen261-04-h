@@ -4,7 +4,7 @@
 ## Google Format GitHub Actions ##
 ##################################
 ##################################
-name: Java Google Format
+name: Google Java Formatter
 
 #
 # Documentation:
@@ -45,5 +45,6 @@ jobs:
           ref: ${{ github.event.pull_request.head.ref }}
       - uses: axel-op/googlejavaformat-action@v3
         with:
-          args: "--skip-removing-unused-imports --skip-reflowing-long-strings --skip-javadoc-formatting --replace --set-exit-if-changed"
+          args: "--skip-removing-unused-imports --skip-reflowing-long-strings --skip-javadoc-formatting --replace"
           commitMessage: "Google Java Formatter"
+          skipCommit: true
