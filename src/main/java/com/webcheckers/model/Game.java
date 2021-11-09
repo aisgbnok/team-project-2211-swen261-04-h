@@ -1,6 +1,7 @@
 package com.webcheckers.model;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.UUID;
 
@@ -13,6 +14,7 @@ public class Game {
 
   private final UUID gameID; // Game Identifier
   private final Board board; // Game Board
+  private LinkedList<Move> pendingMoves; // Pending game piece moves
 
   private final Color activeColor; // Active Player/Piece Color
   private final Player redPlayer; // Player with red pieces
@@ -73,6 +75,14 @@ public class Game {
    */
   public Board getBoard(Color color) {
     return new Board(board, color.equals(Color.WHITE));
+  }
+
+  public boolean validateMove(Move move) {
+    Board testBoard = new Board(board);
+
+    // TODO add other pending moves, and some other stuff
+
+    return testBoard.validateMove(move);
   }
 
   /*
