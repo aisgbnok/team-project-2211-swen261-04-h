@@ -50,5 +50,5 @@ jobs:
       - uses: axel-op/googlejavaformat-action@3.5.0
         with:
           args: "--skip-removing-unused-imports --skip-reflowing-long-strings --skip-javadoc-formatting --replace"
-          files: "**/main/java/com/webcheckers/@(application|model|ui)/*.java"
+          files: "**/main/java/com/webcheckers/**/*.java"
           #commitMessage: "Google Java Formatter"
