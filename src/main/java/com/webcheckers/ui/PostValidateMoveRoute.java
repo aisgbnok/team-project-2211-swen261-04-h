@@ -1,8 +1,11 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.application.GameCenter;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.Move;
+import java.util.UUID;
 import java.util.logging.Logger;
 import spark.Request;
 import spark.Response;
@@ -37,6 +40,9 @@ public class PostValidateMoveRoute implements Route {
     // Get Move
     Gson gson = new Gson();
     Move move = gson.fromJson(request.queryParams("actionData"), Move.class);
+    UUID uuid = gson.fromJson(request.queryParams("gameID"), UUID.class);
+
+    Game game = GameCenter.getGame(uuid);
 
     // TODO validate move
 
