@@ -18,6 +18,8 @@ import spark.Route;
  * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
  */
 public class PostResignRoute implements Route {
+
+  // Console Logger
   private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
 
   /**
