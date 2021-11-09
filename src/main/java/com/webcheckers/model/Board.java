@@ -85,6 +85,10 @@ public class Board implements Iterable<Row> {
     }
   }
 
+  private Space getSpace(Position position) {
+    return rows.get(position.getRow()).getSpace(position.getCell());
+  }
+
   @Override
   public Iterator<Row> iterator() {
     return new Board(this).rows.iterator();
