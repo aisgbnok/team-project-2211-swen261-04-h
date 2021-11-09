@@ -87,7 +87,7 @@ public class GameCenter {
   }
 
   /**
-   * Singals to the game with the given gameID that it has ended and why it was ended.
+   * Notifies the game with the given gameID that it has ended and why it was ended.
    *
    * @param gameID gameID of the game to end.
    * @param gameOverMessage Message describing why/how the game ended.
@@ -96,5 +96,6 @@ public class GameCenter {
     Game game = getGame(gameID);
 
     game.gameOver(gameOverMessage);
+    GameCenter.removeGame(game); //TODO change how this works later
   }
 }
