@@ -80,6 +80,10 @@ public class Game {
   public boolean validateMove(Move move) {
     Board testBoard = new Board(board);
 
+    for (Move pendingMove: pendingMoves) {
+      // Apply each pendingMove to the test board.
+    }
+
     // TODO add other pending moves, and some other stuff
 
     return testBoard.validateMove(move);
