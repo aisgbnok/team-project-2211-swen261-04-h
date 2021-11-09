@@ -33,7 +33,7 @@ public class Player {
   /**
    * Sets the {@link Player} {@code inGame} status.
    *
-   * @param inGame Boolean used to set whether player is in a game or not.
+   * @param inGame Used to set whether player is in a game or not.
    */
   public void inGame(boolean inGame) {
     this.inGame = inGame;
