@@ -47,4 +47,4 @@ jobs:
         with:
           args: "--skip-removing-unused-imports --skip-reflowing-long-strings --skip-javadoc-formatting --replace"
           commitMessage: "Google Java Formatter"
-          files: ".*(.*.java)"
+          #files: ".*(.*.java)"
