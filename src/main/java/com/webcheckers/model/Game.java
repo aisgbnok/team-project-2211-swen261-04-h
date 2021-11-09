@@ -111,6 +111,10 @@ public class Game {
   public void gameOver(String gameOverMessage) {
     this.isGameOver = true;
     this.gameOverMessage = gameOverMessage;
+
+    // Update Players inGame status
+    redPlayer.inGame(false);
+    whitePlayer.inGame(false);
   }
 
   /**
