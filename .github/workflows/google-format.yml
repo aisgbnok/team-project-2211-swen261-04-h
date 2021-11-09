@@ -46,7 +46,7 @@ jobs:
       - uses: actions/setup-java@v2
         with:
           java-version: 17
-      - uses: axel-op/googlejavaformat-action@v3.5.0
+      - uses: axel-op/googlejavaformat-action@3.5.0
         with:
           args: "--skip-removing-unused-imports --skip-reflowing-long-strings --skip-javadoc-formatting --replace"
           #commitMessage: "Google Java Formatter"
