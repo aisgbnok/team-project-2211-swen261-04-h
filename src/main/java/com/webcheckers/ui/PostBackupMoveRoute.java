@@ -53,7 +53,7 @@ public class PostBackupMoveRoute implements Route {
         Board board = httpSession.attribute("BOARD");
 
         Message message;
-        board.undoMove(board.lastMove);
+       //board.undoMove(board.lastMove);
         //TODO: Change turn
         message = Message.info("true");
         return gson.toJson(message);

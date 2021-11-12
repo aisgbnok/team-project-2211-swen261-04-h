@@ -1,27 +1,41 @@
 package com.webcheckers.model;
 
+/**
+ * Move action that happens to a piece on a game board.
+ *
+ * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
+ */
 public class Move {
-    private Space start;
-    private Space end;
 
-    public Move(Space space, Space space2) {
-        start = space;
-        end = space2;
-    }
+  private final Position start; // Move's starting position
+  private final Position end; // Move's ending position
 
-    public Space getStart() {
-        return start;
-    }
+  /**
+   * Constructs a Move. Holds a start position and an end position for the move.
+   *
+   * @param start Move's starting position
+   * @param end Move's ending position
+   */
+  public Move(Position start, Position end) {
+    this.start = start;
+    this.end = end;
+  }
 
-    public void setStart(Space start) {
-        this.start = start;
-    }
+  /**
+   * Getter for the starting position of the move.
+   *
+   * @return Move's starting position
+   */
+  public Position getStart() {
+    return start;
+  }
 
-    public Space getEnd() {
-        return end;
-    }
-
-    public void setEnd(Space end) {
-        this.end = end;
-    }
+  /**
+   * Getter for the ending position of the move.
+   *
+   * @return Move's ending position
+   */
+  public Position getEnd() {
+    return end;
+  }
 }

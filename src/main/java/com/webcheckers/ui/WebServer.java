@@ -38,112 +38,112 @@ import static spark.Spark.*;
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
 public class WebServer {
-    /**
-     * The URL pattern to request the Home page.
-     */
-    public static final String HOME_URL = "/";
+  /** The URL pattern to request the Home page. */
+  public static final String HOME_URL = "/";
 
+  //
+  // Constants
+  //
+  public static final String SIGNIN_URL = "/signin";
+  public static final String SIGNOUT_URL = "/signout";
+  public static final String GAME_START_URL = "/startGame";
+  public static final String GAME_URL = "/game";
+  public static final String RESIGN = "/resignGame";
+  private static final Logger LOG = Logger.getLogger(WebServer.class.getName());
+  // private static final String VALIDATE_URL = "/validateMove";
+
+  //
+  // Attributes
+  //
+  private final TemplateEngine templateEngine;
+  private final Gson gson;
+
+  //
+  // Constructor
+  //
+
+  /**
+   * The constructor for the Web Server.
+   *
+   * @param templateEngine The default {@link TemplateEngine} to render page-level HTML views.
+   * @param gson The Google JSON parser object used to render Ajax responses.
+   * @throws NullPointerException If any of the parameters are {@code null}.
+   */
+  public WebServer(final TemplateEngine templateEngine, final Gson gson) {
+    // validation
+    Objects.requireNonNull(templateEngine, "templateEngine must not be null");
+    Objects.requireNonNull(gson, "gson must not be null");
     //
-    // Constants
-    //
-    public static final String SIGNIN_URL = "/signin";
-    public static final String SIGNOUT_URL = "/signout";
-    public static final String GAME_START_URL = "/startGame";
-    public static final String GAME_URL = "/game";
-    public static final String RESIGN = "/resignGame";
-    private static final Logger LOG = Logger.getLogger(WebServer.class.getName());
-    // private static final String VALIDATE_URL = "/validateMove";
+    this.templateEngine = templateEngine;
+    this.gson = gson;
+  }
 
-    //
-    // Attributes
-    //
-    private final TemplateEngine templateEngine;
-    private final Gson gson;
+  //
+  // Public methods
+  //
 
-    //
-    // Constructor
-    //
+  /**
+   * Initialize all of the HTTP routes that make up this web application.
+   *
+   * <p>Initialization of the web server includes defining the location for static files, and
+   * defining all routes for processing client requests. The method returns after the web server
+   * finishes its initialization.
+   */
+  public void initialize() {
 
-    /**
-     * The constructor for the Web Server.
-     *
-     * @param templateEngine The default {@link TemplateEngine} to render page-level HTML views.
-     * @param gson           The Google JSON parser object used to render Ajax responses.
-     * @throws NullPointerException If any of the parameters are {@code null}.
-     */
-    public WebServer(final TemplateEngine templateEngine, final Gson gson) {
-        // validation
-        Objects.requireNonNull(templateEngine, "templateEngine must not be null");
-        Objects.requireNonNull(gson, "gson must not be null");
-        //
-        this.templateEngine = templateEngine;
-        this.gson = gson;
-    }
+    // Configuration to serve static files
+    staticFileLocation("/public");
 
-    //
-    // Public methods
-    //
+    //// Setting any route (or filter) in Spark triggers initialization of the
+    //// embedded Jetty web server.
 
-    /**
-     * Initialize all of the HTTP routes that make up this web application.
-     *
-     * <p>Initialization of the web server includes defining the location for static files, and
-     * defining all routes for processing client requests. The method returns after the web server
-     * finishes its initialization.
-     */
-    public void initialize() {
+    //// A route is set for a request verb by specifying the path for the
+    //// request, and the function callback (request, response) -> {} to
+    //// process the request. The order that the routes are defined is
+    //// important. The first route (request-path combination) that matches
+    //// is the one which is invoked. Additional documentation is at
+    //// http://sparkjava.com/documentation.html and in Spark tutorials.
 
-        // Configuration to serve static files
-        staticFileLocation("/public");
+    //// Each route (processing function) will check if the request is valid
+    //// from the client that made the request. If it is valid, the route
+    //// will extract the relevant data from the request and pass it to the
+    //// application object delegated with executing the request. When the
+    //// delegate completes execution of the request, the route will create
+    //// the parameter map that the response template needs. The data will
+    //// either be in the value the delegate returns to the route after
+    //// executing the request, or the route will query other application
+    //// objects for the data needed.
 
-        //// Setting any route (or filter) in Spark triggers initialization of the
-        //// embedded Jetty web server.
+    //// FreeMarker defines the HTML response using templates. Additional
+    //// documentation is at
+    //// http://freemarker.org/docs/dgui_quickstart_template.html.
+    //// The Spark FreeMarkerEngine lets you pass variable values to the
+    //// template via a map. Additional information is in online
+    //// tutorials such as
+    //// http://benjamindparrish.azurewebsites.net/adding-freemarker-to-java-spark/.
 
-        //// A route is set for a request verb by specifying the path for the
-        //// request, and the function callback (request, response) -> {} to
-        //// process the request. The order that the routes are defined is
-        //// important. The first route (request-path combination) that matches
-        //// is the one which is invoked. Additional documentation is at
-        //// http://sparkjava.com/documentation.html and in Spark tutorials.
+    //// These route definitions are examples. You will define the routes
+    //// that are appropriate for the HTTP client interface that you define.
+    //// Create separate Route classes to handle each route; this keeps your
+    //// code clean; using small classes.
 
-        //// Each route (processing function) will check if the request is valid
-        //// from the client that made the request. If it is valid, the route
-        //// will extract the relevant data from the request and pass it to the
-        //// application object delegated with executing the request. When the
-        //// delegate completes execution of the request, the route will create
-        //// the parameter map that the response template needs. The data will
-        //// either be in the value the delegate returns to the route after
-        //// executing the request, or the route will query other application
-        //// objects for the data needed.
+    // Shows the Checkers game Home page.
+    get(HOME_URL, new GetHomeRoute(templateEngine));
+    get(SIGNIN_URL, new GetSignInRoute(templateEngine));
+    post(SIGNIN_URL, new PostSignInRoute(templateEngine));
+    post(SIGNOUT_URL, new PostSignOutRoute(templateEngine));
+    post(GAME_START_URL, new PostStartGameRoute());
+    get(GAME_URL, new GetGameRoute(templateEngine));
+    post(RESIGN, new PostResignRoute());
 
-        //// FreeMarker defines the HTML response using templates. Additional
-        //// documentation is at
-        //// http://freemarker.org/docs/dgui_quickstart_template.html.
-        //// The Spark FreeMarkerEngine lets you pass variable values to the
-        //// template via a map. Additional information is in online
-        //// tutorials such as
-        //// http://benjamindparrish.azurewebsites.net/adding-freemarker-to-java-spark/.
+/*    post(VALIDATE_URL, new PostValidateMoveRoute(templateEngine));
+    post("/submit_turn", new PostSubmitTurnRoute());
+    post("/resignGame", new PostResignRoute());
+    post("/checkTurn", new PostCheckTurnRoute());*/
 
-        //// These route definitions are examples. You will define the routes
-        //// that are appropriate for the HTTP client interface that you define.
-        //// Create separate Route classes to handle each route; this keeps your
-        //// code clean; using small classes.
+    PlayerLobby.initPlayers();
+    GameCenter.initGames();
 
-        // Shows the Checkers game Home page.
-        get(HOME_URL, new GetHomeRoute(templateEngine));
-        get(SIGNIN_URL, new GetSignInRoute(templateEngine));
-        post(SIGNIN_URL, new PostSignInRoute(templateEngine));
-        post(SIGNOUT_URL, new PostSignOutRoute(templateEngine));
-        post(GAME_START_URL, new PostStartGameRoute());
-        get(GAME_URL, new GetGameRoute(templateEngine));
-        post(RESIGN, new PostResignRoute());
-        //   post(VALIDATE_URL, new PostValidateMoveRoute(templateEngine));
-        post("/submit_turn", new PostSubmitTurnRoute());
-        post("/resignGame", new PostResignRoute());
-        post("/checkTurn", new PostCheckTurnRoute());
-        PlayerLobby.initPlayers();
-        GameCenter.initGames();
-
-        LOG.config("WebServer is initialized.");
-    }
+    LOG.config("WebServer is initialized.");
+  }
 }

@@ -2,7 +2,6 @@ package com.webcheckers.ui;
 
 import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER_KEY;
 import static com.webcheckers.ui.WebServer.GAME_URL;
-import static com.webcheckers.ui.WebServer.HOME_URL;
 import static spark.Spark.halt;
 
 import com.webcheckers.application.GameCenter;
@@ -94,7 +93,7 @@ public class PostStartGameRoute implements Route {
 
     // TODO eventually have GameCenter handle adding and removing player inGame status
     // Set currentPlayer and opponentPlayer as inGame
-    currentPlayer.setGame(true);
-    opponentPlayer.setGame(true);
+    currentPlayer.inGame(true);
+    opponentPlayer.inGame(true);
   }
 }
