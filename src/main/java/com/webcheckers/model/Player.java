@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import java.util.UUID;
+
 /**
  * Player representation used for holding their information.
  *
@@ -8,17 +10,28 @@ package com.webcheckers.model;
  */
 public class Player {
 
+  private final UUID playerID; // Player Identifier
   private final String name; // Player's name
   private boolean inGame; // Player is in a game or not
 
   /**
-   * Constructs a Player with given name, and sets inGame to false.
+   * Constructs a Player given name, generates a player ID, and sets inGame to false.
    *
    * @param name Player username
    */
   public Player(String name) {
+    this.playerID = UUID.randomUUID(); // Generate random player ID
     this.name = name;
     this.inGame = false;
+  }
+
+  /**
+   * Getter for the playerID.
+   *
+   * @return The player's ID in UUIDv4.
+   */
+  public UUID getPlayerID() {
+    return playerID;
   }
 
   /**
@@ -59,6 +72,6 @@ public class Player {
     if (this == o) return true;
     if (!(o instanceof Player)) return false;
     Player player = (Player) o;
-    return this.name.equals(player.name);
+    return this.playerID.equals(player.playerID) && this.name.equals(player.name);
   }
 }
