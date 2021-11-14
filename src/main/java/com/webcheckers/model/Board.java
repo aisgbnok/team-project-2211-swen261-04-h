@@ -98,8 +98,8 @@ public class Board implements Iterable<Row> {
     Piece startPiece = startSpace.getPiece(); // This should be the piece we want to move
     Piece endPiece = endSpace.getPiece(); // This needs to be null (empty space)
 
-    // Ensure End Space is valid
-    if (endSpace.isValid()) {
+    // End Space is not valid then move isn't valid
+    if (!endSpace.isValid()) {
       return false;
     }
 
