@@ -2,6 +2,7 @@ package com.webcheckers.model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Logger;
 
 /**
  * Board model for generating a board and handling board related actions.
@@ -14,6 +15,9 @@ public class Board implements Iterable<Row> {
   public static final int COLS = 8; // How many columns in a board
 
   private final ArrayList<Row> rows; // Contains all rows in a board in order.
+
+  // TODO REMOVE AFTER TESTING
+  private static final Logger LOG = Logger.getLogger(Board.class.getName());
 
   /** Constructs a new board in the default orientation. Red pieces are generated at the bottom. */
   public Board() {
@@ -102,6 +106,12 @@ public class Board implements Iterable<Row> {
     if (!endSpace.isValid()) {
       return false;
     }
+
+    LOG.fine(
+        "ROW: "
+            + Math.abs(startPos.getRow() - endPos.getRow())
+            + "\tCOL: "
+            + Math.abs(startPos.getCell() - endPos.getCell()));
 
     // Need to determine if the move is a jump or a simple move
     if (Math.abs(startPos.getRow() - endPos.getRow()) == 2
