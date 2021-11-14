@@ -118,10 +118,14 @@ public class Board implements Iterable<Row> {
         && Math.abs(startPos.getCell() - endPos.getCell()) == 2) {
       // This is a jump move.
       // Do something
+      LOG.fine("Returning True");
+      return true;
+    } else {
+      return false;
     }
 
     //
-    return true;
+    // return true;
   }
 
   private Space getSpace(Position position) {
