@@ -107,25 +107,23 @@ public class Board implements Iterable<Row> {
       return false;
     }
 
+    // TODO Remove after testing
+    // I'm pretty sure you can just do |startRow - endCol| == 3 to determine a jump, instead of
+    // long calculation. This will show results for both in case of error.
     LOG.fine(
-        "ROW: "
-            + Math.abs(startPos.getRow() - endPos.getRow())
-            + "\tCOL: "
-            + Math.abs(startPos.getCell() - endPos.getCell()));
+        "Is this a jump?\tLong: "
+            + ((Math.abs(startPos.getRow() - endPos.getRow()) == 2)
+                && (Math.abs(startPos.getCell() - endPos.getCell()) == 2))
+            + "\t\tShort: "
+            + (Math.abs(startPos.getRow() - endPos.getCell()) == 3));
 
     // Need to determine if the move is a jump or a simple move
-    if (Math.abs(startPos.getRow() - endPos.getRow()) == 2
-        && Math.abs(startPos.getCell() - endPos.getCell()) == 2) {
-      // This is a jump move.
-      // Do something
-      LOG.fine("Returning True");
+    if (Math.abs(startPos.getRow() - endPos.getCell()) == 3) {
       return true;
-    } else {
-      return false;
     }
 
-    //
-    // return true;
+    // Return false by default
+    return false;
   }
 
   private Space getSpace(Position position) {
