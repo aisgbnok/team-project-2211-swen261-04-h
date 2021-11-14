@@ -77,7 +77,7 @@ public class Game {
     return new Board(board, color.equals(Color.WHITE));
   }
 
-  public boolean validateMove(Move move) {
+  public Message validateMove(Move move) {
     // Create a new board, so we aren't modifying this board
     Board testBoard = new Board(board);
 

@@ -89,7 +89,7 @@ public class Board implements Iterable<Row> {
     }
   }
 
-  public boolean validateMove(Move move) {
+  public Message validateMove(Move move) {
     // Get start and end position
     Position startPos = move.getStart();
     Position endPos = move.getEnd();
@@ -104,7 +104,7 @@ public class Board implements Iterable<Row> {
 
     // End Space is not valid then move isn't valid
     if (!endSpace.isValid()) {
-      return false;
+      return Message.error("End Space is not valid!");
     }
 
     // TODO Remove after testing
@@ -119,11 +119,11 @@ public class Board implements Iterable<Row> {
 
     // Need to determine if the move is a jump or a simple move
     if (Math.abs(startPos.getRow() - endPos.getCell()) == 3) {
-      return true;
+      return Message.info("Valid jump!");
     }
 
     // Return false by default
-    return false;
+    return Message.error("Move invalid!");
   }
 
   private Space getSpace(Position position) {

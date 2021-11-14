@@ -45,11 +45,6 @@ public class PostValidateMoveRoute implements Route {
     Game game = GameCenter.getGame(uuid);
     // Board board = game.getBoard();
 
-    // TODO validate move
-    if (game.validateMove(move)) {
-      return new Gson().toJson(Message.info("Move Successful!"));
-    }
-
-    return new Gson().toJson(Message.error("Move Failed!"));
+    return new Gson().toJson(game.validateMove(move));
   }
 }
