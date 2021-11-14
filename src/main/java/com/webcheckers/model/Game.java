@@ -78,8 +78,10 @@ public class Game {
   }
 
   public boolean validateMove(Move move) {
+    // Create a new board, so we aren't modifying this board
     Board testBoard = new Board(board);
 
+    //Apply each pending move to the test board. (These should have already been validated)
     for (Move pendingMove: pendingMoves) {
       // Apply each pendingMove to the test board.
     }

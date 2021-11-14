@@ -86,19 +86,25 @@ public class Board implements Iterable<Row> {
   }
 
   public boolean validateMove(Move move) {
+    // Get start and end position
     Position startPos = move.getStart();
     Position endPos = move.getEnd();
 
+    // Get start and end space
     Space startSpace = this.getSpace(startPos);
     Space endSpace = this.getSpace(endPos);
 
-    Piece startPiece = startSpace.getPiece();
-    Piece endPiece = endSpace.getPiece();
+    // Get start and end piece
+    Piece startPiece = startSpace.getPiece(); // This should be the piece we want to move
+    Piece endPiece = endSpace.getPiece(); // This needs to be null (empty space)
 
-    // Validate End Space is valid
+    // Ensure End Space is valid
     if(endSpace.isValid()) {
       return false;
     }
+
+    // Need to determine if the move is a jump or a simple move
+
 
 
 
