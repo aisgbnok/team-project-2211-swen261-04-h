@@ -95,6 +95,7 @@ public class GetGameRoute implements Route {
 
     vm.put("viewMode", viewModes.PLAY);
     vm.put("activeColor", game.getActiveColor());
+    vm.put("gameID", String.format("\"%s\"", game.getGameID()));
 
     // TODO movement
     /*if (board.getTurn().equals("OPPONENT")) {
