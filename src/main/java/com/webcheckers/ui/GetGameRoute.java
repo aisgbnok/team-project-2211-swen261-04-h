@@ -1,22 +1,26 @@
 package com.webcheckers.ui;
 
+import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER_KEY;
+import static com.webcheckers.ui.PostStartGameRoute.BOARD_KEY;
+import static com.webcheckers.ui.PostStartGameRoute.OPPONENT_PLAYER_KEY;
+
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Color;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Game.viewModes;
 import com.webcheckers.model.Player;
-import java.util.UUID;
-import spark.*;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.logging.Logger;
-
-import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER_KEY;
-import static com.webcheckers.ui.PostStartGameRoute.BOARD_KEY;
-import static com.webcheckers.ui.PostStartGameRoute.OPPONENT_PLAYER_KEY;
+import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
+import spark.Route;
+import spark.Session;
+import spark.TemplateEngine;
 
 /**
  * The UI Controller to GET the Game page.
@@ -95,7 +99,7 @@ public class GetGameRoute implements Route {
 
     vm.put("viewMode", viewModes.PLAY);
     vm.put("activeColor", game.getActiveColor());
-    vm.put("gameID", String.format("\"%s\"", game.getGameID()));
+    vm.put("gameID", "\"" + game.getGameID() + "\"");
 
     // TODO movement
     /*if (board.getTurn().equals("OPPONENT")) {
