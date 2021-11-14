@@ -99,14 +99,16 @@ public class Board implements Iterable<Row> {
     Piece endPiece = endSpace.getPiece(); // This needs to be null (empty space)
 
     // Ensure End Space is valid
-    if(endSpace.isValid()) {
+    if (endSpace.isValid()) {
       return false;
     }
 
     // Need to determine if the move is a jump or a simple move
-
-
-
+    if (Math.abs(startPos.getRow() - endPos.getRow()) == 2
+        && Math.abs(startPos.getCell() - endPos.getCell()) == 2) {
+      // This is a jump move.
+      // Do something
+    }
 
     //
     return true;
