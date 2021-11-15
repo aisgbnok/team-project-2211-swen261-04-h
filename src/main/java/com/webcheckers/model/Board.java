@@ -145,18 +145,27 @@ public class Board implements Iterable<Row> {
 
     // TODO make this work better using ENUM directions
     // 2. SINGLE pieces only have two possible jumps
-    possibleJumps.add(
-        new Move(
-            startPos,
-            new Position(startPos.getRow() - jumpIncrement, startPos.getCell() + jumpIncrement)));
+    if ((0 <= startPos.getRow() - jumpIncrement)
+        && (startPos.getRow() - jumpIncrement < ROWS)
+        && (0 <= startPos.getCell() + jumpIncrement)
+        && (startPos.getCell() + jumpIncrement < COLS))
+      possibleJumps.add(
+          new Move(
+              startPos,
+              new Position(startPos.getRow() - jumpIncrement, startPos.getCell() + jumpIncrement)));
 
-    possibleJumps.add(
-        new Move(
-            startPos,
-            new Position(startPos.getRow() - jumpIncrement, startPos.getCell() - jumpIncrement)));
+    if ((0 <= startPos.getRow() - jumpIncrement)
+        && (startPos.getRow() - jumpIncrement < ROWS)
+        && (0 <= startPos.getCell() - jumpIncrement)
+        && (startPos.getCell() - jumpIncrement < COLS))
+      possibleJumps.add(
+          new Move(
+              startPos,
+              new Position(startPos.getRow() - jumpIncrement, startPos.getCell() - jumpIncrement)));
 
     // 2. KING pieces have an additional two possible jumps (4 total)
     if (piece.getType() == Type.KING) {
+      // Todo Add if statement to ensure in bounds
       possibleJumps.add(
           new Move(
               startPos,
