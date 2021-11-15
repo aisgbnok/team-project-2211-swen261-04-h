@@ -26,6 +26,8 @@ public class Move {
     int rowDelta = Math.abs(start.getRow() - end.getRow()); // Delta between start and end row
     int colDelta = Math.abs(start.getCell() - end.getCell()); // Delta between start and end col
 
+    // TODO should we do validation here as well?  Or not care whether end space is valid, etc?
+
     if (rowDelta == 1 && colDelta == 1) {
       type = Type.SLIDE; // If both row and col moved by 1 then it is a slide
     } else if (rowDelta == 2 && colDelta == 2) {
