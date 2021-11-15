@@ -109,18 +109,18 @@ public class Board implements Iterable<Row> {
       return Message.error("End Space is not valid!");
     }
 
-    // 2. Determine if a jump is possible, and force the player to jump
-    // If a player has more than one piece that can jump, they must choose one of them to jump.
-    if (canJump(startPos)) {
-      return Message.error("Must jump!");
-    }
-
-    // 3. Determine if it's a move or a jump
+    // 2. Determine if it's a move or a jump
     if (move.isSlide()) {
+      // 3. Determine if a jump is possible, and force the player to jump
+      // If a player has more than one piece that can jump, they must choose one of them to jump.
+      if (canJump(startPos)) {
+        return Message.error("Must jump!");
+      }
+
       // 4. Validate the move
       return Message.info("Valid slide!");
     } else if (move.isJump()) {
-      // 4. Validate the jump
+      // 2. Validate the jump
       return Message.info("Valid jump!");
     }
 
