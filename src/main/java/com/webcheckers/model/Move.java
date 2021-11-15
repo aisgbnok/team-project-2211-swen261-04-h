@@ -38,6 +38,15 @@ public class Move {
   }
 
   /**
+   * Constructs a duplicate of a given move.
+   *
+   * @param move Move to duplicate
+   */
+  public Move(Move move) {
+    this(move.getStart(), move.getEnd());
+  }
+
+  /**
    * Getter for the starting position of the move.
    *
    * @return Move's starting position
