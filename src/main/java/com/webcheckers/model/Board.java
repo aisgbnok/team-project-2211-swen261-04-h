@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import com.webcheckers.model.Piece.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Logger;
@@ -128,12 +129,35 @@ public class Board implements Iterable<Row> {
     return rows.get(position.getRow()).getSpace(position.getCell());
   }
 
-  private boolean canJump(Piece piece) {
+  private boolean canJump(Position startPos) {
     // TODO: If it is a multiple jump move do we have to do that over a single jump?
 
+    // Get space
+    Space space = getSpace(startPos);
+    Piece piece = space.getPiece();
+
+    // 1. Create a list of possible Jumps
+    int jumpIncrement = 2;
+    ArrayList<Move> possibleJumps = new ArrayList<>(2);
+
+    // TODO make this work better using ENUM directions
+    // SINGLE pieces only have two possible jumps
+    possibleJumps.add(
+        new Move(startPos, new Position(startPos.getRow() - jumpIncrement, startPos.getCell() + jumpIncrement)));
+
+    possibleJumps.add(
+        new Move(startPos, new Position(startPos.getRow() - jumpIncrement, startPos.getCell() - jumpIncrement)));
+
+    // KING pieces have an additional two possible jumps (4 total).
+    if (piece.getType() == Type.KING) {
+      possibleJumps.add(
+          new Move(startPos, new Position(startPos.getRow() + jumpIncrement, startPos.getCell() + jumpIncrement)));
+
+      possibleJumps.add(
+          new Move(startPos, new Position(startPos.getRow() + jumpIncrement, startPos.getCell() - jumpIncrement)));
+    }
+
     // TODO:
-    // 1. Determine the piece type (SINGLE OR KING)
-    // 2. SINGLE (for each of the two diagonals), KING (for each of the four diagonals)
     // 3. Check to see if there is a piece in between
     // 4. Determine if it is the opposite color
     // 5. Make sure it is not a KING // TODO can a KING jump a KING?
