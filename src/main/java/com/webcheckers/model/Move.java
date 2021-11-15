@@ -91,6 +91,21 @@ public class Move {
     return type == Type.JUMP;
   }
 
+  /**
+   * Getter for the middle position between a jump move.
+   *
+   * @return Position between start and end if the move is a jump, and null if it isn't.
+   */
+  public Position middle() {
+    if (isJump()) {
+      int midRow = (start.getRow() + end.getRow()) / 2;
+      int midCol = (start.getCell() + end.getCell()) / 2;
+
+      return new Position(midRow, midCol);
+    }
+    return null;
+  }
+
   // Enumerations
   public enum Type {
     SLIDE,
