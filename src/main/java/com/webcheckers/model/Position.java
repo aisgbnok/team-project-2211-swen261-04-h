@@ -34,7 +34,7 @@ public class Position {
       this.cell = cell;
     } else {
       throw new IllegalArgumentException(
-          "Position: cell must be within 0 and column size, cell is " + row);
+          "Position: cell must be within 0 and column size, cell is " + cell);
     }
   }
 
