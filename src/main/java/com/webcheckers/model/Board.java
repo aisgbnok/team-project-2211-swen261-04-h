@@ -112,21 +112,11 @@ public class Board implements Iterable<Row> {
     // If a player has more than one piece that can jump, they must choose one of them to jump.
 
     // 3. Determine if it's a move or a jump
-
-    // 4. Validate the move or jump
-
-    // Both will equal 1 if it's a slide, or 2 if it's a jump
-    int rowCalc = Math.abs(startPos.getRow() - endPos.getRow());
-    int colCalc = Math.abs(startPos.getCell() - endPos.getCell());
-
-    // 2. Check if the move is a simple slide
-    if (rowCalc == 1 && colCalc == 1) {
+    if (move.isSlide()) {
+      // 4. Validate the move
       return Message.info("Valid slide!");
-    }
-
-    // 3. Check if the move is a jump
-    else if (rowCalc == 2 && colCalc == 2) {
-
+    } else if (move.isJump()) {
+      // 4. Validate the jump
       return Message.info("Valid jump!");
     }
 
