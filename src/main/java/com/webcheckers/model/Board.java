@@ -141,23 +141,30 @@ public class Board implements Iterable<Row> {
     ArrayList<Move> possibleJumps = new ArrayList<>(2);
 
     // TODO make this work better using ENUM directions
-    // SINGLE pieces only have two possible jumps
+    // 2. SINGLE pieces only have two possible jumps
     possibleJumps.add(
-        new Move(startPos, new Position(startPos.getRow() - jumpIncrement, startPos.getCell() + jumpIncrement)));
+        new Move(
+            startPos,
+            new Position(startPos.getRow() - jumpIncrement, startPos.getCell() + jumpIncrement)));
 
     possibleJumps.add(
-        new Move(startPos, new Position(startPos.getRow() - jumpIncrement, startPos.getCell() - jumpIncrement)));
+        new Move(
+            startPos,
+            new Position(startPos.getRow() - jumpIncrement, startPos.getCell() - jumpIncrement)));
 
-    // KING pieces have an additional two possible jumps (4 total).
+    // 2. KING pieces have an additional two possible jumps (4 total)
     if (piece.getType() == Type.KING) {
       possibleJumps.add(
-          new Move(startPos, new Position(startPos.getRow() + jumpIncrement, startPos.getCell() + jumpIncrement)));
+          new Move(
+              startPos,
+              new Position(startPos.getRow() + jumpIncrement, startPos.getCell() + jumpIncrement)));
 
       possibleJumps.add(
-          new Move(startPos, new Position(startPos.getRow() + jumpIncrement, startPos.getCell() - jumpIncrement)));
+          new Move(
+              startPos,
+              new Position(startPos.getRow() + jumpIncrement, startPos.getCell() - jumpIncrement)));
     }
 
-    // TODO:
     // 3. Check to see if there is a piece in between
     // 4. Determine if it is the opposite color
     // 5. Make sure it is not a KING // TODO can a KING jump a KING?
