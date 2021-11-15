@@ -38,4 +38,11 @@ public class Move {
   public Position getEnd() {
     return end;
   }
+
+  // Enumerations
+  public enum Type {
+    SLIDE,
+    JUMP,
+    INVALID
+  }
 }
