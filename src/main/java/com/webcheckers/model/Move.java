@@ -10,6 +10,8 @@ public class Move {
   private final Position start; // Move's starting position
   private final Position end; // Move's ending position
 
+  private final Type type; // Move type enum, SLIDE, JUMP, or INVALID.
+
   /**
    * Constructs a Move. Holds a start position and an end position for the move.
    *
@@ -19,6 +21,18 @@ public class Move {
   public Move(Position start, Position end) {
     this.start = start;
     this.end = end;
+
+    // Determine Move Type
+    int rowDelta = Math.abs(start.getRow() - end.getRow()); // Delta between start and end row
+    int colDelta = Math.abs(start.getCell() - end.getCell()); // Delta between start and end col
+
+    if (rowDelta == 1 && colDelta == 1) {
+      type = Type.SLIDE; // If both row and col moved by 1 then it is a slide
+    } else if (rowDelta == 2 && colDelta == 2) {
+      type = Type.JUMP; // If both row and col moved by 2 then it is a jump
+    } else {
+      type = Type.INVALID; // If it isn't a slide or jump, it is invalid
+    }
   }
 
   /**
