@@ -79,7 +79,7 @@ public class Move {
    * @return True if the move type is a slide, or false if it isn't.
    */
   public boolean isSlide() {
-    return type.equals(Type.SLIDE);
+    return type == Type.SLIDE;
   }
 
   /**
@@ -88,7 +88,7 @@ public class Move {
    * @return True if the move type is a jump, or false if it isn't.
    */
   public boolean isJump() {
-    return type.equals(Type.JUMP);
+    return type == Type.JUMP;
   }
 
   // Enumerations
