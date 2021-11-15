@@ -111,6 +111,9 @@ public class Board implements Iterable<Row> {
 
     // 2. Determine if a jump is possible, and force the player to jump
     // If a player has more than one piece that can jump, they must choose one of them to jump.
+    if (canJump(startPos)) {
+      return Message.error("Must jump!");
+    }
 
     // 3. Determine if it's a move or a jump
     if (move.isSlide()) {
