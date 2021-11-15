@@ -53,6 +53,33 @@ public class Move {
     return end;
   }
 
+  /**
+   * Getter for the move type. SLIDE, JUMP, or INVALID.
+   *
+   * @return Type enum SLIDE, JUMP, or INVALID.
+   */
+  public Type getType() {
+    return type;
+  }
+
+  /**
+   * Getter for if the move type is a slide.
+   *
+   * @return True if the move type is a slide, or false if it isn't.
+   */
+  public boolean isSlide() {
+    return type.equals(Type.SLIDE);
+  }
+
+  /**
+   * Getter for if the move type is a jump.
+   *
+   * @return True if the move type is a jump, or false if it isn't.
+   */
+  public boolean isJump() {
+    return type.equals(Type.JUMP);
+  }
+
   // Enumerations
   public enum Type {
     SLIDE,
