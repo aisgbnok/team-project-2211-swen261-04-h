@@ -164,6 +164,7 @@ public class Board implements Iterable<Row> {
               new Position(startPos.getRow() - jumpIncrement, startPos.getCell() - jumpIncrement)));
 
     // 2. KING pieces have an additional two possible jumps (4 total)
+    // TODO this will result in NullPointerException after first move, because previous move hasn't been applied yet.
     if (piece.getType() == Type.KING) {
       // Todo Add if statement to ensure in bounds
       possibleJumps.add(
