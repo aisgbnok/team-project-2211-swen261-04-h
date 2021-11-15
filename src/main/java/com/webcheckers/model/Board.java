@@ -166,8 +166,19 @@ public class Board implements Iterable<Row> {
     }
 
     // 3. Check to see if there is a piece in between
-    // 4. Determine if it is the opposite color
-    // 5. Make sure it is not a KING // TODO can a KING jump a KING?
+    for (Move jump : possibleJumps) {
+      if (jump.middle() != null) {
+        if (getSpace(jump.middle()).getPiece() != null) {
+          // 4. Determine if it is the opposite color
+          if (piece.getColor().opposite().equals(getSpace(jump.middle()).getPiece().getColor())) {
+            // 5. Make sure it is not a KING // TODO can a KING jump a KING?
+            if (getSpace(jump.middle()).getPiece().getType() != Type.KING) {
+              return true;
+            }
+          }
+        }
+      }
+    }
 
     return false;
   }
