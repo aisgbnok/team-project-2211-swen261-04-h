@@ -10,7 +10,7 @@ public class Move {
   private final Position start; // Move's starting position
   private final Position end; // Move's ending position
 
-  private final Type type; // Move type enum, SLIDE, JUMP, or INVALID.
+  private final Type type; // Move type enum; SLIDE, JUMP, or INVALID.
 
   /**
    * Constructs a Move. Holds a start position and an end position for the move.
