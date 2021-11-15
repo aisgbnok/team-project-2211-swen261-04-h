@@ -102,23 +102,23 @@ public class Board implements Iterable<Row> {
     Piece startPiece = startSpace.getPiece(); // This should be the piece we want to move
     Piece endPiece = endSpace.getPiece(); // This needs to be null (empty space)
 
-    // End Space is not valid then move isn't valid
+    // 1. Ensure that the endSpace is valid
     if (!endSpace.isValid()) {
       return Message.error("End Space is not valid!");
     }
 
-    // TODO Remove after testing
-    // I'm pretty sure you can just do |startRow - endCol| == 3 to determine a jump, instead of
-    // long calculation. This will show results for both in case of error.
-    LOG.fine(
-        "Is this a jump?\tLong: "
-            + ((Math.abs(startPos.getRow() - endPos.getRow()) == 2)
-                && (Math.abs(startPos.getCell() - endPos.getCell()) == 2))
-            + "\t\tShort: "
-            + (Math.abs(startPos.getRow() - endPos.getCell()) == 3));
+    // Both will equal 1 if it's a slide, or 2 if it's a jump
+    int rowCalc = Math.abs(startPos.getRow() - endPos.getRow());
+    int colCalc = Math.abs(startPos.getCell() - endPos.getCell());
 
-    // Need to determine if the move is a jump or a simple move
-    if (Math.abs(startPos.getRow() - endPos.getCell()) == 3) {
+    // 2. Check if the move is a simple slide
+    if (rowCalc == 1 && colCalc == 1) {
+      return Message.info("Valid slide!");
+    }
+
+    // 3. Check if the move is a jump
+    else if (rowCalc == 2 && colCalc == 2) {
+
       return Message.info("Valid jump!");
     }
 
