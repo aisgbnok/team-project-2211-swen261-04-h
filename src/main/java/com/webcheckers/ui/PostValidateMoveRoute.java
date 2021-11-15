@@ -3,7 +3,6 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.model.Game;
-import com.webcheckers.model.Message;
 import com.webcheckers.model.Move;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -41,6 +40,10 @@ public class PostValidateMoveRoute implements Route {
     Gson gson = new Gson();
     Move move = gson.fromJson(request.queryParams("actionData"), Move.class);
     UUID uuid = gson.fromJson(request.queryParams("gameID"), UUID.class);
+
+    // GSON deserialization doesn't call constructor, so we need to manually recreate the Move to
+    // ensure the constructor is called.
+    move = new Move(move);
 
     Game game = GameCenter.getGame(uuid);
     // Board board = game.getBoard();
