@@ -27,4 +27,23 @@ public enum Color {
   public Color opposite() {
     return getOppositeColor(this);
   }
+
+  /**
+   * Returns the direction the color should travel in.
+   *
+   * @param color Color to get direction of
+   * @return -1 if the color is RED, as RED moves away from the bottom. 1 if the color is WHITE.
+   */
+  public int getDirection(Color color) {
+    return color.equals(RED) ? -1 : 1;
+  }
+
+  /**
+   * Returns the direction of the color.
+   *
+   * @return -1 if the color is RED, as RED moves away from the bottom. 1 if the color is WHITE.
+   */
+  public int direction() {
+    return getDirection(this);
+  }
 }
