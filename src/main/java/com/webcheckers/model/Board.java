@@ -89,6 +89,7 @@ public class Board implements Iterable<Row> {
     }
   }
 
+  // TODO determine that piece is moving forwards
   public Message validateMove(Move move) {
     // Get start and end position
     Position startPos = move.getStart();
@@ -106,6 +107,13 @@ public class Board implements Iterable<Row> {
     if (!endSpace.isValid()) {
       return Message.error("End Space is not valid!");
     }
+
+    // 2. Determine if a jump is possible, and force the player to jump
+    // If a player has more than one piece that can jump, they must choose one of them to jump.
+
+    // 3. Determine if it's a move or a jump
+
+    // 4. Validate the move or jump
 
     // Both will equal 1 if it's a slide, or 2 if it's a jump
     int rowCalc = Math.abs(startPos.getRow() - endPos.getRow());
