@@ -196,6 +196,14 @@ public class Board implements Iterable<Row> {
     return false;
   }
 
+  // TODO: This is temporary
+  public void performMove(Move move) {
+    Space endSpace = getSpace(move.getEnd());
+    Space startSpace = getSpace(move.getStart());
+    endSpace.setPiece(startSpace.getPiece());
+    startSpace.removePiece();
+  }
+
   @Override
   public Iterator<Row> iterator() {
     return new Board(this).rows.iterator();
