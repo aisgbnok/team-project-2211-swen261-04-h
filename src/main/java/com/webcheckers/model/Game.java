@@ -83,10 +83,11 @@ public class Game {
     // Create a new board, so we aren't modifying this board
     Board testBoard = new Board(board);
 
-    //Apply each pending move to the test board. (These should have already been validated)
-/*    for (Move pendingMove: pendingMoves) {
+    // Apply each pending move to the test board. (These should have already been validated)
+    for (Move pendingMove : pendingMoves) {
       // Apply each pendingMove to the test board.
-    }*/
+      testBoard.performMove(pendingMove);
+    }
 
     // TODO add other pending moves, and some other stuff
 
