@@ -22,7 +22,7 @@ public class Position {
    */
   public Position(int row, int cell) {
     // Check to ensure row is within 0 and ROWS
-    if ((0 <= row) && (row < ROWS)) {
+    if (rowInBounds(row)) {
       this.row = row;
     } else {
       throw new IllegalArgumentException(
@@ -30,7 +30,7 @@ public class Position {
     }
 
     // Check to ensure cell is within 0 and COLS
-    if ((0 <= cell) && (cell < COLS)) {
+    if (cellInBounds(cell)) {
       this.cell = cell;
     } else {
       throw new IllegalArgumentException(
