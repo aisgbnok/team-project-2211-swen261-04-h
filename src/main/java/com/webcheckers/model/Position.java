@@ -86,23 +86,4 @@ public class Position {
   public static boolean inBounds(int row, int cell) {
     return rowInBounds(row) && cellInBounds(cell);
   }
-
-  /**
-   * Determines if the given position is on the board or not.
-   *
-   * @param position The position to check
-   * @return True if the position is in bounds (on the board), or false if it is not.
-   */
-  public static boolean inBounds(Position position) {
-    return rowInBounds(position.getRow()) && cellInBounds(position.getCell());
-  }
-
-  /**
-   * Getter for if this position is on the board or not.
-   *
-   * @return True if in bounds (on the board), or false if not.
-   */
-  public boolean inBounds() {
-    return inBounds(this);
-  }
 }
