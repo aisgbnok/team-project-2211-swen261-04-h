@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import com.webcheckers.model.Message.Type;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -89,7 +90,14 @@ public class Game {
 
     // TODO add other pending moves, and some other stuff
 
-    return testBoard.validateMove(move);
+    // If the result of the validation is INFO (success) then add it to pendingMoves
+    // TODO this is temporary for testing validate move
+    Message validResult = testBoard.validateMove(move);
+    if (validResult.getType() == Type.INFO) {
+      pendingMoves.add(move);
+    }
+
+    return validResult;
   }
 
   /*
