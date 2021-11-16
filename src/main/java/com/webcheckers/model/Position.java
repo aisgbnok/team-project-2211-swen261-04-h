@@ -22,7 +22,7 @@ public class Position {
    */
   public Position(int row, int cell) {
     // Check to ensure row is within 0 and ROWS
-    if (rowInBounds(row)) {
+    if (isRowInBounds(row)) {
       this.row = row;
     } else {
       throw new IllegalArgumentException(
@@ -30,7 +30,7 @@ public class Position {
     }
 
     // Check to ensure cell is within 0 and COLS
-    if (cellInBounds(cell)) {
+    if (isCellInBounds(cell)) {
       this.cell = cell;
     } else {
       throw new IllegalArgumentException(
@@ -62,7 +62,7 @@ public class Position {
    * @param row The row index to check
    * @return True if row index is in bounds (on the board), or false if it is not.
    */
-  public static boolean rowInBounds(int row) {
+  public static boolean isRowInBounds(int row) {
     return (0 <= row) && (row < ROWS);
   }
 
@@ -72,7 +72,7 @@ public class Position {
    * @param cell The cell index to check
    * @return True if cell index is in bounds (on the board), or false if it is not.
    */
-  public static boolean cellInBounds(int cell) {
+  public static boolean isCellInBounds(int cell) {
     return (0 <= cell) && (cell < COLS);
   }
 
@@ -83,7 +83,7 @@ public class Position {
    * @param cell The cell index to check
    * @return True if indexes are in bounds (on the board), or false if they are not.
    */
-  public static boolean inBounds(int row, int cell) {
-    return rowInBounds(row) && cellInBounds(cell);
+  public static boolean isInBounds(int row, int cell) {
+    return isRowInBounds(row) && isCellInBounds(cell);
   }
 }
