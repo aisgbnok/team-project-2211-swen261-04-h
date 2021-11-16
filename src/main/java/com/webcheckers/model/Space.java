@@ -100,12 +100,12 @@ public class Space {
   /**
    * Places a piece on the valid and empty space.
    *
-   * @param newPiece Piece to place on the empty space.
+   * @param piece Piece to place on the empty space.
    * @throws IllegalArgumentException if space is not valid.
    */
-  public void setPiece(Piece newPiece) {
+  public void setPiece(Piece piece) {
     if (isValid) {
-      this.piece = newPiece;
+      this.piece = piece;
       this.setValid();
     } else {
       // TODO is this smelly code?
