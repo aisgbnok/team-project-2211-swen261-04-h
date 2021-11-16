@@ -21,7 +21,7 @@ public class Position {
    * @param cell Position's cell index, must be integer from zero to COLS.
    */
   public Position(int row, int cell) {
-    // Check to ensure row is within 0 and ROWS
+    // Check to ensure given row is in bounds
     if (isRowInBounds(row)) {
       this.row = row;
     } else {
@@ -29,7 +29,7 @@ public class Position {
           "Position: row must be within 0 and row size, row is " + row);
     }
 
-    // Check to ensure cell is within 0 and COLS
+    // Check to ensure given cell is in bounds
     if (isCellInBounds(cell)) {
       this.cell = cell;
     } else {
@@ -63,6 +63,7 @@ public class Position {
    * @return True if row index is in bounds (on the board), or false if it is not.
    */
   public static boolean isRowInBounds(int row) {
+    // Check to ensure row is within 0 and ROWS
     return (0 <= row) && (row < ROWS);
   }
 
@@ -84,6 +85,7 @@ public class Position {
    * @return True if indexes are in bounds (on the board), or false if they are not.
    */
   public static boolean isInBounds(int row, int cell) {
+    // Check to ensure cell is within 0 and COLS
     return isRowInBounds(row) && isCellInBounds(cell);
   }
 }
