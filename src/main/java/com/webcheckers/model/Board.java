@@ -143,39 +143,28 @@ public class Board implements Iterable<Row> {
     int jumpIncrement = 2;
     ArrayList<Move> possibleJumps = new ArrayList<>(2);
 
-    // TODO make this work better using ENUM directions
+    // TODO: Rewrite from here down to be just better, because this is bad. Use ENUM directions.
     // 2. SINGLE pieces only have two possible jumps
-    if ((0 <= startPos.getRow() - jumpIncrement)
-        && (startPos.getRow() - jumpIncrement < ROWS)
-        && (0 <= startPos.getCell() + jumpIncrement)
-        && (startPos.getCell() + jumpIncrement < COLS))
-      possibleJumps.add(
-          new Move(
-              startPos,
-              new Position(startPos.getRow() - jumpIncrement, startPos.getCell() + jumpIncrement)));
+    int possibleRow = startPos.getRow() - jumpIncrement;
+    int possibleCol = startPos.getCell() + jumpIncrement;
+    if (Position.isInBounds(possibleRow, possibleCol)) // -, +
+    possibleJumps.add(new Move(startPos, new Position(possibleRow, possibleCol)));
 
-    if ((0 <= startPos.getRow() - jumpIncrement)
-        && (startPos.getRow() - jumpIncrement < ROWS)
-        && (0 <= startPos.getCell() - jumpIncrement)
-        && (startPos.getCell() - jumpIncrement < COLS))
-      possibleJumps.add(
-          new Move(
-              startPos,
-              new Position(startPos.getRow() - jumpIncrement, startPos.getCell() - jumpIncrement)));
+    possibleCol = startPos.getCell() - jumpIncrement;
+    if (Position.isInBounds(possibleRow, possibleCol)) // -, -
+    possibleJumps.add(new Move(startPos, new Position(possibleRow, possibleCol)));
 
     // 2. KING pieces have an additional two possible jumps (4 total)
-    // TODO this will result in NullPointerException after first move, because previous move hasn't been applied yet.
     if (piece.getType() == Type.KING) {
-      // Todo Add if statement to ensure in bounds
-      possibleJumps.add(
-          new Move(
-              startPos,
-              new Position(startPos.getRow() + jumpIncrement, startPos.getCell() + jumpIncrement)));
 
-      possibleJumps.add(
-          new Move(
-              startPos,
-              new Position(startPos.getRow() + jumpIncrement, startPos.getCell() - jumpIncrement)));
+      possibleRow = startPos.getRow() + jumpIncrement;
+
+      if (Position.isInBounds(possibleRow, possibleCol)) // +, -
+      possibleJumps.add(new Move(startPos, new Position(possibleRow, possibleCol)));
+
+      possibleCol = startPos.getCell() + jumpIncrement;
+      if (Position.isInBounds(possibleRow, possibleCol)) // +, +
+      possibleJumps.add(new Move(startPos, new Position(possibleRow, possibleCol)));
     }
 
     // 3. Check to see if there is a piece in between
