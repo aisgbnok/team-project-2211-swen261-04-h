@@ -160,6 +160,10 @@ public class Board implements Iterable<Row> {
     int jumpIncrement = 2;
     ArrayList<Move> possibleJumps = new ArrayList<>(2);
 
+    // TODO: Starting rewrite
+    // 1. Needs to generate two jumps in the correct direction dependant on color
+    // 2. Need to generate two additional jumps in the other direction if it is a KING
+
     // TODO: Rewrite from here down to be just better, because this is bad. Use ENUM directions.
     // 2. SINGLE pieces only have two possible jumps
     int possibleRow = startPos.getRow() - jumpIncrement;
@@ -186,6 +190,8 @@ public class Board implements Iterable<Row> {
 
     // 3. Check to see if there is a piece in between
     for (Move jump : possibleJumps) {
+
+      // TODO move this to a separate method called jumpValidation or something.
       if (jump.middle() != null) {
         if (getSpace(jump.middle()).getPiece() != null) {
           // 4. Determine if it is the opposite color
