@@ -32,18 +32,33 @@ public enum Color {
    * Returns the direction the color should travel in.
    *
    * @param color Color to get direction of
-   * @return -1 if the color is RED, as RED moves away from the bottom. 1 if the color is WHITE.
+   * @return UP if the color is RED, or DOWN if the color is WHITE.
    */
-  public int getDirection(Color color) {
-    return color.equals(RED) ? -1 : 1;
+  public Direction getDirection(Color color) {
+    return color.equals(RED) ? Direction.UP : Direction.DOWN;
   }
 
   /**
    * Returns the direction of the color.
    *
-   * @return -1 if the color is RED, as RED moves away from the bottom. 1 if the color is WHITE.
+   * @return UP if the color is RED, or DOWN if the color is WHITE.
    */
-  public int direction() {
+  public Direction direction() {
     return getDirection(this);
+  }
+
+  /** Provides directionality for COLOR */
+  private enum Direction {
+    UP,
+    DOWN;
+
+    /**
+     * Returns the integer value associated with the DIRECTION type. UP (-1) or DOWN (1).
+     *
+     * @return -1 if the DIRECTION is UP, or 1 if the DIRECTION is DOWN.
+     */
+    public int value() {
+      return this.equals(UP) ? -1 : 1;
+    }
   }
 }
