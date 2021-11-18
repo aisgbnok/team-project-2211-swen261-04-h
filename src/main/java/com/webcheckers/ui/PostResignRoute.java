@@ -20,7 +20,7 @@ import spark.Route;
 public class PostResignRoute implements Route {
 
   // Console Logger
-  private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
+  private static final Logger LOG = Logger.getLogger(PostResignRoute.class.getName());
 
   /**
    * Create the Spark Route (UI controller) to handle all {@code POST /resignGame} HTTP requests.
