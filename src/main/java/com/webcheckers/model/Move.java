@@ -91,6 +91,16 @@ public class Move {
     return type == Type.JUMP;
   }
 
+
+  /**
+   * Getter for if the move type is invalid.
+   *
+   * @return True if the move type is invalid, or false if it isn't.
+   */
+  public boolean isInvalid() {
+    return type == Type.INVALID;
+  }
+
   /**
    * Getter for the middle position between a jump move.
    *
