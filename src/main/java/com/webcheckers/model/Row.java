@@ -65,7 +65,7 @@ public class Row implements Iterable<Space> {
    * @param row Row to duplicate
    * @param reflection Will generated a reflected Row if true.
    */
-  public Row(Row row, Boolean reflection) {
+  public Row(Row row, boolean reflection) {
     this.index = row.index; // Row's index on the board
     this.spaces = new ArrayList<>(COLS); // Create a new list of spaces with default size of COLS
 
