@@ -100,47 +100,44 @@ public class Board implements Iterable<Row> {
     Space startSpace = this.getSpace(startPos);
     Space endSpace = this.getSpace(endPos);
 
-    // Get start and end piece
-    Piece startPiece = startSpace.getPiece(); // This should be the piece we want to move
-    Piece endPiece = endSpace.getPiece(); // This needs to be null (empty space)
+    // Get start piece
+    Piece startPiece = startSpace.getPiece(); // This is the piece we want to move
+    Color startColor = startPiece.getColor(); // Piece Color
+    Type startType = startPiece.getType(); // Piece Type
 
-    // 1. Ensure that the endSpace is valid
-    // TODO i think this is redundant / not needed
+    // TODO: I think this is not needed and possibly redundant.
     if (!endSpace.isValid()) {
       return Message.error("End Space is not valid!");
     }
 
-    // 2. Ensure move is valid
+    // Ensure move is not invalid
     if (move.isInvalid()) {
       return Message.error("Move is not valid!");
     }
 
-    // 3. Ensure it is going in the right direction
-    // Only matters for SINGLE pieces, king's can move any direction
-    if (startPiece.getType().equals(Type.SINGLE)) {
-      // RED row delta should be positive
-      if (startPiece.getColor().equals(Color.RED) && (rowDelta < 0)) {
-        return Message.error(Color.RED.name() + " pieces can only move " + Color.RED.direction());
-      }
-      // WHITE row delta should be negative
-      else if (startPiece.getColor().equals(Color.WHITE) && (rowDelta > 0)) {
-        return Message.error(
-            Color.WHITE.name() + " pieces can only move " + Color.WHITE.direction());
+    // Ensure the piece is moving in the right direction
+    // Only matters for SINGLE pieces, KINGs can move UP or DOWN
+    if (startType.equals(Type.SINGLE)) {
+      // RED row delta should be positive; WHITE row delta should be negative
+      if ((startColor.equals(Color.RED) && (rowDelta < 0))
+          || (startColor.equals(Color.WHITE) && (rowDelta > 0))) {
+        return Message.error(startColor.name() + " pieces can only move " + startColor.direction());
       }
     }
 
-    // 4. Determine if it's a move or a jump
+    // Validate the Slide Move
     if (move.isSlide()) {
-      // 5. Determine if a jump is possible, and force the player to jump
-      // If a player has more than one piece that can jump, they must choose one of them to jump.
+      // Determine if a jump is possible, and force the player to jump
       if (canJump(startPos)) {
         return Message.error("Must jump!");
       }
 
-      // 6. Validate the move
+      // Valid Slide
       return Message.info("Valid slide!");
-    } else if (move.isJump()) {
-      // 5. Validate the jump
+    }
+    // Validate the Jump Move
+    else if (move.isJump()) {
+      // Validate the JUMP
       return Message.info("Valid jump!");
     }
 
