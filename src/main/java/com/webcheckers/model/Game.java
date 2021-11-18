@@ -155,6 +155,41 @@ public class Game {
         && this.whitePlayer.equals(game.whitePlayer);
   }
 
+  public Message submitTurn(Player sessionPlayer) {
+    //Check if players active turn
+      //1. Update board
+      //2. Change who the active player is
+      //3. return successful message
+    return null;
+  }
+
+  private void changeActivePlayer() {
+    //1. determine who the next player is
+    //2. make kings
+    makeKings();
+    //3. determine winners
+  }
+
+  private void makeKings(){
+    for(int cell = 0; cell < 8; cell++){
+      if(
+              board.getRows().get(0).getSpaces().get(cell).isFull() &&
+              board.getRows().get(0).getSpaces().get(cell).getPiece().getColor() == Color.RED
+      ){
+        board.getRows().get(0).getSpaces().get(cell).getPiece().king();
+      }
+    }
+
+    for(int cell = 0; cell < 8; cell++){
+      if(
+              board.getRows().get(7).getSpaces().get(cell).isFull() &&
+              board.getRows().get(7).getSpaces().get(cell).getPiece().getColor() == Color.WHITE
+      ){
+        board.getRows().get(7).getSpaces().get(cell).getPiece().king();
+      }
+    }
+  }
+
   // TODO: viewModes don't belong to a game, but a session. Where should we put these?
   public enum viewModes {
     PLAY,

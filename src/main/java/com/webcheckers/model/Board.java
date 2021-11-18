@@ -85,6 +85,9 @@ public class Board implements Iterable<Row> {
     }
   }
 
+  public ArrayList<Row> getRows(){
+    return rows;
+  }
   @Override
   public Iterator<Row> iterator() {
     return new Board(this).rows.iterator();
