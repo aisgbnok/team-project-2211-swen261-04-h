@@ -94,6 +94,7 @@ public class Board implements Iterable<Row> {
     // Get start and end position
     Position startPos = move.getStart();
     Position endPos = move.getEnd();
+    int rowDelta = startPos.getRow() - endPos.getRow();
 
     // Get start and end space
     Space startSpace = this.getSpace(startPos);
@@ -117,17 +118,14 @@ public class Board implements Iterable<Row> {
     // 3. Ensure it is going in the right direction
     // Only matters for SINGLE pieces, king's can move any direction
     if (startPiece.getType().equals(Type.SINGLE)) {
-      // RED moves negative
-      if (startPiece.getColor().equals(Color.RED)) {
-        if (startPos.getRow() < endPos.getRow()) {
-          return Message.error("Wrong direction!");
-        }
+      // RED row delta should be positive
+      if (startPiece.getColor().equals(Color.RED) && (rowDelta < 0)) {
+        return Message.error(Color.RED.name() + " pieces can only move " + Color.RED.direction());
       }
-      // WHITE moves positive
-      else if (startPiece.getColor().equals(Color.WHITE)) {
-        if (startPos.getRow() > endPos.getRow()) {
-          return Message.error("Wrong direction!");
-        }
+      // WHITE row delta should be negative
+      else if (startPiece.getColor().equals(Color.WHITE) && (rowDelta > 0)) {
+        return Message.error(
+            Color.WHITE.name() + " pieces can only move " + Color.WHITE.direction());
       }
     }
 
