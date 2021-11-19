@@ -194,19 +194,14 @@ public class Board implements Iterable<Row> {
   }
 
   private boolean jumpValidation(Move move) {
-    // Get Positions
-    Position startPos = move.getStart();
-    Position midPos = move.getMiddle();
-    Position endPos = move.getEnd();
-
-    // Get Pieces
-    Piece startPiece = getSpace(startPos).getPiece();
-    Piece midPiece = getSpace(midPos).getPiece();
+    Position midPos = move.getMiddle(); // Position between start and end position
+    Piece midPiece = getSpace(midPos).getPiece(); // Piece at middle position
+    Piece startPiece = getSpace(move.getStart()).getPiece(); // Piece at start position
 
     // Make sure the middle position is not null
     if (midPos != null) {
       // Make sure the middle piece is not null
-      // TODO this is redundant
+      // TODO this is redundant?
       if (midPiece != null) {
         // Make sure the midPiece and the jumping piece is not the same color
         if (!midPiece.getColor().equals(startPiece.getColor())) {
@@ -216,6 +211,7 @@ public class Board implements Iterable<Row> {
       }
     }
 
+    // Return false by default
     return false;
   }
 
