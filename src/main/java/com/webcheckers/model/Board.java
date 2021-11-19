@@ -222,32 +222,26 @@ public class Board implements Iterable<Row> {
   }
 
   protected void performMove(Move move) {
-    // 1. Get the needed objects (positions, spaces, pieces)
-    // Get start and end position
-    Position startPos = move.getStart();
-    Position endPos = move.getEnd();
-
-    // Get start and end space
-    Space startSpace = this.getSpace(startPos);
-    Space midSpace = getSpace(move.getMiddle());
-    Space endSpace = this.getSpace(endPos);
-
-    // Get start piece
+    // Get objects needed for slide
+    Space startSpace = getSpace(move.getStart());
+    Space endSpace = getSpace(move.getEnd());
     Piece startPiece = startSpace.getPiece(); // This is the piece we want to move
 
     // Technically perform move should only be called on validatedMoves in Game.pendingMoves
     // We will do very simple error checking just to be sure anyway
     if (move.isInvalid()) return;
 
-    // 2. If it is a slide perform a slide
     // If the move is a slide
     if (move.isSlide()) {
       // Move the piece (perform slide)
       endSpace.setPiece(startPiece); // Set endSpace piece to startPiece object reference
       startSpace.removePiece(); // Remove startPiece object reference from startSpace
+      return; // Finished
     }
 
-    // 3. If it is a jump perform a jump
+    // Get objects needed for jump
+    Space midSpace = getSpace(move.getMiddle());
+
     // If the move is a jump && is legal/validated
     if (move.isJump() && jumpValidation(move)) {
       // Move the piece (perform jump)
