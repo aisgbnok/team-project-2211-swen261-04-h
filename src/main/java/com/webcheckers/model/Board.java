@@ -33,7 +33,7 @@ public class Board implements Iterable<Row> {
    * @param color Color of pieces to place on the bottom of the board.
    */
   private Board(Color color) {
-    // Create a new list of rows with default size of ROWS
+    // Create a new list of rows with initial capacity of ROWS
     this.rows = new ArrayList<>(ROWS);
 
     // Set the otherColor to WHITE if color is RED, or vice versa
@@ -73,7 +73,7 @@ public class Board implements Iterable<Row> {
    * @param reflection Will generated a reflected board if true.
    */
   public Board(Board board, boolean reflection) {
-    // Create a new list of rows with default size of ROWS
+    // Create a new list of rows with initial capacity of ROWS
     this.rows = new ArrayList<>(ROWS);
 
     // If the board should be reflected along x-axis and y-axis:
@@ -176,8 +176,8 @@ public class Board implements Iterable<Row> {
     // Go through all positions if it is a KING; only first two if it is a SINGLE
     int maxLoop = piece.getType() == Type.KING ? 4 : 2;
 
-    // Generate an empty ArrayList with a starting capacity of 2, to store possible jump moves
-    ArrayList<Move> possibleJumps = new ArrayList<>(2); // (2 because always 2 SINGLE)
+    // Generate an empty ArrayList to store possible jump moves
+    ArrayList<Move> possibleJumps = new ArrayList<>(4);
 
     // For maxLoop possible positions generate possible jumps, if the position is valid
     for (int i = 0; i <= maxLoop; i++) {

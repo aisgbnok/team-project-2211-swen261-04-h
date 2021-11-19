@@ -1,8 +1,8 @@
 package com.webcheckers.model;
 
 import com.webcheckers.model.Message.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.UUID;
 
@@ -15,7 +15,7 @@ public class Game {
 
   private final UUID gameID; // Game Identifier
   private final Board board; // Game Board
-  private final LinkedList<Move> pendingMoves; // Pending game piece moves
+  private final ArrayList<Move> pendingMoves; // Pending game piece moves
 
   private final Color activeColor; // Active Player/Piece Color
   private final Player redPlayer; // Player with red pieces
@@ -35,7 +35,7 @@ public class Game {
     // Game
     this.gameID = UUID.randomUUID(); // Set gameID
     this.board = new Board(); // Create a new board
-    this.pendingMoves = new LinkedList<>(); // Create an empty list to store pending moves
+    this.pendingMoves = new ArrayList<>(); // Create an empty list to store pending moves
 
     // Players
     this.activeColor = Color.RED; // RED is always the starting color
