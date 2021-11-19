@@ -126,6 +126,8 @@ public class Board implements Iterable<Row> {
       }
     }
 
+    // TODO jump can't happen after step, etc. etc.
+
     // Validate the Slide Move
     if (move.isSlide()) {
       // Determine if a jump is possible, and force the player to jump
@@ -163,10 +165,10 @@ public class Board implements Iterable<Row> {
 
     // Create possible jump positions
     int[][] possiblePositions = {
-        // SINGLES
+      // SINGLES
       {startPos.getRow() - jumpIncrement, startPos.getCell() - jumpIncrement}, // -, -
       {startPos.getRow() - jumpIncrement, startPos.getCell() + jumpIncrement}, // -, +
-        // KINGS
+      // KINGS
       {startPos.getRow() + jumpIncrement, startPos.getCell() - jumpIncrement}, // +, -
       {startPos.getRow() + jumpIncrement, startPos.getCell() + jumpIncrement}, // + , +
     };
