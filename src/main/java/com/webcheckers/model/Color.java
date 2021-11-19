@@ -47,6 +47,15 @@ public enum Color {
     return getDirection(this);
   }
 
+  /**
+   * Returns the integer value associated with the COLOR's DIRECTION type. RED (-1) or WHITE (1).
+   *
+   * @return -1 if the COLOR is RED, or 1 if the COLOR is WHITE.
+   */
+  public int value() {
+    return direction().value();
+  }
+
   /** Provides directionality for COLOR */
   private enum Direction {
     UP,
