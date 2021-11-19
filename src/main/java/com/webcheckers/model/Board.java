@@ -192,12 +192,12 @@ public class Board implements Iterable<Row> {
     for (Move jump : possibleJumps) {
 
       // TODO move this to a separate method called jumpValidation or something.
-      if (jump.middle() != null) {
-        if (getSpace(jump.middle()).getPiece() != null) {
+      if (jump.getMiddle() != null) {
+        if (getSpace(jump.getMiddle()).getPiece() != null) {
           // 4. Determine if it is the opposite color
-          if (piece.getColor().opposite().equals(getSpace(jump.middle()).getPiece().getColor())) {
+          if (piece.getColor().opposite().equals(getSpace(jump.getMiddle()).getPiece().getColor())) {
             // 5. Make sure it is not a KING // TODO can a KING jump a KING?
-            if (getSpace(jump.middle()).getPiece().getType() != Type.KING) {
+            if (getSpace(jump.getMiddle()).getPiece().getType() != Type.KING) {
               return true;
             }
           }
