@@ -108,12 +108,12 @@ public class Board implements Iterable<Row> {
 
     // TODO: I think this is not needed and possibly redundant.
     if (!endSpace.isValid()) {
-      return Message.error("End Space is not valid!");
+      return Message.error("End space is not valid!");
     }
 
     // Ensure move is not invalid
     if (move.isInvalid()) {
-      return Message.error("Move is not valid!");
+      return Message.error("Invalid Move");
     }
 
     // Ensure the piece is moving in the right direction
@@ -130,20 +130,21 @@ public class Board implements Iterable<Row> {
     if (move.isSlide()) {
       // Determine if a jump is possible, and force the player to jump
       if (canJump(startPos)) {
-        return Message.error("Must jump!");
+        return Message.error("A jump is possible, you must jump!");
       }
 
       // Valid Slide
-      return Message.info("Valid slide!");
+      return Message.info("Valid Slide");
     }
     // Validate the Jump Move
     else if (move.isJump()) {
       // Validate the JUMP
-      return Message.info("Valid jump!");
+      return Message.info("Valid Jump");
     }
 
     // Return false by default
-    return Message.error("Move invalid!");
+    // TODO this should never happen, added (Edge Case) for testing.
+    return Message.error("Invalid Move (Edge Case)");
   }
 
   private Space getSpace(Position position) {
