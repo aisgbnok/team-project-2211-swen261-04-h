@@ -221,12 +221,22 @@ public class Board implements Iterable<Row> {
     return false;
   }
 
-  // TODO: This is temporary
   public void performMove(Move move) {
-    Space endSpace = getSpace(move.getEnd());
+    // Get start and end space
     Space startSpace = getSpace(move.getStart());
+    Space endSpace = getSpace(move.getEnd());
+
+    // Set the end space piece to the start space piece object reference
     endSpace.setPiece(startSpace.getPiece());
+
+    // Remove the piece object reference from the start space
     startSpace.removePiece();
+
+    //TODO
+    // 1. Get the needed objects (positions, spaces, pieces)
+    // 2. If it is a slide perform a slide
+    // 3. If it is a jump perform a jump
+    // Update certain states along the way (hmmm think about this)
   }
 
   @Override
