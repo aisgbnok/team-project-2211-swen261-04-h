@@ -79,26 +79,29 @@ public class Game {
     return new Board(board, color.equals(Color.WHITE));
   }
 
+  /**
+   * Checks if a given move is valid on this game's current board.
+   *
+   * @param move Move that needs to be validated.
+   * @return Message of type INFO if move is valid, or type ERROR if invalid.
+   */
   public Message validateMove(Move move) {
     // Create a new board, so we aren't modifying this board
     Board testBoard = new Board(board);
 
-    // Apply each pending move to the test board. (These should have already been validated)
+    // Perform each pending move on the test board
     for (Move pendingMove : pendingMoves) {
-      // Apply each pendingMove to the test board.
       testBoard.performMove(pendingMove);
     }
 
-    // TODO add other pending moves, and some other stuff
-
     // If the result of the validation is INFO (success) then add it to pendingMoves
-    // TODO this is temporary for testing validate move
-    Message validResult = testBoard.validateMove(move);
-    if (validResult.getType() == Type.INFO) {
+    Message result = testBoard.validateMove(move);
+    if (result.getType() == Type.INFO) {
       pendingMoves.add(move);
     }
 
-    return validResult;
+    // Return the message result from board.validateMove
+    return result;
   }
 
   /*
