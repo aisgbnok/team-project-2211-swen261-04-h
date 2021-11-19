@@ -90,6 +90,7 @@ public class Board implements Iterable<Row> {
     }
   }
 
+  // TODO think about validation flow to ensure no exceptions
   public Message validateMove(Move move) {
     // Get start and end position
     Position startPos = move.getStart();
@@ -149,6 +150,7 @@ public class Board implements Iterable<Row> {
     return rows.get(position.getRow()).getSpace(position.getCell());
   }
 
+  // TODO think about validation flow to ensure no exceptions
   private boolean canJump(Position startPos) {
     // TODO: If it is a multiple jump move do we have to do that over a single jump?
 
@@ -193,6 +195,7 @@ public class Board implements Iterable<Row> {
     return false;
   }
 
+  // TODO think about validation flow to ensure no exceptions
   private boolean jumpValidation(Move move) {
     Position midPos = move.getMiddle(); // Position between start and end position
     Piece midPiece = getSpace(midPos).getPiece(); // Piece at middle position
