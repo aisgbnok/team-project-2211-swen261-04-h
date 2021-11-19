@@ -152,44 +152,40 @@ public class Board implements Iterable<Row> {
   private boolean canJump(Position startPos) {
     // TODO: If it is a multiple jump move do we have to do that over a single jump?
 
-    // Get other objects
     Space space = getSpace(startPos); // Starting Space
     Piece piece = space.getPiece(); // Starting (Moving) Piece
 
     // Generate correct jump increment, dependant on color direction value
     int jumpIncrement = 2 * piece.getColor().value(); // RED (Negative), WHITE (Positive)
 
+    // Create possible jump positions
+    int[][] possiblePositions = {
+        // SINGLES
+      {startPos.getRow() - jumpIncrement, startPos.getCell() - jumpIncrement}, // -, -
+      {startPos.getRow() - jumpIncrement, startPos.getCell() + jumpIncrement}, // -, +
+        // KINGS
+      {startPos.getRow() + jumpIncrement, startPos.getCell() - jumpIncrement}, // +, -
+      {startPos.getRow() + jumpIncrement, startPos.getCell() + jumpIncrement}, // + , +
+    };
+
+    // Go through all positions if it is a KING; only first two if it is a SINGLE
+    int maxLoop = piece.getType() == Type.KING ? 4 : 2;
+
     // Generate an empty ArrayList with a starting capacity of 2, to store possible jump moves
     ArrayList<Move> possibleJumps = new ArrayList<>(2); // (2 because always 2 SINGLE)
 
-    // Generate SINGLE jump moves
-    int possibleRow = startPos.getRow() - jumpIncrement;
-    int possibleCol = startPos.getCell() - jumpIncrement;
+    // For maxLoop possible positions generate possible jumps, if the position is valid
+    for (int i = 0; i <= maxLoop; i++) {
+      int row = possiblePositions[i][0];
+      int col = possiblePositions[i][1];
 
-    if (Position.isInBounds(possibleRow, possibleCol))
-      possibleJumps.add(new Move(startPos, new Position(possibleRow, possibleCol)));
-
-    // Change Column Position to other possible column
-    possibleCol = startPos.getCell() + jumpIncrement;
-
-    if (Position.isInBounds(possibleRow, possibleCol))
-      possibleJumps.add(new Move(startPos, new Position(possibleRow, possibleCol)));
-
-    if (piece.getType() == Type.KING) {
-      possibleCol = startPos.getCell() - jumpIncrement;
-
-      if (Position.isInBounds(possibleRow, possibleCol))
-        possibleJumps.add(new Move(startPos, new Position(possibleRow, possibleCol)));
-
-      possibleRow = startPos.getCell() + jumpIncrement;
-
-      if (Position.isInBounds(possibleRow, possibleCol))
-        possibleJumps.add(new Move(startPos, new Position(possibleRow, possibleCol)));
+      if (Position.isInBounds(row, col))
+        possibleJumps.add(new Move(startPos, new Position(row, col)));
     }
 
-    // Ensure Possible Jumps are Valid
+    // Check if possible jumps are valid
     for (Move jump : possibleJumps) {
-      // First valid jump, return true
+      // If a jump is valid, return true. The piece can jump.
       if (jumpValidation(jump)) return true;
     }
 
