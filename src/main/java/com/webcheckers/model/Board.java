@@ -152,62 +152,48 @@ public class Board implements Iterable<Row> {
   private boolean canJump(Position startPos) {
     // TODO: If it is a multiple jump move do we have to do that over a single jump?
 
-    // Get space
-    Space space = getSpace(startPos);
-    Piece piece = space.getPiece();
+    // Get other objects
+    Space space = getSpace(startPos); // Starting Space
+    Piece piece = space.getPiece(); // Starting (Moving) Piece
 
-    // 1. Create a list of possible Jumps
-    int jumpIncrement = 2;
-    ArrayList<Move> possibleJumps = new ArrayList<>(2);
+    // Generate correct jump increment, dependant on color direction value
+    int jumpIncrement = 2 * piece.getColor().value(); // RED (Negative), WHITE (Positive)
 
-    // TODO: Starting rewrite
-    // 1. Needs to generate two jumps in the correct direction dependant on color
-    // 2. Need to generate two additional jumps in the other direction if it is a KING
+    // Generate an empty ArrayList with a starting capacity of 2, to store possible jump moves
+    ArrayList<Move> possibleJumps = new ArrayList<>(2); // (2 because always 2 SINGLE)
 
-    // TODO: Rewrite from here down to be just better, because this is bad. Use ENUM directions.
-    // 2. SINGLE pieces only have two possible jumps
+    // Generate SINGLE jump moves
     int possibleRow = startPos.getRow() - jumpIncrement;
-    int possibleCol = startPos.getCell() + jumpIncrement;
-    if (Position.isInBounds(possibleRow, possibleCol)) // -, +
-    possibleJumps.add(new Move(startPos, new Position(possibleRow, possibleCol)));
+    int possibleCol = startPos.getCell() - jumpIncrement;
 
-    possibleCol = startPos.getCell() - jumpIncrement;
-    if (Position.isInBounds(possibleRow, possibleCol)) // -, -
-    possibleJumps.add(new Move(startPos, new Position(possibleRow, possibleCol)));
+    if (Position.isInBounds(possibleRow, possibleCol))
+      possibleJumps.add(new Move(startPos, new Position(possibleRow, possibleCol)));
 
-    // 2. KING pieces have an additional two possible jumps (4 total)
+    // Change Column Position to other possible column
+    possibleCol = startPos.getCell() + jumpIncrement;
+
+    if (Position.isInBounds(possibleRow, possibleCol))
+      possibleJumps.add(new Move(startPos, new Position(possibleRow, possibleCol)));
+
     if (piece.getType() == Type.KING) {
+      possibleCol = startPos.getCell() - jumpIncrement;
 
-      possibleRow = startPos.getRow() + jumpIncrement;
+      if (Position.isInBounds(possibleRow, possibleCol))
+        possibleJumps.add(new Move(startPos, new Position(possibleRow, possibleCol)));
 
-      if (Position.isInBounds(possibleRow, possibleCol)) // +, -
-      possibleJumps.add(new Move(startPos, new Position(possibleRow, possibleCol)));
+      possibleRow = startPos.getCell() + jumpIncrement;
 
-      possibleCol = startPos.getCell() + jumpIncrement;
-      if (Position.isInBounds(possibleRow, possibleCol)) // +, +
-      possibleJumps.add(new Move(startPos, new Position(possibleRow, possibleCol)));
+      if (Position.isInBounds(possibleRow, possibleCol))
+        possibleJumps.add(new Move(startPos, new Position(possibleRow, possibleCol)));
     }
 
-    // 3. Check to see if there is a piece in between
+    // Ensure Possible Jumps are Valid
     for (Move jump : possibleJumps) {
-
-      // TODO move this to a separate method called jumpValidation or something.
-      if (jump.getMiddle() != null) {
-        if (getSpace(jump.getMiddle()).getPiece() != null) {
-          // 4. Determine if it is the opposite color
-          if (piece
-              .getColor()
-              .opposite()
-              .equals(getSpace(jump.getMiddle()).getPiece().getColor())) {
-            // 5. Make sure it is not a KING // TODO can a KING jump a KING?
-            if (getSpace(jump.getMiddle()).getPiece().getType() != Type.KING) {
-              return true;
-            }
-          }
-        }
-      }
+      // First valid jump, return true
+      if (jumpValidation(jump)) return true;
     }
 
+    // Return false by default
     return false;
   }
 
