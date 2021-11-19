@@ -141,7 +141,7 @@ public class Board implements Iterable<Row> {
     // Validate the Jump Move
     else if (move.isJump()) {
       // Validate the JUMP
-      return Message.info("Valid Jump");
+      return jumpValidation(move) ? Message.info("Valid Jump") : Message.error("Invalid Jump");
     }
 
     // Return false by default
