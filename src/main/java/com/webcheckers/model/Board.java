@@ -118,10 +118,10 @@ public class Board implements Iterable<Row> {
 
     // Ensure the piece is moving in the right direction
     // Only matters for SINGLE pieces, KINGs can move UP or DOWN
-    if (startType.equals(Type.SINGLE)) {
+    if (startType == Type.SINGLE) {
       // RED row delta should be positive; WHITE row delta should be negative
-      if ((startColor.equals(Color.RED) && (rowDelta < 0))
-          || (startColor.equals(Color.WHITE) && (rowDelta > 0))) {
+      if (((startColor == Color.RED) && (rowDelta < 0))
+          || ((startColor == Color.WHITE) && (rowDelta > 0))) {
         return Message.error(startColor.name() + " pieces can only move " + startColor.direction());
       }
     }
@@ -177,10 +177,10 @@ public class Board implements Iterable<Row> {
     int maxLoop = piece.getType() == Type.KING ? 4 : 2;
 
     // Generate an empty ArrayList to store possible jump moves
-    ArrayList<Move> possibleJumps = new ArrayList<>(4);
+    ArrayList<Move> possibleJumps = new ArrayList<>(maxLoop);
 
     // For maxLoop possible positions generate possible jumps, if the position is valid
-    for (int i = 0; i <= maxLoop; i++) {
+    for (int i = 0; i < maxLoop; i++) {
       int row = possiblePositions[i][0];
       int col = possiblePositions[i][1];
 
@@ -210,7 +210,7 @@ public class Board implements Iterable<Row> {
       // TODO this is redundant?
       if (midPiece != null) {
         // Make sure the midPiece and the jumping piece is not the same color
-        if (!midPiece.getColor().equals(startPiece.getColor())) {
+        if (midPiece.getColor() != startPiece.getColor()) {
           // Then they can jump
           return true;
         }
