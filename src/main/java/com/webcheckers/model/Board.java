@@ -166,11 +166,11 @@ public class Board implements Iterable<Row> {
     // Create possible jump positions
     int[][] possiblePositions = {
       // SINGLES
-      {startPos.getRow() - jumpIncrement, startPos.getCell() - jumpIncrement}, // -, -
-      {startPos.getRow() - jumpIncrement, startPos.getCell() + jumpIncrement}, // -, +
-      // KINGS
       {startPos.getRow() + jumpIncrement, startPos.getCell() - jumpIncrement}, // +, -
-      {startPos.getRow() + jumpIncrement, startPos.getCell() + jumpIncrement}, // + , +
+      {startPos.getRow() + jumpIncrement, startPos.getCell() + jumpIncrement}, // +, +
+      // KINGS
+      {startPos.getRow() - jumpIncrement, startPos.getCell() - jumpIncrement}, // -, -
+      {startPos.getRow() - jumpIncrement, startPos.getCell() + jumpIncrement}, // - , +
     };
 
     // Go through all positions if it is a KING; only first two if it is a SINGLE
