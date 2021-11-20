@@ -17,6 +17,8 @@ public class Board implements Iterable<Row> {
 
   private final ArrayList<Row> rows; // Contains all rows in a board in order.
 
+  private boolean slid, jumped = false;
+
   // TODO REMOVE AFTER TESTING
   private static final Logger LOG = Logger.getLogger(Board.class.getName());
 
@@ -128,8 +130,8 @@ public class Board implements Iterable<Row> {
 
     // TODO jump can't happen after step, etc. etc.
 
-    // Validate the Slide Move
-    if (move.isSlide()) {
+    // Validate the Slide Move if a slide or jump hasn't already occurred
+    if (move.isSlide() && !slid && !jumped) {
       // Determine if a jump is possible, and force the player to jump
       if (canJump(startPos)) {
         return Message.error("A jump is possible, you must jump!");
@@ -138,8 +140,8 @@ public class Board implements Iterable<Row> {
       // Valid Slide
       return Message.info("Valid Slide");
     }
-    // Validate the Jump Move
-    else if (move.isJump()) {
+    // Validate the Jump Move if a slide hasn't already occurred
+    else if (move.isJump() && !slid) {
       // Validate the JUMP
       return jumpValidation(move) ? Message.info("Valid Jump") : Message.error("Invalid Jump");
     }
@@ -236,6 +238,7 @@ public class Board implements Iterable<Row> {
       // Move the piece (perform slide)
       endSpace.setPiece(startPiece); // Set endSpace piece to startPiece object reference
       startSpace.removePiece(); // Remove startPiece object reference from startSpace
+      slid = true; // A slide has occurred
       return; // Finished
     }
 
@@ -250,10 +253,9 @@ public class Board implements Iterable<Row> {
 
       // Capture (remove) the middle piece
       midSpace.removePiece();
-    }
 
-    //TODO
-    // Update certain states along the way (hmmm think about this)
+      jumped = true; // A jump has occurred
+    }
   }
 
   @Override
