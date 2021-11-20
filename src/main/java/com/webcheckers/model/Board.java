@@ -120,7 +120,7 @@ public class Board implements Iterable<Row> {
     Color startColor = startPiece.getColor(); // Piece Color
     Type startType = startPiece.getType(); // Piece Type
 
-    // TODO: I think this is not needed and possibly redundant.
+    // TODO: CSS and javascript don't let you move invalid piece. Maybe still keep? (Security)
     if (!endSpace.isValid()) {
       return Message.error(INVALID_END_SPACE);
     }
@@ -169,20 +169,20 @@ public class Board implements Iterable<Row> {
       }
 
       // Validate the JUMP
-      // TODO improve error reporting
+      // TODO: Improve Jump Validation Error Reporting
       return jumpValidation(move) ? Message.info(VALID_JUMP) : Message.error(INVALID_JUMP);
     }
 
     // Return false by default
-    // TODO this should never happen, added (Edge Case) for testing.
-    return Message.error("Invalid Move (Edge Case)");
+    // TODO: This should never happen. Added (Edge Case) for testing, if you see this look into it.
+    return Message.error(INVALID_MOVE + " (Edge Case)");
   }
 
   private Space getSpace(Position position) {
     return rows.get(position.getRow()).getSpace(position.getCell());
   }
 
-  // TODO think about validation flow to ensure no exceptions
+  // TODO: Run multiple validation flows to ensure no exceptions.
   private boolean canJump(Position startPos) {
     // TODO: If it is a multiple jump move do we have to do that over a single jump?
 
@@ -227,16 +227,16 @@ public class Board implements Iterable<Row> {
     return false;
   }
 
-  // TODO think about validation flow to ensure no exceptions
+  // TODO: Run multiple validation flows to ensure no exceptions.
   private boolean jumpValidation(Move move) {
     Position midPos = move.getMiddle(); // Position between start and end position
     Piece midPiece = getSpace(midPos).getPiece(); // Piece at middle position
     Piece startPiece = getSpace(move.getStart()).getPiece(); // Piece at start position
 
+    // TODO: Check the redundancy of these checks
     // Make sure the middle position is not null
     if (midPos != null) {
       // Make sure the middle piece is not null
-      // TODO this is redundant?
       if (midPiece != null) {
         // Make sure the midPiece and the jumping piece is not the same color
         if (midPiece.getColor() != startPiece.getColor()) {
@@ -273,6 +273,7 @@ public class Board implements Iterable<Row> {
     Space midSpace = getSpace(move.getMiddle());
 
     // If the move is a jump && is legal/validated
+    // TODO: Check the redundancy of these checks
     if (move.isJump() && jumpValidation(move)) {
       // Move the piece (perform jump)
       endSpace.setPiece(startPiece); // Set endSpace piece to startPiece object reference
