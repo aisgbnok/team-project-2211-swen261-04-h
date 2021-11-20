@@ -3,7 +3,6 @@ package com.webcheckers.model;
 import com.webcheckers.model.Piece.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.logging.Logger;
 
 /**
  * Board model for generating a board and handling board related actions.
@@ -34,9 +33,6 @@ public class Board implements Iterable<Row> {
 
   private static final String VALID_SLIDE = "Valid Slide";
   private static final String VALID_JUMP = "Valid Jump";
-
-  // TODO REMOVE AFTER TESTING
-  private static final Logger LOG = Logger.getLogger(Board.class.getName());
 
   /** Constructs a new board in the default orientation. Red pieces are generated at the bottom. */
   public Board() {
