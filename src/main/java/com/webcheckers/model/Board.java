@@ -17,7 +17,23 @@ public class Board implements Iterable<Row> {
 
   private final ArrayList<Row> rows; // Contains all rows in a board in order.
 
-  private boolean slid, jumped = false;
+  private boolean hasSlid; // A slide has occurred previously
+  private boolean hasJumped; // A jump has occurred previously
+
+  /*
+   * Validation Messages // TODO: Possibly Move into utility tier
+   */
+  private static final String INVALID_DIRECTION = "%s pieces can only move %s!";
+  private static final String INVALID_END_SPACE = "End space is not valid!";
+  private static final String INVALID_MOVE = "Invalid Move";
+  private static final String INVALID_JUMP = "Invalid Jump";
+  private static final String INVALID_JUMP_AFTER_SLIDE = "You can't jump after a slide!";
+  private static final String INVALID_SLIDE_AFTER_JUMP = "You can't slide after a jump!";
+  private static final String INVALID_SLIDE_AFTER_SLIDE = "You can't slide twice!";
+  private static final String INVALID_SLIDE_WHEN_JUMP = "A jump is possible, you must jump!";
+
+  private static final String VALID_SLIDE = "Valid Slide";
+  private static final String VALID_JUMP = "Valid Jump";
 
   // TODO REMOVE AFTER TESTING
   private static final Logger LOG = Logger.getLogger(Board.class.getName());
@@ -110,40 +126,55 @@ public class Board implements Iterable<Row> {
 
     // TODO: I think this is not needed and possibly redundant.
     if (!endSpace.isValid()) {
-      return Message.error("End space is not valid!");
+      return Message.error(INVALID_END_SPACE);
     }
 
     // Ensure move is not invalid
     if (move.isInvalid()) {
-      return Message.error("Invalid Move");
+      return Message.error(INVALID_MOVE);
     }
 
     // Ensure the piece is moving in the right direction
-    // Only matters for SINGLE pieces, KINGs can move UP or DOWN
-    if (startType == Type.SINGLE) {
-      // RED row delta should be positive; WHITE row delta should be negative
-      if (((startColor == Color.RED) && (rowDelta < 0))
-          || ((startColor == Color.WHITE) && (rowDelta > 0))) {
-        return Message.error(startColor.name() + " pieces can only move " + startColor.direction());
-      }
+    if ((startType == Type.SINGLE) // Only matters for SINGLE pieces, KINGs can move UP or DOWN
+        && ((startColor == Color.RED && rowDelta < 0) // RED row delta should be positive
+            || (startColor == Color.WHITE && rowDelta > 0))) // WHITE row delta should be negative
+    {
+      return Message.error(
+          String.format(INVALID_DIRECTION, startColor.name(), startColor.direction()));
     }
 
-    // TODO jump can't happen after step, etc. etc.
+    // Validate the Slide Move
+    if (move.isSlide()) {
 
-    // Validate the Slide Move if a slide or jump hasn't already occurred
-    if (move.isSlide() && !slid && !jumped) {
-      // Determine if a jump is possible, and force the player to jump
+      // If a slide has already occurred return an error message
+      if (hasSlid) {
+        return Message.error(INVALID_SLIDE_AFTER_SLIDE);
+      }
+      // If a jump has already occurred return an error message
+      else if (hasJumped) {
+        return Message.error(INVALID_SLIDE_AFTER_JUMP);
+      }
+
+      // Determine if a jump is possible, and tell the player to jump
       if (canJump(startPos)) {
-        return Message.error("A jump is possible, you must jump!");
+        return Message.error(INVALID_SLIDE_WHEN_JUMP);
       }
 
       // Valid Slide
-      return Message.info("Valid Slide");
+      return Message.info(VALID_SLIDE);
     }
-    // Validate the Jump Move if a slide hasn't already occurred
-    else if (move.isJump() && !slid) {
+
+    // Validate the Jump Move
+    else if (move.isJump()) {
+
+      // If a slide has already occurred return an error message
+      if (hasSlid) {
+        return Message.error(INVALID_JUMP_AFTER_SLIDE);
+      }
+
       // Validate the JUMP
-      return jumpValidation(move) ? Message.info("Valid Jump") : Message.error("Invalid Jump");
+      // TODO improve error reporting
+      return jumpValidation(move) ? Message.info(VALID_JUMP) : Message.error(INVALID_JUMP);
     }
 
     // Return false by default
@@ -238,7 +269,7 @@ public class Board implements Iterable<Row> {
       // Move the piece (perform slide)
       endSpace.setPiece(startPiece); // Set endSpace piece to startPiece object reference
       startSpace.removePiece(); // Remove startPiece object reference from startSpace
-      slid = true; // A slide has occurred
+      hasSlid = true; // A slide has occurred
       return; // Finished
     }
 
@@ -254,7 +285,7 @@ public class Board implements Iterable<Row> {
       // Capture (remove) the middle piece
       midSpace.removePiece();
 
-      jumped = true; // A jump has occurred
+      hasJumped = true; // A jump has occurred
     }
   }
 
