@@ -23,11 +23,11 @@ public class Board implements Iterable<Row> {
   /*
    * Validation Messages // TODO: Possibly Move into utility tier
    */
-  private static final String INVALID_DIRECTION = "%s pieces can only move %s!";
-  private static final String INVALID_END_SPACE = "End space is not valid!";
   private static final String INVALID_MOVE = "Invalid Move";
   private static final String INVALID_SLIDE = "Invalid Slide";
   private static final String INVALID_JUMP = "Invalid Jump";
+  private static final String INVALID_DIRECTION = "%s pieces can only move %s!";
+  private static final String INVALID_END_SPACE = "End space is not valid!";
   private static final String INVALID_JUMP_AFTER_SLIDE = "You can't jump after a slide!";
   private static final String INVALID_JUMP_SAME_PIECE = "You can't jump over your own pieces!";
   private static final String INVALID_JUMP_EMPTY_MIDDLE = "You can't jump over an empty space!";
@@ -105,6 +105,54 @@ public class Board implements Iterable<Row> {
       for (int rowIndex = 0; rowIndex < ROWS; rowIndex++) {
         this.rows.add(new Row(board.rows.get(rowIndex), false));
       }
+    }
+  }
+
+  /**
+   * Private getter for a space on the board.
+   *
+   * @param position Position of the space to return.
+   * @return Space on the board based on given position.
+   */
+  private Space getSpace(Position position) {
+    return rows.get(position.getRow()).getSpace(position.getCell());
+  }
+
+  /**
+   * Performs a move on the board. Provide an already validated move!
+   *
+   * @param move Valid move to perform on the board.
+   */
+  protected void performMove(Move move) {
+    Space startSpace = getSpace(move.getStart());
+    Space endSpace = getSpace(move.getEnd());
+    Piece movePiece = startSpace.getPiece(); // This is the piece we want to move
+
+    // performMove should only be called on validated moves added to Game.pendingMoves
+    // We will do very simple error checking just to be sure anyway
+    if (move.isInvalid()) return;
+
+    // Perform Slide
+    if (move.isSlide()) {
+      endSpace.setPiece(movePiece); // Set endSpace piece to movePiece
+      startSpace.removePiece(); // Remove movePiece from startSpace
+
+      hasSlid = true; // A slide has occurred
+      return; // Finished
+    }
+
+    // Get midSpace needed for jump
+    Space midSpace = getSpace(move.getMiddle());
+
+    // Perform Jump
+    if (move.isJump()) {
+      endSpace.setPiece(movePiece); // Set endSpace piece to movePiece
+      startSpace.removePiece(); // Remove movePiece from startSpace
+
+      // Capture (remove) the middle piece
+      midSpace.removePiece();
+
+      hasJumped = true; // A jump has occurred
     }
   }
 
@@ -188,7 +236,7 @@ public class Board implements Iterable<Row> {
       return validateJump(move);
     }
 
-    // Return false by default, should never happen, if you see this look into it.
+    // Invalid Move, above checks failed. This should never happen, if you see this look into it.
     return Message.error(INVALID_MOVE + " (Edge Case)");
   }
 
@@ -201,7 +249,7 @@ public class Board implements Iterable<Row> {
   private Message validateSlide(Move move) {
     // NOTE THIS IS A PLACEHOLDER METHOD THAT IS NEVER USED AND DOES NOT PERFORM ANY FUNCTION
 
-    // Return false by default
+    // Invalid Slide, above checks failed
     return Message.error(INVALID_SLIDE);
   }
 
@@ -237,8 +285,6 @@ public class Board implements Iterable<Row> {
    * @return True if there are available valid jumps from the starting position, or false if not.
    */
   private boolean canJump(Position startPosition) {
-    // TODO: If it is a multiple jump move do we have to do that over a single jump?
-
     Space space = getSpace(startPosition); // Starting Space
     Piece piece = space.getPiece(); // Starting (Moving) Piece
 
@@ -278,54 +324,6 @@ public class Board implements Iterable<Row> {
 
     // None of the possible jumps were viable
     return false;
-  }
-
-  /**
-   * Performs a move on the board. Provide an already validated move!
-   *
-   * @param move Valid move to perform on the board.
-   */
-  protected void performMove(Move move) {
-    Space startSpace = getSpace(move.getStart());
-    Space endSpace = getSpace(move.getEnd());
-    Piece movePiece = startSpace.getPiece(); // This is the piece we want to move
-
-    // performMove should only be called on validated moves added to Game.pendingMoves
-    // We will do very simple error checking just to be sure anyway
-    if (move.isInvalid()) return;
-
-    // Perform Slide
-    if (move.isSlide()) {
-      endSpace.setPiece(movePiece); // Set endSpace piece to movePiece
-      startSpace.removePiece(); // Remove movePiece from startSpace
-
-      hasSlid = true; // A slide has occurred
-      return; // Finished
-    }
-
-    // Get midSpace needed for jump
-    Space midSpace = getSpace(move.getMiddle());
-
-    // Perform Jump
-    if (move.isJump()) {
-      endSpace.setPiece(movePiece); // Set endSpace piece to movePiece
-      startSpace.removePiece(); // Remove movePiece from startSpace
-
-      // Capture (remove) the middle piece
-      midSpace.removePiece();
-
-      hasJumped = true; // A jump has occurred
-    }
-  }
-
-  /**
-   * Private getter for a space on the board.
-   *
-   * @param position Position of the space to return.
-   * @return Space on the board based on given position.
-   */
-  private Space getSpace(Position position) {
-    return rows.get(position.getRow()).getSpace(position.getCell());
   }
 
   @Override
