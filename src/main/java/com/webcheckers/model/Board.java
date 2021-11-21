@@ -278,34 +278,36 @@ public class Board implements Iterable<Row> {
     return false;
   }
 
+  /**
+   * Performs a move on the board. Provide an already validated move!
+   *
+   * @param move Valid move to perform on the board.
+   */
   protected void performMove(Move move) {
-    // Get objects needed for slide
     Space startSpace = getSpace(move.getStart());
     Space endSpace = getSpace(move.getEnd());
-    Piece startPiece = startSpace.getPiece(); // This is the piece we want to move
+    Piece movePiece = startSpace.getPiece(); // This is the piece we want to move
 
-    // Technically perform move should only be called on validatedMoves in Game.pendingMoves
+    // performMove should only be called on validated moves added to Game.pendingMoves
     // We will do very simple error checking just to be sure anyway
     if (move.isInvalid()) return;
 
-    // If the move is a slide
+    // Perform Slide
     if (move.isSlide()) {
-      // Move the piece (perform slide)
-      endSpace.setPiece(startPiece); // Set endSpace piece to startPiece object reference
-      startSpace.removePiece(); // Remove startPiece object reference from startSpace
+      endSpace.setPiece(movePiece); // Set endSpace piece to movePiece
+      startSpace.removePiece(); // Remove movePiece from startSpace
+
       hasSlid = true; // A slide has occurred
       return; // Finished
     }
 
-    // Get objects needed for jump
+    // Get midSpace needed for jump
     Space midSpace = getSpace(move.getMiddle());
 
-    // If the move is a jump && is legal/validated
-    // TODO: Check the redundancy of these checks
-    if (move.isJump() && validateJump(move).isSuccessful()) {
-      // Move the piece (perform jump)
-      endSpace.setPiece(startPiece); // Set endSpace piece to startPiece object reference
-      startSpace.removePiece(); // Remove startPiece object reference from startSpace
+    // Perform Jump
+    if (move.isJump()) {
+      endSpace.setPiece(movePiece); // Set endSpace piece to movePiece
+      startSpace.removePiece(); // Remove movePiece from startSpace
 
       // Capture (remove) the middle piece
       midSpace.removePiece();
