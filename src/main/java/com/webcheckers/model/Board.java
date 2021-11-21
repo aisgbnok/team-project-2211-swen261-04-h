@@ -171,7 +171,7 @@ public class Board implements Iterable<Row> {
       }
 
       // Validate the JUMP
-      return jumpValidation(move);
+      return validateJump(move);
     }
 
     // Return false by default
@@ -179,8 +179,31 @@ public class Board implements Iterable<Row> {
     return Message.error(INVALID_MOVE + " (Edge Case)");
   }
 
-  private Space getSpace(Position position) {
-    return rows.get(position.getRow()).getSpace(position.getCell());
+  // TODO: Run multiple validation flows to ensure no exceptions.
+  private Message validateJump(Move move) {
+    Position midPos = move.getMiddle(); // Position between start and end position
+    Piece midPiece = getSpace(midPos).getPiece(); // Piece at middle position
+    Piece startPiece = getSpace(move.getStart()).getPiece(); // Piece at start position
+
+    // TODO: Check the redundancy of these checks
+    // Make sure the middle position is not null
+    if (midPos != null) {
+      // Make sure the middle piece is not null
+      if (midPiece != null) {
+        // Make sure the midPiece and the jumping piece is not the same color
+        if (midPiece.getColor() != startPiece.getColor()) {
+          // Then they can jump
+          return Message.info(VALID_JUMP);
+        } else {
+          return Message.error(INVALID_JUMP_SAME_PIECE);
+        }
+      } else {
+        return Message.error(INVALID_JUMP_EMPTY_MIDDLE);
+      }
+    }
+
+    // Return false by default
+    return Message.error(INVALID_JUMP);
   }
 
   // TODO: Run multiple validation flows to ensure no exceptions.
@@ -221,38 +244,11 @@ public class Board implements Iterable<Row> {
     // Check if possible jumps are valid
     for (Move jump : possibleJumps) {
       // If a jump is valid, return true. The piece can jump.
-      if (jumpValidation(jump).isSuccessful()) return true;
+      if (validateJump(jump).isSuccessful()) return true;
     }
 
     // Return false by default
     return false;
-  }
-
-  // TODO: Run multiple validation flows to ensure no exceptions.
-  private Message jumpValidation(Move move) {
-    Position midPos = move.getMiddle(); // Position between start and end position
-    Piece midPiece = getSpace(midPos).getPiece(); // Piece at middle position
-    Piece startPiece = getSpace(move.getStart()).getPiece(); // Piece at start position
-
-    // TODO: Check the redundancy of these checks
-    // Make sure the middle position is not null
-    if (midPos != null) {
-      // Make sure the middle piece is not null
-      if (midPiece != null) {
-        // Make sure the midPiece and the jumping piece is not the same color
-        if (midPiece.getColor() != startPiece.getColor()) {
-          // Then they can jump
-          return Message.info(VALID_JUMP);
-        } else {
-          return Message.error(INVALID_JUMP_SAME_PIECE);
-        }
-      } else {
-        return Message.error(INVALID_JUMP_EMPTY_MIDDLE);
-      }
-    }
-
-    // Return false by default
-    return Message.error(INVALID_JUMP);
   }
 
   protected void performMove(Move move) {
@@ -279,7 +275,7 @@ public class Board implements Iterable<Row> {
 
     // If the move is a jump && is legal/validated
     // TODO: Check the redundancy of these checks
-    if (move.isJump() && jumpValidation(move).isSuccessful()) {
+    if (move.isJump() && validateJump(move).isSuccessful()) {
       // Move the piece (perform jump)
       endSpace.setPiece(startPiece); // Set endSpace piece to startPiece object reference
       startSpace.removePiece(); // Remove startPiece object reference from startSpace
@@ -289,6 +285,16 @@ public class Board implements Iterable<Row> {
 
       hasJumped = true; // A jump has occurred
     }
+  }
+
+  /**
+   * Private getter for a space on the board.
+   *
+   * @param position Position of the space to return.
+   * @return Space on the board based on given position.
+   */
+  private Space getSpace(Position position) {
+    return rows.get(position.getRow()).getSpace(position.getCell());
   }
 
   @Override
