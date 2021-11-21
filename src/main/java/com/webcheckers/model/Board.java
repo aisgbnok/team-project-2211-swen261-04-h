@@ -228,11 +228,16 @@ public class Board implements Iterable<Row> {
     return Message.info(VALID_JUMP);
   }
 
-  // TODO: Run multiple validation flows to ensure no exceptions.
-  private boolean canJump(Position startPos) {
+  /**
+   * Checks if there are available valid jumps from the given starting position.
+   *
+   * @param startPosition Position to test if it can perform any valid jumps.
+   * @return True if there are available valid jumps from the starting position, or false if not.
+   */
+  private boolean canJump(Position startPosition) {
     // TODO: If it is a multiple jump move do we have to do that over a single jump?
 
-    Space space = getSpace(startPos); // Starting Space
+    Space space = getSpace(startPosition); // Starting Space
     Piece piece = space.getPiece(); // Starting (Moving) Piece
 
     // Generate correct jump increment, dependant on color direction value
@@ -241,35 +246,35 @@ public class Board implements Iterable<Row> {
     // Create possible jump positions
     int[][] possiblePositions = {
       // SINGLES
-      {startPos.getRow() + jumpIncrement, startPos.getCell() - jumpIncrement}, // +, -
-      {startPos.getRow() + jumpIncrement, startPos.getCell() + jumpIncrement}, // +, +
+      {startPosition.getRow() + jumpIncrement, startPosition.getCell() - jumpIncrement}, // +, -
+      {startPosition.getRow() + jumpIncrement, startPosition.getCell() + jumpIncrement}, // +, +
       // KINGS
-      {startPos.getRow() - jumpIncrement, startPos.getCell() - jumpIncrement}, // -, -
-      {startPos.getRow() - jumpIncrement, startPos.getCell() + jumpIncrement}, // - , +
+      {startPosition.getRow() - jumpIncrement, startPosition.getCell() - jumpIncrement}, // -, -
+      {startPosition.getRow() - jumpIncrement, startPosition.getCell() + jumpIncrement}, // - , +
     };
 
-    // Go through all positions if it is a KING; only first two if it is a SINGLE
-    int maxLoop = piece.getType() == Type.KING ? 4 : 2;
+    // Traverse first two positions if it is a SINGLE, or all if it is a KING
+    int maxTraverse = piece.getType() == Type.SINGLE ? 2 : 4;
 
     // Generate an empty ArrayList to store possible jump moves
-    ArrayList<Move> possibleJumps = new ArrayList<>(maxLoop);
+    ArrayList<Move> possibleJumps = new ArrayList<>(maxTraverse);
 
-    // For maxLoop possible positions generate possible jumps, if the position is valid
-    for (int i = 0; i < maxLoop; i++) {
+    // For maxTraverse possible positions generate possible jumps, if the position isInBounds
+    for (int i = 0; i < maxTraverse; i++) {
       int row = possiblePositions[i][0];
       int col = possiblePositions[i][1];
 
       if (Position.isInBounds(row, col))
-        possibleJumps.add(new Move(startPos, new Position(row, col)));
+        possibleJumps.add(new Move(startPosition, new Position(row, col)));
     }
 
-    // Check if possible jumps are valid
+    // Check validity of possible jumps
     for (Move jump : possibleJumps) {
       // If a jump is valid, return true. The piece can jump.
       if (validateJump(jump).isSuccessful()) return true;
     }
 
-    // Return false by default
+    // None of the possible jumps were viable
     return false;
   }
 
