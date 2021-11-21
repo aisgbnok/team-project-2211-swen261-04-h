@@ -189,31 +189,29 @@ public class Board implements Iterable<Row> {
     return Message.error(INVALID_MOVE + " (Edge Case)");
   }
 
-  // TODO: Run multiple validation flows to ensure no exceptions.
+  /**
+   * Checks if a given jump is a valid on this board.
+   *
+   * @param move Jump that needs to be validated.
+   * @return Message of type INFO if jump is valid, or type ERROR if invalid.
+   */
   private Message validateJump(Move move) {
     Position midPos = move.getMiddle(); // Position between start and end position
     Piece midPiece = getSpace(midPos).getPiece(); // Piece at middle position
     Piece startPiece = getSpace(move.getStart()).getPiece(); // Piece at start position
 
-    // TODO: Check the redundancy of these checks
-    // Make sure the middle position is not null
-    if (midPos != null) {
-      // Make sure the middle piece is not null
-      if (midPiece != null) {
-        // Make sure the midPiece and the jumping piece is not the same color
-        if (midPiece.getColor() != startPiece.getColor()) {
-          // Then they can jump
-          return Message.info(VALID_JUMP);
-        } else {
-          return Message.error(INVALID_JUMP_SAME_PIECE);
-        }
-      } else {
-        return Message.error(INVALID_JUMP_EMPTY_MIDDLE);
-      }
+    // Middle piece should not be empty
+    if (midPiece == null) {
+      return Message.error(INVALID_JUMP_EMPTY_MIDDLE);
     }
 
-    // Return false by default
-    return Message.error(INVALID_JUMP);
+    // Middle piece should not be the same color as the jumping piece
+    if (midPiece.getColor() == startPiece.getColor()) {
+      return Message.error(INVALID_JUMP_SAME_PIECE);
+    }
+
+    // Valid Jump, above checks passed
+    return Message.info(VALID_JUMP);
   }
 
   // TODO: Run multiple validation flows to ensure no exceptions.
