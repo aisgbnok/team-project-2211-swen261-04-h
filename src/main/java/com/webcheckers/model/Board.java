@@ -221,7 +221,7 @@ public class Board implements Iterable<Row> {
     // Check if possible jumps are valid
     for (Move jump : possibleJumps) {
       // If a jump is valid, return true. The piece can jump.
-      if (jumpValidation(jump).getType() == Message.Type.INFO) return true;
+      if (jumpValidation(jump).isSuccessful()) return true;
     }
 
     // Return false by default
@@ -279,7 +279,7 @@ public class Board implements Iterable<Row> {
 
     // If the move is a jump && is legal/validated
     // TODO: Check the redundancy of these checks
-    if (move.isJump() && jumpValidation(move).getType() == Message.Type.INFO) {
+    if (move.isJump() && jumpValidation(move).isSuccessful()) {
       // Move the piece (perform jump)
       endSpace.setPiece(startPiece); // Set endSpace piece to startPiece object reference
       startSpace.removePiece(); // Remove startPiece object reference from startSpace

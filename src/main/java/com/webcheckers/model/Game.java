@@ -96,7 +96,7 @@ public class Game {
 
     // If the result of the validation is INFO (success) then add it to pendingMoves
     Message result = testBoard.validateMove(move);
-    if (result.getType() == Type.INFO) {
+    if (result.isSuccessful()) {
       pendingMoves.add(move);
     }
 
