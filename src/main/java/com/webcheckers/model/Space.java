@@ -98,17 +98,17 @@ public class Space {
   }
 
   /**
-   * Places a piece on the valid and empty space.
+   * Places given piece only if the space is valid. Only use setPiece on valid spaces!
    *
    * @param piece Piece to place on the empty space.
-   * @throws IllegalArgumentException if space is not valid.
    */
   public void setPiece(Piece piece) {
     if (isValid) {
       this.piece = piece;
       this.setValid();
     } else {
-      // TODO is this smelly code?
+      // RuntimeException (Unchecked)
+      // Only call setPiece on valid spaces!
       throw new IllegalArgumentException("Space already has a piece.");
     }
   }
