@@ -16,6 +16,7 @@ public class Board implements Iterable<Row> {
 
   private final ArrayList<Row> rows; // Contains all rows in a board in order.
 
+  // FIXME: Think about implications when submitting a turn? How do we reset them?
   private boolean hasSlid; // A slide has occurred previously
   private boolean hasJumped; // A jump has occurred previously
 
@@ -106,7 +107,12 @@ public class Board implements Iterable<Row> {
     }
   }
 
-  // TODO think about validation flow to ensure no exceptions
+  /**
+   * Checks if a given move is valid on this board. Takes into account previous movements.
+   *
+   * @param move Move that needs to be validated.
+   * @return Message of type INFO if move is valid, or type ERROR if invalid.
+   */
   public Message validateMove(Move move) {
     // Get start and end position
     Position startPos = move.getStart();
@@ -122,7 +128,12 @@ public class Board implements Iterable<Row> {
     Color startColor = startPiece.getColor(); // Piece Color
     Type startType = startPiece.getType(); // Piece Type
 
-    // TODO: CSS and javascript don't let you move invalid piece. Maybe still keep? (Security)
+    /*
+     * Basic Validation Checks
+     */
+
+    // CSS/JavaScript shouldn't let pieces be moved to invalid spaces, but keeping this as a simple
+    // check to filter out basic exceptions.
     if (!endSpace.isValid()) {
       return Message.error(INVALID_END_SPACE);
     }
@@ -141,41 +152,40 @@ public class Board implements Iterable<Row> {
           String.format(INVALID_DIRECTION, startColor.name(), startColor.direction()));
     }
 
-    // Validate the Slide Move
+    /*
+     * Slide Validation
+     */
     if (move.isSlide()) {
-
-      // If a slide has already occurred return an error message
+      // If a slide or jump has already occurred return appropriate error message
       if (hasSlid) {
         return Message.error(INVALID_SLIDE_AFTER_SLIDE);
-      }
-      // If a jump has already occurred return an error message
-      else if (hasJumped) {
+      } else if (hasJumped) {
         return Message.error(INVALID_SLIDE_AFTER_JUMP);
       }
 
-      // Determine if a jump is possible, and tell the player to jump
+      // If a jump is possible, tell the player
       if (canJump(startPos)) {
         return Message.error(INVALID_SLIDE_WHEN_JUMP);
       }
 
-      // Valid Slide
+      // Valid Slide, above checks passed
       return Message.info(VALID_SLIDE);
     }
 
-    // Validate the Jump Move
+    /*
+     * Jump Validation
+     */
     else if (move.isJump()) {
-
-      // If a slide has already occurred return an error message
+      // If a slide has already occurred return appropriate error message
       if (hasSlid) {
         return Message.error(INVALID_JUMP_AFTER_SLIDE);
       }
 
-      // Validate the JUMP
+      // Validate the Jump, and return the result
       return validateJump(move);
     }
 
-    // Return false by default
-    // TODO: This should never happen. Added (Edge Case) for testing, if you see this look into it.
+    // Return false by default, should never happen, if you see this look into it.
     return Message.error(INVALID_MOVE + " (Edge Case)");
   }
 
