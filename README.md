@@ -1,33 +1,54 @@
 # WebCheckers
 
-An online Checkers game system built in Java 8=>11 and Spark, a web micro-framework.
+An online Checkers game system built in Java 8 => 17 and Spark, a web micro-framework.
 
-## Team
+## Team H
 
-- Ian Chasse (idc7947)
-- Jake Downie (jwd2488)
-- Anthony Swierkosz (ajs2576)
+_Semester 2211, SWEN-261, Section 04, Team H_
+
+- Anthony Swierkosz, ajs2576
+- Jake Downie, 	jwd2488
+- Ian Chasse, idc7947
 
 ## Prerequisites
 
-- Java 8=>11 (Make sure to have correct JAVA_HOME setup in your environment)
-- Maven
+- You must have Java 8 to 17
+- You must have Maven 3.6.3 or later
+- [It is recommended to have `JAVA_HOME` setup in your environment](https://docs.oracle.com/en/cloud/saas/enterprise-performance-management-common/diepm/epm_set_java_home_104x6dd63633_106x6dd6441c.html)
 
-## How to run it
+_This project has been tested up to Java SE `17.0.1` and Maven `3.8.4`, but other versions may work._
 
-1. Clone the repository and go to the root directory.
-2. Execute `mvn compile exec:java`
-3. Open in your browser `http://localhost:4567/`
-4. Start a game and begin playing.
+## Running
 
-## Known bugs and disclaimers
+1. Clone the repository
 
-(It may be the case that your implementation is not perfect.)
+```
+git clone https://github.com/RIT-SWEN-261-04/team-project-2211-swen261-04-h.git
+```
 
-Document any known bug or nuisance. If any shortcomings, make clear what these are and where they
-are located.
+### For Terminal
+2. Go to the root directory
+3. Run the maven execution plugin
+```
+mvn compile exec:java
+```
+### For IntelliJ
+2. Open the root directory
+3. Run the `Run` configuration, <kbd>Shift</kbd> + <kbd>F10</kbd>
 
-## How to test it
+
+4. Go to [`http://localhost:4567/`](http://localhost:4567/) in your browser
+5. Follow the directions and begin playing a game
+
+## Known Bugs & Disclaimers
+
+> 👉 Turn submission is not yet implemented
+
+> 👉 After submitting a turn, move validation breaks. For more details on why, see [#32](https://github.com/RIT-SWEN-261-04/team-project-2211-swen261-04-h/issues/32)
+
+> 👉 There are instances where routing breaks because of race conditions. e.g., players challenge another around the same time.
+
+## Debugging & Testing
 
 The Maven build script provides hooks for run unit tests and generate code coverage reports in HTML.
 
@@ -67,6 +88,4 @@ To run tests on all the tiers in isolation do this:
 
 ## License
 
-MIT License
-
-See LICENSE for details.
+WebCheckers is licensed under the [MIT LICENSE](https://github.com/RIT-SWEN-261-04/team-project-2211-swen261-04-h/blob/master/LICENSE).
