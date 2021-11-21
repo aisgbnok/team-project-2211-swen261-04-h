@@ -7,7 +7,7 @@ An online Checkers game system built in Java 8 => 17 and Spark, a web micro-fram
 _Semester 2211, SWEN-261, Section 04, Team H_
 
 - Anthony Swierkosz, ajs2576
-- Jake Downie, 	jwd2488
+- Jake Downie, jwd2488
 - Ian Chasse, idc7947
 
 ## Prerequisites
@@ -16,7 +16,8 @@ _Semester 2211, SWEN-261, Section 04, Team H_
 - You must have Maven 3.6.3 or later
 - [It is recommended to have `JAVA_HOME` setup in your environment](https://docs.oracle.com/en/cloud/saas/enterprise-performance-management-common/diepm/epm_set_java_home_104x6dd63633_106x6dd6441c.html)
 
-_This project has been tested up to Java SE `17.0.1` and Maven `3.8.4`, but other versions may work._
+_This project has been tested up to Java SE `17.0.1` and Maven `3.8.4`, but other versions may
+work._
 
 ## Running
 
@@ -27,12 +28,16 @@ git clone https://github.com/RIT-SWEN-261-04/team-project-2211-swen261-04-h.git
 ```
 
 ### For Terminal
+
 2. Go to the root directory
 3. Run the maven execution plugin
+
 ```
 mvn compile exec:java
 ```
+
 ### For IntelliJ
+
 2. Open the root directory
 3. Run the `Run` configuration, <kbd>Shift</kbd> + <kbd>F10</kbd>
 
@@ -46,7 +51,7 @@ mvn compile exec:java
 
 > 👉 After submitting a turn, move validation breaks. For more details on why, see [#32](https://github.com/RIT-SWEN-261-04/team-project-2211-swen261-04-h/issues/32)
 
-> 👉 There are instances where routing breaks because of race conditions. e.g., players challenge another around the same time.
+> 👉 There are instances where routing breaks. e.g., players challenge another around the same time results in error message for second player [#34](https://github.com/RIT-SWEN-261-04/team-project-2211-swen261-04-h/issues/32)
 
 ## Debugging & Testing
 
@@ -88,4 +93,5 @@ To run tests on all the tiers in isolation do this:
 
 ## License
 
-WebCheckers is licensed under the [MIT LICENSE](https://github.com/RIT-SWEN-261-04/team-project-2211-swen261-04-h/blob/master/LICENSE).
+WebCheckers is licensed under
+the [MIT LICENSE.](https://github.com/RIT-SWEN-261-04/team-project-2211-swen261-04-h/blob/master/LICENSE)
