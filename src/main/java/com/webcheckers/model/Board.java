@@ -119,7 +119,7 @@ public class Board implements Iterable<Row> {
   }
 
   /**
-   * Performs a move on the board. Provide an already validated move!
+   * Performs a move on the board. Only pass an already validated move!
    *
    * @param move Valid move to perform on the board.
    */
@@ -157,7 +157,7 @@ public class Board implements Iterable<Row> {
   }
 
   /**
-   * Checks if a given move is valid on this board.
+   * Checks if a given move is valid on the board.
    *
    * @param move Move that needs to be validated.
    * @return Message of type INFO if move is valid, or type ERROR if invalid.
@@ -241,7 +241,7 @@ public class Board implements Iterable<Row> {
   }
 
   /**
-   * PLACEHOLDER! Checks if a given slide is valid on this board.
+   * PLACEHOLDER! Checks if a given slide is valid on the board.
    *
    * @param move Slide that needs to be validated.
    * @return Message of type INFO if slide is valid, or type ERROR if invalid.
@@ -254,7 +254,7 @@ public class Board implements Iterable<Row> {
   }
 
   /**
-   * Checks if a given jump is a valid on this board.
+   * Checks if a given jump is a valid on the board.
    *
    * @param move Jump that needs to be validated.
    * @return Message of type INFO if jump is valid, or type ERROR if invalid.

@@ -1,6 +1,5 @@
 package com.webcheckers.model;
 
-import com.webcheckers.model.Message.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -61,7 +60,7 @@ public class Game {
   }
 
   /**
-   * Getter for the game board. Generates a new duplicate game board and returns it.
+   * Getter for the game's board. Generates a new duplicate game board and returns it.
    *
    * @return Game board
    */
@@ -70,7 +69,8 @@ public class Game {
   }
 
   /**
-   * Getter for the game board. Generates a new duplicated and reflected game board and returns it.
+   * Getter for the game's board. Generates a new duplicated and reflected game board and returns
+   * it.
    *
    * @param color Color of the pieces that start on the bottom of the board.
    * @return Reflected Game board
@@ -80,7 +80,8 @@ public class Game {
   }
 
   /**
-   * Checks if a given move is valid on this game's current board.
+   * Checks if a given move is valid on the game's board. If valid, the move will be added to the
+   * game's pending moves. Moves are pending until turn is submitted.
    *
    * @param move Move that needs to be validated.
    * @return Message of type INFO if move is valid, or type ERROR if invalid.
