@@ -109,25 +109,25 @@ public class Board implements Iterable<Row> {
   }
 
   /**
-   * Checks if a given move is valid on this board. Takes into account previous movements.
+   * Checks if a given move is valid on this board.
    *
    * @param move Move that needs to be validated.
    * @return Message of type INFO if move is valid, or type ERROR if invalid.
    */
   public Message validateMove(Move move) {
-    // Get start and end position
+    // Positions
     Position startPos = move.getStart();
     Position endPos = move.getEnd();
     int rowDelta = startPos.getRow() - endPos.getRow();
 
-    // Get start and end space
+    // Spaces
     Space startSpace = this.getSpace(startPos);
     Space endSpace = this.getSpace(endPos);
 
-    // Get start piece
-    Piece startPiece = startSpace.getPiece(); // This is the piece we want to move
-    Color startColor = startPiece.getColor(); // Piece Color
-    Type startType = startPiece.getType(); // Piece Type
+    // Piece
+    Piece movePiece = startSpace.getPiece(); // This is the piece we want to move
+    Color moveColor = movePiece.getColor();
+    Type moveType = movePiece.getType();
 
     /*
      * Basic Validation Checks
@@ -139,23 +139,24 @@ public class Board implements Iterable<Row> {
       return Message.error(INVALID_END_SPACE);
     }
 
-    // Ensure move is not invalid
+    // Move should not be invalid
     if (move.isInvalid()) {
       return Message.error(INVALID_MOVE);
     }
 
-    // Ensure the piece is moving in the right direction
-    if ((startType == Type.SINGLE) // Only matters for SINGLE pieces, KINGs can move UP or DOWN
-        && ((startColor == Color.RED && rowDelta < 0) // RED row delta should be positive
-            || (startColor == Color.WHITE && rowDelta > 0))) // WHITE row delta should be negative
+    // Ensure SINGLE piece is moving in the right direction
+    if ((moveType == Type.SINGLE)
+        && ((moveColor == Color.RED && rowDelta < 0) // RED row delta should be positive
+            || (moveColor == Color.WHITE && rowDelta > 0))) // WHITE row delta should be negative
     {
       return Message.error(
-          String.format(INVALID_DIRECTION, startColor.name(), startColor.direction()));
+          String.format(INVALID_DIRECTION, moveColor.name(), moveColor.direction()));
     }
 
     /*
      * Slide Validation
      */
+
     if (move.isSlide()) {
       // If a slide or jump has already occurred return appropriate error message
       if (hasSlid) {
@@ -176,7 +177,8 @@ public class Board implements Iterable<Row> {
     /*
      * Jump Validation
      */
-    else if (move.isJump()) {
+
+    if (move.isJump()) {
       // If a slide has already occurred return appropriate error message
       if (hasSlid) {
         return Message.error(INVALID_JUMP_AFTER_SLIDE);
