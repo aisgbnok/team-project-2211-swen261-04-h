@@ -27,6 +27,8 @@ public class Board implements Iterable<Row> {
   private static final String INVALID_MOVE = "Invalid Move";
   private static final String INVALID_JUMP = "Invalid Jump";
   private static final String INVALID_JUMP_AFTER_SLIDE = "You can't jump after a slide!";
+  private static final String INVALID_JUMP_SAME_PIECE = "You can't jump over your own pieces!";
+  private static final String INVALID_JUMP_EMPTY_MIDDLE = "You can't jump over an empty space!";
   private static final String INVALID_SLIDE_AFTER_JUMP = "You can't slide after a jump!";
   private static final String INVALID_SLIDE_AFTER_SLIDE = "You can't slide twice!";
   private static final String INVALID_SLIDE_WHEN_JUMP = "A jump is possible, you must jump!";
@@ -169,8 +171,7 @@ public class Board implements Iterable<Row> {
       }
 
       // Validate the JUMP
-      // TODO: Improve Jump Validation Error Reporting
-      return jumpValidation(move) ? Message.info(VALID_JUMP) : Message.error(INVALID_JUMP);
+      return jumpValidation(move);
     }
 
     // Return false by default
@@ -220,7 +221,7 @@ public class Board implements Iterable<Row> {
     // Check if possible jumps are valid
     for (Move jump : possibleJumps) {
       // If a jump is valid, return true. The piece can jump.
-      if (jumpValidation(jump)) return true;
+      if (jumpValidation(jump).getType() == Message.Type.INFO) return true;
     }
 
     // Return false by default
@@ -228,7 +229,7 @@ public class Board implements Iterable<Row> {
   }
 
   // TODO: Run multiple validation flows to ensure no exceptions.
-  private boolean jumpValidation(Move move) {
+  private Message jumpValidation(Move move) {
     Position midPos = move.getMiddle(); // Position between start and end position
     Piece midPiece = getSpace(midPos).getPiece(); // Piece at middle position
     Piece startPiece = getSpace(move.getStart()).getPiece(); // Piece at start position
@@ -241,13 +242,17 @@ public class Board implements Iterable<Row> {
         // Make sure the midPiece and the jumping piece is not the same color
         if (midPiece.getColor() != startPiece.getColor()) {
           // Then they can jump
-          return true;
+          return Message.info(VALID_JUMP);
+        } else {
+          return Message.error(INVALID_JUMP_SAME_PIECE);
         }
+      } else {
+        return Message.error(INVALID_JUMP_EMPTY_MIDDLE);
       }
     }
 
     // Return false by default
-    return false;
+    return Message.error(INVALID_JUMP);
   }
 
   protected void performMove(Move move) {
@@ -274,7 +279,7 @@ public class Board implements Iterable<Row> {
 
     // If the move is a jump && is legal/validated
     // TODO: Check the redundancy of these checks
-    if (move.isJump() && jumpValidation(move)) {
+    if (move.isJump() && jumpValidation(move).getType() == Message.Type.INFO) {
       // Move the piece (perform jump)
       endSpace.setPiece(startPiece); // Set endSpace piece to startPiece object reference
       startSpace.removePiece(); // Remove startPiece object reference from startSpace
