@@ -27,7 +27,9 @@ work._
 git clone https://github.com/RIT-SWEN-261-04/team-project-2211-swen261-04-h.git
 ```
 
-### For Terminal
+_If you are using IntelliJ, you can use the **IntelliJ** directions for steps 2-3._
+
+### Terminal
 
 2. Go to the root directory
 3. Run the maven execution plugin
@@ -36,11 +38,12 @@ git clone https://github.com/RIT-SWEN-261-04/team-project-2211-swen261-04-h.git
 mvn compile exec:java
 ```
 
-### For IntelliJ
+### IntelliJ
 
 2. Open the root directory
-3. Run the `Run` configuration, <kbd>Shift</kbd> + <kbd>F10</kbd>
+3. Run the `Run` configuration, <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>F10</kbd>
 
+### Play
 
 4. Go to [`http://localhost:4567/`](http://localhost:4567/) in your browser
 5. Follow the directions and begin playing a game
