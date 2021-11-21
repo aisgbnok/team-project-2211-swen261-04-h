@@ -27,7 +27,9 @@ work._
 git clone https://github.com/RIT-SWEN-261-04/team-project-2211-swen261-04-h.git
 ```
 
-_If you are using IntelliJ, you can use the **IntelliJ** directions for steps 2-3._
+_If you are using IntelliJ, you can use
+the **[IntelliJ](https://github.com/RIT-SWEN-261-04/team-project-2211-swen261-04-h/tree/master#intellij)**
+directions for steps 2-3._
 
 ### Terminal
 
