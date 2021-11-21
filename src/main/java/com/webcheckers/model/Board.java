@@ -26,6 +26,7 @@ public class Board implements Iterable<Row> {
   private static final String INVALID_DIRECTION = "%s pieces can only move %s!";
   private static final String INVALID_END_SPACE = "End space is not valid!";
   private static final String INVALID_MOVE = "Invalid Move";
+  private static final String INVALID_SLIDE = "Invalid Slide";
   private static final String INVALID_JUMP = "Invalid Jump";
   private static final String INVALID_JUMP_AFTER_SLIDE = "You can't jump after a slide!";
   private static final String INVALID_JUMP_SAME_PIECE = "You can't jump over your own pieces!";
@@ -187,6 +188,19 @@ public class Board implements Iterable<Row> {
 
     // Return false by default, should never happen, if you see this look into it.
     return Message.error(INVALID_MOVE + " (Edge Case)");
+  }
+
+  /**
+   * PLACEHOLDER! Checks if a given slide is valid on this board.
+   *
+   * @param move Slide that needs to be validated.
+   * @return Message of type INFO if slide is valid, or type ERROR if invalid.
+   */
+  private Message validateSlide(Move move) {
+    // NOTE THIS IS A PLACEHOLDER METHOD THAT IS NEVER USED AND DOES NOT PERFORM ANY FUNCTION
+
+    // Return false by default
+    return Message.error(INVALID_SLIDE);
   }
 
   /**
