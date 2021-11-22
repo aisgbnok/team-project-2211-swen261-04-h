@@ -97,10 +97,15 @@ Alt</kbd> + <kbd>Shift</kbd> + <kbd>F10</kbd>
 
 The generated PDF will be in the `PROJECT_HOME/target/` directory.
 
-## How to create a zipfile distribution of the source for the project
+## Project Distribution (Zipfile)
 
-1. Execute `mvn exec:exec@zip`
-2. The distribution zipfile will be in `PROJECT_HOME/target/WebCheckers.zip`
+To generate a zipfile distribution of the source for the project, execute the following command:
+
+```
+mvn exec:exec@zip
+```
+
+The generated distribution zipfile will be in `PROJECT_HOME/target/WebCheckers.zip`
 
 ## License
 
