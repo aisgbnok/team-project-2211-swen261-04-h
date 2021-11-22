@@ -72,11 +72,10 @@ This section describes the application domain.
 
 ![The WebCheckers Domain Model](Team-H_Domain-Model.png)
 
-- Players view a homepage and then begin the sign-in process.
-- Once the player is signed in to the application then they can start a game of checkers.
-- A game of checkers consists of a board, a playerLobby, and other attributes like a gameID.
-- The board contains rows which contains spaces, and each valid space might have a piece.
-- A piece can be red or black and normal or a king.
+After a player signs in they are added to the Lobby and then able to play in games. Each game has
+two players which alternatively perform moves on the board. The board validates that moves adhere to
+the American Rules of Checkers. Each game has a single board containing 64 spaces which may contain
+a piece.
 
 ## Architecture and Design
 
