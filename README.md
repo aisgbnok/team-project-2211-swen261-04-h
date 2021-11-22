@@ -58,30 +58,36 @@ mvn compile exec:java
 
 > 👉 There are instances where routing breaks. e.g., players challenge another around the same time results in error message for second player [#34](https://github.com/RIT-SWEN-261-04/team-project-2211-swen261-04-h/issues/32)
 
-## Debugging & Testing
+## Testing
 
-The Maven build script provides hooks for run unit tests and generate code coverage reports in HTML.
+The Maven build script provides hooks for running unit tests and generating code coverage reports in
+HTML.
 
-To run tests on all tiers together do this:
+### Run tests on all tiers together:
 
-1. Execute `mvn clean test jacoco:report`
-2. Open in your browser the file at `PROJECT_HOME/target/site/jacoco/index.html`
+```
+mvn clean test jacoco:report
+```
 
-To run tests on a single tier do this:
+Open `PROJECT_HOME/target/site/jacoco/index.html` in your browser
 
-1. Execute `mvn clean test-compile surefire:test@tier jacoco:report@tier` where `tier` is one
-   of `ui`, `appl`, `model`
-2. Open in your browser the file at `PROJECT_HOME/target/site/jacoco/{ui, appl, model}/index.html`
+### Run tests on all the tiers in isolation:
 
-To run tests on all the tiers in isolation do this:
+```
+mvn exec:exec@tests-and-coverage
+```
 
-1. Execute `mvn exec:exec@tests-and-coverage`
-2. To view the Model tier tests open in your browser the file
-   at `PROJECT_HOME/target/site/jacoco/model/index.html`
-3. To view the Application tier tests open in your browser the file
-   at `PROJECT_HOME/target/site/jacoco/appl/index.html`
-4. To view the UI tier tests open in your browser the file
-   at `PROJECT_HOME/target/site/jacoco/ui/index.html`
+Open `PROJECT_HOME/target/site/jacoco/{ui, appl, model}/index.html` in your browser
+
+### Run tests on a single tier:
+
+Where `tier` is one of `ui`, `appl`, `model`:
+
+```
+mvn clean test-compile surefire:test@tier jacoco:report@tier
+``` 
+
+Open `PROJECT_HOME/target/site/jacoco/{ui, appl, model}/index.html` in your browser
 
 ## Design Documentation
 
