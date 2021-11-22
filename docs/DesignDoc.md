@@ -14,14 +14,13 @@ _Semester 2211, SWEN-261, Section 04, Team H_
 
 ## Executive Summary
 
-WebCheckers is a website allowing multiple users to play a game of checkers against another. Using
-Agile methodology, our team iteratively developed WebCheckers by utilizing the Java Spark
-micro-framework and the FreeMarker template engine. Users sign in with a unique name, from there
-they can spectate a game, or play against other players that are already signed in.
+WebCheckers provides players with a way to play a game of checkers against another. After signing in
+with a unique name, players can spectate a game or play against each other!
 
 ### Purpose
 
-WebCheckers allows multiple users to play a game of American checkers against another user.
+The goal of WebCheckers is to allow multiple players to play a game of American checkers against
+each other.
 
 ### Glossary and Acronyms
 
