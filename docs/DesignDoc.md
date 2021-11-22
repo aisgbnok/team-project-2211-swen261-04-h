@@ -1,23 +1,23 @@
 ---
-geometry: margin=.75in
+geometry: margin=1in
 ---
 
-# PROJECT Design Documentation
+# WebCheckers Design Documentation
 
 ## Team Information
 
-* Team name: TEAMNAME
-* Team members
-    * Ian Chasse (idc7947)
-    * Jake Downie (jwd2488)
-    * Anthony Swierkosz (ajs2576)
+_Semester 2211, SWEN-261, Section 04, Team H_
+
+* Anthony Swierkosz, ajs2576
+* Jake Downie, jwd2488
+* Ian Chasse, idc7947
 
 ## Executive Summary
 
-Using Agile methodology, our team iteratively developed WebCheckers by utilizing the Java Spark
-micro-framework coupled with the FreeMarker template engine. The application architecture was
-designed to utilize Object-Oriented design concepts from SOLID and GRASP. Therefore, the application
-is split into three main tiers: UI, Model, and Application.
+WebCheckers is a website allowing multiple users to play a game of checkers against another. Using
+Agile methodology, our team iteratively developed WebCheckers by utilizing the Java Spark
+micro-framework and the FreeMarker template engine. Users sign in with a unique name, from there
+they can spectate a game, or play against other players that are already signed in.
 
 ### Purpose
 
