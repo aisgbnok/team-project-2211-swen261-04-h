@@ -83,13 +83,19 @@ To run tests on all the tiers in isolation do this:
 4. To view the UI tier tests open in your browser the file
    at `PROJECT_HOME/target/site/jacoco/ui/index.html`
 
-## How to generate the Design documentation PDF
+## Design Documentation
 
-1. Execute `mvn exec:exec@docs`
-2. Note: this command will fail on a clean project without a `/target`
-   directory. Create the directory first if running after a `clean` operation without any
-   intervening commands that create the directory, such as compile.
-3. The generated PDF will be in `PROJECT_HOME/target/` directory
+To generate a PDF of the Design documentation, execute the following command:
+
+```
+mvn exec:exec@docs
+```
+
+If you are using **IntelliJ** you can run the `Generate Design Documentation` configuration, <kbd>
+Alt</kbd> + <kbd>Shift</kbd> + <kbd>F10</kbd>
+> _This command will fail on a clean project without a `/target` directory. Create the directory first if running after a `clean` operation without any intervening commands that create the directory, such as compile._
+
+The generated PDF will be in the `PROJECT_HOME/target/` directory.
 
 ## How to create a zipfile distribution of the source for the project
 
