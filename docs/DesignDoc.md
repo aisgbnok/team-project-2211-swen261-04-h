@@ -36,17 +36,18 @@ This section describes the features of the application.
 
 ### Definition of MVP
 
-The WebCheckers MVP should be capable of handling users and gameplay. Players must be able to sign
-in, sign out, start a game with another player, and resign. The game system must enforce the
-American Rules of Checkers and validate moves accordingly.
+WebCheckers MVP is capable of handling players and gameplay. Players can sign in, sign out, start a
+game with another player, and resign. WebCheckers enforces the American Rules of Checkers, and moves
+are validated accordingly.
 
 ### MVP Features
 
-#### User Handling
+#### Players
 
-- Allow multiple users to sign in and be connected to a single server.
-- Ensure no username is used twice.
-- Allow players to resign and/or sign out.
+- Players can sign in using a unique username
+- Players can play a game of checkers against another player
+- Players can sign out
+- Players can resign from a game
 
 #### Gameplay
 
