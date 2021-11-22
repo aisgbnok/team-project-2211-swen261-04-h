@@ -70,7 +70,7 @@ are validated accordingly.
 
 This section describes the application domain.
 
-![The WebCheckers Domain Model](domain-model.png)
+![The WebCheckers Domain Model](Team-H_Domain-Model.png)
 
 - Players view a homepage and then begin the sign-in process.
 - Once the player is signed in to the application then they can start a game of checkers.
