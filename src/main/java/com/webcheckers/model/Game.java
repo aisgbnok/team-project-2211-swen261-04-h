@@ -17,7 +17,7 @@ public class Game {
   private final Board board; // Game Board
   private final ArrayList<Move> pendingMoves; // Pending game piece moves
 
-  private final Color activeColor; // Active Player/Piece Color
+  private Color activeColor; // Active Player/Piece Color
   private final Player redPlayer; // Player with red pieces
   private final Player whitePlayer; // Player with white pieces
 
@@ -225,10 +225,12 @@ public class Game {
   }
 
   private void changeActivePlayer() {
-    //1. determine who the next player is
-    //2. make kings
+    activeColor = activeColor.opposite();
+
+    // 1. determine who the next player is
+    // 2. make kings
     makeKings();
-    //3. determine winners
+    // 3. determine winners
   }
 
   // TODO: viewModes don't belong to a game, but a session. Where should we put these?
