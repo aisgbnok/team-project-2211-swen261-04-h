@@ -2,7 +2,6 @@ package com.webcheckers.application;
 
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
-
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -13,39 +12,20 @@ import java.util.UUID;
  */
 public class GameCenter {
 
-  // ArrayList used for storing games
-  private static ArrayList<Game> games;
+  private ArrayList<Game> games;
 
-  /** Initialize the games ArrayList. */
-  public static void initGames() {
-    games = new ArrayList<>();
+  public GameCenter() {
+    this.games = new ArrayList<>();
   }
 
   /**
-   * Returns all Games.
+   * Creates a new game and registers it with the GameCenter
    *
-   * @return ArrayList containing all Games in GameCenter.
+   * @param redPlayer Starting player with the RED pieces
+   * @param whitePlayer Opponent player with the WHITE pieces
    */
-  public static ArrayList<Game> getGames() {
-    return games;
-  }
-
-  /**
-   * Adds a Game to the GameCenter.
-   *
-   * @param game Game to be added to GameCenter.
-   */
-  public static void addGame(Game game) {
-    games.add(game);
-  }
-
-  /**
-   * Removes a Game from the GameCenter.
-   *
-   * @param game Game to be removed from GameCenter.
-   */
-  public static void removeGame(Game game) {
-    games.remove(game);
+  public void newGame(Player redPlayer, Player whitePlayer) {
+    games.add(new Game(redPlayer, whitePlayer));
   }
 
   /**
@@ -54,7 +34,7 @@ public class GameCenter {
    * @param gameID Game ID used to find Game.
    * @return Game with the matching gameID, or null if it doesn't exist.
    */
-  public static Game getGame(UUID gameID) {
+  public Game getGame(UUID gameID) {
     for (Game game : games) {
       if (game.getGameID().equals(gameID)) {
         return game;
@@ -69,7 +49,7 @@ public class GameCenter {
    * @param player Player used to find Game.
    * @return Game with the matching player, or null if it doesn't exist.
    */
-  public static Game getGame(Player player) {
+  public Game getGame(Player player) {
     for (Game game : games) {
       if (game.hasPlayer(player)) {
         return game;
@@ -79,11 +59,11 @@ public class GameCenter {
   }
 
   /**
-   * The number of Players in the GameCenter.
+   * The number of Games in the GameCenter.
    *
-   * @return Number of Players in the GameCenter.
+   * @return Number of Games in the GameCenter.
    */
-  public static int size() {
+  public int size() {
     return games.size();
   }
 }
