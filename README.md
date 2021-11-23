@@ -50,13 +50,15 @@ mvn compile exec:java
 4. Go to [`http://localhost:4567/`](http://localhost:4567/) in your browser
 5. Follow the directions and begin playing a game
 
-## Known Bugs & Disclaimers
+## Known Bugs
 
 > 👉 Turn submission is not yet implemented
 
 > 👉 After submitting a turn, move validation breaks. For more details on why, see [#32](https://github.com/RIT-SWEN-261-04/team-project-2211-swen261-04-h/issues/32)
 
 > 👉 There are instances where routing breaks. e.g., players challenge another around the same time results in error message for second player [#34](https://github.com/RIT-SWEN-261-04/team-project-2211-swen261-04-h/issues/32)
+
+> 👉 Move Validation breaks when you reload the page while in the middle of a turn. For more details on why, see [#27](https://github.com/RIT-SWEN-261-04/team-project-2211-swen261-04-h/issues/27)
 
 ## Testing
 
