@@ -1,10 +1,9 @@
 package com.webcheckers.ui;
 
 import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER_KEY;
-
 import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
-import com.webcheckers.model.Message;
+import com.webcheckers.util.Message;
 import com.webcheckers.model.Player;
 import java.util.UUID;
 import java.util.logging.Logger;

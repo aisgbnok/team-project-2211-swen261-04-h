@@ -1,7 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.application.PlayerLobby;
-import com.webcheckers.model.Message;
+import com.webcheckers.util.Message;
 import com.webcheckers.model.Player;
 import spark.*;
 

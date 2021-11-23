@@ -1,6 +1,7 @@
 package com.webcheckers.model;
 
 import com.webcheckers.model.Piece.Type;
+import com.webcheckers.util.Message;
 import java.util.ArrayList;
 import java.util.Iterator;
 

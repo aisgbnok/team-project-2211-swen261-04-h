@@ -2,7 +2,7 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.model.Board;
-import com.webcheckers.model.Message;
+import com.webcheckers.util.Message;
 import com.webcheckers.model.Move;
 import spark.*;
 
