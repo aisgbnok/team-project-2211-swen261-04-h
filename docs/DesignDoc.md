@@ -102,7 +102,7 @@ Details of the components within these tiers are supplied below.
 This section describes the web interface flow; this is how the user views and interacts with the
 WebCheckers application.
 
-![The WebCheckers Web Interface Statechart](web-interface.png)
+![The WebCheckers Web Interface Statechart](Team-H_State-Chart.png)
 
 The application provides the player with a view of a traditional chess board with access to submit moves, resing a game, among other things. 
 
