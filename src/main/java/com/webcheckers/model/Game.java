@@ -217,11 +217,16 @@ public class Game {
   }
 
   public Message submitTurn(Player sessionPlayer) {
-    //Check if players active turn
-      //1. Update board
-      //2. Change who the active player is
-      //3. return successful message
-    return null;
+    // Check if players active turn
+    // 1. Update board
+    // 2. Change who the active player is
+    // 3. return successful message
+
+    changeActivePlayer();
+
+    // TODO: Might be better to return info message during testing
+    //return Message.info("Turn Submitted Successfully");
+    return Message.error("Error Submitting Turn");
   }
 
   private void changeActivePlayer() {
