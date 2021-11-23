@@ -1,11 +1,12 @@
 package com.webcheckers.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 /**
- * A game of checkers against a REd and a White player.
+ * A game of checkers against a RED and a WHITE player.
  *
  * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
  */
@@ -13,6 +14,7 @@ public class Game {
 
   private final UUID gameID; // Game Identifier
   private final Board board; // Game Board
+  private final ArrayList<Move> pendingMoves; // Pending game piece moves
 
   private final Color activeColor; // Active Player/Piece Color
   private final Player redPlayer; // Player with red pieces
@@ -32,6 +34,7 @@ public class Game {
     // Game
     this.gameID = UUID.randomUUID(); // Set gameID
     this.board = new Board(); // Create a new board
+    this.pendingMoves = new ArrayList<>(); // Create an empty list to store pending moves
 
     // Players
     this.activeColor = Color.RED; // RED is always the starting color
@@ -57,7 +60,7 @@ public class Game {
   }
 
   /**
-   * Getter for the game board. Generates a new duplicate game board and returns it.
+   * Getter for the game's board. Generates a new duplicate game board and returns it.
    *
    * @return Game board
    */
@@ -66,13 +69,40 @@ public class Game {
   }
 
   /**
-   * Getter for the game board. Generates a new duplicated and reflected game board and returns it.
+   * Getter for the game's board. Generates a new duplicated and reflected game board and returns
+   * it.
    *
    * @param color Color of the pieces that start on the bottom of the board.
    * @return Reflected Game board
    */
   public Board getBoard(Color color) {
     return new Board(board, color.equals(Color.WHITE));
+  }
+
+  /**
+   * Checks if a given move is valid on the game's board. If valid, the move will be added to the
+   * game's pending moves. Moves are pending until turn is submitted.
+   *
+   * @param move Move that needs to be validated.
+   * @return Message of type INFO if move is valid, or type ERROR if invalid.
+   */
+  public Message validateMove(Move move) {
+    // Create a new board, so we aren't modifying this board
+    Board testBoard = new Board(board);
+
+    // Perform each pending move on the test board
+    for (Move pendingMove : pendingMoves) {
+      testBoard.performMove(pendingMove);
+    }
+
+    // If the result of the validation is INFO (success) then add it to pendingMoves
+    Message result = testBoard.validateMove(move);
+    if (result.isSuccessful()) {
+      pendingMoves.add(move);
+    }
+
+    // Return the message result from board.validateMove
+    return result;
   }
 
   /*

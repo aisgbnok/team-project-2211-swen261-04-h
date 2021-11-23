@@ -50,6 +50,7 @@ public class WebServer {
   public static final String GAME_URL = "/game"; // Game Page
 
   public static final String RESIGN_URL = "/resignGame"; // Resign Game
+  public static final String VALIDATE_MOVE_URL = "/validateMove"; // Validate Piece Move
 
   //
   // Constants
@@ -146,6 +147,7 @@ public class WebServer {
 
     // Game Actions
     post(RESIGN_URL, new PostResignRoute());
+    post(VALIDATE_MOVE_URL, new PostValidateMoveRoute());
 
     // Setup Application Layer
     PlayerLobby.initPlayers();
