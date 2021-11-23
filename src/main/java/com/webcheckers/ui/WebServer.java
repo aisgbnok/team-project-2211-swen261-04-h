@@ -57,6 +57,7 @@ public class WebServer {
   //
   private final TemplateEngine templateEngine;
   private final Gson gson;
+  private final GameCenter gameCenter;
 
   //
   // Constructor
@@ -76,6 +77,7 @@ public class WebServer {
     //
     this.templateEngine = templateEngine;
     this.gson = gson;
+    this.gameCenter = new GameCenter();
   }
 
   //
@@ -132,8 +134,8 @@ public class WebServer {
     get(SIGNIN_URL, new GetSignInRoute(templateEngine));
     post(SIGNIN_URL, new PostSignInRoute(templateEngine));
     post(SIGNOUT_URL, new PostSignOutRoute(templateEngine));
-    post(GAME_START_URL, new PostStartGameRoute());
-    get(GAME_URL, new GetGameRoute(templateEngine));
+    post(GAME_START_URL, new PostStartGameRoute(gameCenter));
+    get(GAME_URL, new GetGameRoute(templateEngine, gameCenter));
     post(RESIGN, new PostResignRoute());
 
 /*    post(VALIDATE_URL, new PostValidateMoveRoute(templateEngine));
@@ -142,7 +144,6 @@ public class WebServer {
     post("/checkTurn", new PostCheckTurnRoute());*/
 
     PlayerLobby.initPlayers();
-    GameCenter.initGames();
 
     LOG.config("WebServer is initialized.");
   }
