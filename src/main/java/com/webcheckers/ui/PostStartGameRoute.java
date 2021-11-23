@@ -6,8 +6,8 @@ import static spark.Spark.halt;
 
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.application.PlayerLobby;
-import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import java.util.Objects;
 import java.util.logging.Logger;
 import spark.Request;
 import spark.Response;
@@ -22,14 +22,21 @@ import spark.Session;
 public class PostStartGameRoute implements Route {
 
   static final String OPPONENT_PLAYER_KEY = "opponent";
-  static final String GAME_KEY = "game";
   static final String BOARD_KEY = "board";
 
   // Console Logger
   private static final Logger LOG = Logger.getLogger(PostStartGameRoute.class.getName());
 
-  /** Create the Spark Route (UI controller) to handle all {@code POST /startGame} HTTP requests. */
-  public PostStartGameRoute() {
+  // GameCenter used for coordinating games
+  private final GameCenter gameCenter;
+
+  /**
+   * Create the Spark Route (UI controller) to handle all {@code POST /startGame} HTTP requests.
+   *
+   * @param gameCenter the GameCenter used for holding all games
+   */
+  public PostStartGameRoute(final GameCenter gameCenter) {
+    this.gameCenter = Objects.requireNonNull(gameCenter, "gameCenter is required");
 
     LOG.config("PostStartGameRoute is initialized.");
   }
@@ -82,14 +89,11 @@ public class PostStartGameRoute implements Route {
   }
 
   private void setupGame(Session currentSession, Player currentPlayer, Player opponentPlayer) {
-    // Create new Game Model
-    Game newGame = new Game(currentPlayer, opponentPlayer);
+    // Create new Game
+    gameCenter.newGame(currentPlayer, opponentPlayer);
 
     // Set the opponent attribute
     currentSession.attribute(OPPONENT_PLAYER_KEY, opponentPlayer);
-
-    // Register Game with GameCenter
-    GameCenter.addGame(newGame);
 
     // TODO eventually have GameCenter handle adding and removing player inGame status
     // Set currentPlayer and opponentPlayer as inGame
