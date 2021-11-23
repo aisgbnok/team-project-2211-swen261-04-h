@@ -34,13 +34,18 @@ public class GetHomeRoute implements Route {
   // TemplateEngine used for HTML page rendering
   private final TemplateEngine templateEngine;
 
+  // GameCenter used for coordinating games
+  private final GameCenter gameCenter;
+
   /**
    * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
    *
    * @param templateEngine the HTML template rendering engine
+   * @param gameCenter the GameCenter used for holding all games
    */
-  public GetHomeRoute(final TemplateEngine templateEngine) {
+  public GetHomeRoute(final TemplateEngine templateEngine, final GameCenter gameCenter) {
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
+    this.gameCenter = Objects.requireNonNull(gameCenter, "gameCenter is required");
 
     LOG.config("GetHomeRoute is initialized.");
   }
@@ -68,7 +73,7 @@ public class GetHomeRoute implements Route {
       // The NullPointerException should never occur because we already know that the currentPlayer
       // is in a game, meaning the game should be found and every game has a gameID.
       response.redirect(
-          WebServer.GAME_URL + "?gameID=" + GameCenter.getGame(currentPlayer).getGameID());
+          WebServer.GAME_URL + "?gameID=" + gameCenter.getGame(currentPlayer).getGameID());
       return null;
     }
 
