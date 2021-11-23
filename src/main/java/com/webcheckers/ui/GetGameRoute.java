@@ -41,13 +41,18 @@ public class GetGameRoute implements Route {
   // TemplateEngine used for HTML page rendering
   private final TemplateEngine templateEngine;
 
+  // GameCenter used for coordinating games
+  private final GameCenter gameCenter;
+
   /**
    * Create the Spark Route (UI controller) to handle all {@code GET /game} HTTP requests.
    *
    * @param templateEngine the HTML template rendering engine
+   * @param gameCenter the GameCenter used for holding all games
    */
-  public GetGameRoute(final TemplateEngine templateEngine) {
+  public GetGameRoute(final TemplateEngine templateEngine, final GameCenter gameCenter) {
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
+    this.gameCenter = Objects.requireNonNull(gameCenter, "gameCenter is required");
 
     LOG.config("GetGameRoute is initialized.");
   }
@@ -180,7 +185,7 @@ public class GetGameRoute implements Route {
     }
 
     // gameID is given, and it is a valid UUID, so return game from UUID
-    return GameCenter.getGame(gameID);
+    return gameCenter.getGame(gameID);
   }
 
   private boolean currentPlayerInGame(Player currentPlayer) {
