@@ -104,6 +104,20 @@ public class Game {
    */
 
   /**
+   * Signals game end, and sets gameOverMessage to provided message.
+   *
+   * @param gameOverMessage Message describing why/how the game ended.
+   */
+  public void gameOver(String gameOverMessage) {
+    this.isGameOver = true;
+    this.gameOverMessage = gameOverMessage;
+
+    // Update Players inGame status
+    redPlayer.inGame(false);
+    whitePlayer.inGame(false);
+  }
+
+  /**
    * Getter for game over status.
    *
    * @return True if game is over, or false if game is in progress.
