@@ -109,6 +109,7 @@ public class Board implements Iterable<Row> {
     }
   }
 
+
   /**
    * Private getter for a space on the board.
    *

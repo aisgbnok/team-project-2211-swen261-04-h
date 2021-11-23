@@ -118,4 +118,8 @@ public class Space {
     this.piece = null;
     this.setValid();
   }
+
+    public boolean isFull() {
+      return piece != null;
+    }
 }
