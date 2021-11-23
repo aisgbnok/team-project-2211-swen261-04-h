@@ -2,30 +2,33 @@ package com.webcheckers.application;
 
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
- * The application GameCenter. GameCenter keeps track of the server's games.
+ * The GameCenter application for holding and tracking all games on the server over its lifetime.
  *
  * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
  */
 public class GameCenter {
 
-  private ArrayList<Game> games;
+  private final HashMap<UUID, Game> games;
 
+  /** Constructs a new GameCenter used for holding and tracking all games. */
   public GameCenter() {
-    this.games = new ArrayList<>();
+    this.games = new HashMap<>();
   }
 
   /**
-   * Creates a new game and registers it with the GameCenter
+   * Creates a new game and registers it with the GameCenter.
    *
    * @param redPlayer Starting player with the RED pieces
    * @param whitePlayer Opponent player with the WHITE pieces
    */
   public void newGame(Player redPlayer, Player whitePlayer) {
-    games.add(new Game(redPlayer, whitePlayer));
+    Game newGame = new Game(redPlayer, whitePlayer);
+    games.put(newGame.getGameID(), newGame);
   }
 
   /**
@@ -35,14 +38,10 @@ public class GameCenter {
    * @return Game with the matching gameID, or null if it doesn't exist.
    */
   public Game getGame(UUID gameID) {
-    for (Game game : games) {
-      if (game.getGameID().equals(gameID)) {
-        return game;
-      }
-    }
-    return null;
+    return games.get(gameID);
   }
 
+  // TODO try not to use this one, should be phased out.
   /**
    * Finds a game in GameCenter using player lookup.
    *
@@ -50,20 +49,11 @@ public class GameCenter {
    * @return Game with the matching player, or null if it doesn't exist.
    */
   public Game getGame(Player player) {
-    for (Game game : games) {
-      if (game.hasPlayer(player)) {
-        return game;
+    for (Map.Entry<UUID, Game> game : games.entrySet()) {
+      if (game.getValue().hasPlayer(player)) {
+        return game.getValue();
       }
     }
     return null;
-  }
-
-  /**
-   * The number of Games in the GameCenter.
-   *
-   * @return Number of Games in the GameCenter.
-   */
-  public int size() {
-    return games.size();
   }
 }
