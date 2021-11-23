@@ -10,7 +10,7 @@ _Semester 2211, SWEN-261, Section 04, Team H_
 - Jake Downie, jwd2488
 - Ian Chasse, idc7947
 
-## Prerequisites
+## Prerequisites 
 
 - You must have Java 8 to 17
 - You must have Maven 3.6.3 or later
@@ -19,7 +19,7 @@ _Semester 2211, SWEN-261, Section 04, Team H_
 _This project has been tested up to Java SE `17.0.1` and Maven `3.8.4`, but other versions may
 work._
 
-## Running
+## Running 
 
 1. Clone the repository
 
@@ -50,7 +50,7 @@ mvn compile exec:java
 4. Go to [`http://localhost:4567/`](http://localhost:4567/) in your browser
 5. Follow the directions and begin playing a game
 
-## Known Bugs
+## Known Bugs 🪲
 
 > 👉 Turn submission is not yet implemented
 
@@ -60,7 +60,7 @@ mvn compile exec:java
 
 > 👉 Move Validation breaks when you reload the page while in the middle of a turn. For more details on why, see [#27](https://github.com/RIT-SWEN-261-04/team-project-2211-swen261-04-h/issues/27)
 
-## Testing
+## Testing 🧪
 
 The Maven build script provides hooks for running unit tests and generating code coverage reports in
 HTML.
@@ -91,7 +91,7 @@ mvn clean test-compile surefire:test@tier jacoco:report@tier
 
 Open `PROJECT_HOME/target/site/jacoco/{ui, appl, model}/index.html` in your browser
 
-## Design Documentation
+## Design Documentation 📄
 
 To generate a PDF of the Design documentation, execute the following command:
 
@@ -105,7 +105,7 @@ Alt</kbd> + <kbd>Shift</kbd> + <kbd>F10</kbd>
 
 The generated PDF will be in the `PROJECT_HOME/target/` directory.
 
-## Project Distribution (Zipfile)
+## Project Distribution (Zipfile) 📁
 
 To generate a zipfile distribution of the source for the project, execute the following command:
 
