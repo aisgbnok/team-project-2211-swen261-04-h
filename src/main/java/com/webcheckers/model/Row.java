@@ -96,6 +96,10 @@ public class Row implements Iterable<Space> {
     return index;
   }
 
+  protected Space getSpace(int colIndex) {
+    return spaces.get(colIndex);
+  }
+
   @Override
   public Iterator<Space> iterator() {
     return new Row(this).spaces.iterator();

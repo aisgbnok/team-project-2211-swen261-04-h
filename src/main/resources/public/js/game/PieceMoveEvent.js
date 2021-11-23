@@ -16,7 +16,7 @@ define(function(require){
     // private attributes
     this.$piece = $piece;
     this.move = move;
-  }
+  };
 
   // export class constructor
   return PieceMoveEvent;
