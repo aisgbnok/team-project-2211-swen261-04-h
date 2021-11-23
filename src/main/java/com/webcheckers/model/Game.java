@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import com.webcheckers.util.Message;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
