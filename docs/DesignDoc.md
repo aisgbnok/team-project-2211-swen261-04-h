@@ -149,12 +149,11 @@ Model Tier as well as global game stats.
 
 ### Model Tier
 
-Our model tier contains components that represent different game objects like the board,
-player, pieces, spaces, and moves. This is important as it represents the fundamental asepcts of the game that 
-make up our design. 
+Our model tier contains components that represent different game objects like the board, player,
+pieces, spaces, and moves. This is important as it represents the fundamental aspects of the game
+that make up our design.
 
-![img.png](img.png)
-
+> _Provide a summary of the Model tier of your architecture. This section will follow the same instructions that are given for the UI Tier above._
 
 ### Design Improvements
 
