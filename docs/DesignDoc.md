@@ -121,14 +121,19 @@ checkers. While they always see the game page, various states like check turn, v
 turn, and backup handle various game functions.
 
 ### UI Tier
-The main UI for the server is WebServer class that handles routing, and displaying pages. Each page is represented in a class
-like GetGameRoute or GetSignInRoute. The "route" is the page that is displayed.
 
-For handling user inputs, the Post classes are used. This is stuff like PostCheckTurnRoute and PostSignOutRoute.
-These routes can also still direct users to different pages throughout the application.
-> _At appropriate places as part of this narrative provide one or more
-> static models (UML class structure or object diagrams) with some
-> details such as critical attributes and methods._
+Each state is called a route which is handled using a GET and/or POST class. The WebServer class
+handles assigning routes. For example, Sign In, has a GetSignInRoute class that handles rendering
+the Sign-In page, and a PostSignInRoute class that handles writing to the model and application
+tier. These routes and their respective http requests (GET/POST) are mapped in WebServer. WebServer
+acts as the user entrypoint and route arbitrator dictating which UI class is used for each http
+request. GET is used for rendering pages, and POST is used for handling user input.
+
+> _At appropriate places as part of this narrative provide one or more static models (UML class structure or object diagrams) with some details such as critical attributes and methods._
+
+> _You must also provide any dynamic models, such as statechart and sequence diagrams, as is relevant to a particular aspect of the design that you are describing. For example, in WebCheckers you might create a sequence diagram of the POST /validateMove HTTP request processing or you might show a statechart diagram if the Game component uses a state machine to manage the game._
+
+> _If a dynamic model, such as a statechart describes a feature that is not mostly in this tier and cuts across multiple tiers, you can consider placing the narrative description of that feature in a separate section for describing significant features. Place this after you describe the design of the three tiers._
 
 ![img_1.png](img_1.png)
 
