@@ -1,5 +1,12 @@
 ---
 geometry: margin=1in
+mainfont: SegoeUI.ttf 
+mainfontoptions:
+- Extension=.ttf
+- UprightFont=*
+- BoldFont=*B
+- ItalicFont=*I
+- BoldItalicFont=*Z
 ---
 
 # WebCheckers Design Documentation
