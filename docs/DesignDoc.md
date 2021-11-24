@@ -171,16 +171,18 @@ developed during the first sprint is in need of a refactor/rewrite.
 
 ## Testing
 
-Testing is preformed consistently throughout development by all developers. Testing can be done locally by opening another game 
-in an incognito window that doesn't track cookies. 
+As of now (11/24/2021) we have exclusively used manual testing (i.e. running WebCheckers as a player would and manually testing functionality).
+
+> 🚧 Unit Tests are currently in development. Really late, but in development.
 
 ### Acceptance Testing
 
-4 user stories have passed acceptance criteria testing. A number of user stories are going to be
-testing at a later date when we have more resources and complete user stories.
-Our strategy for writing user stories is to keep it short, sweet, and functional.
+> I don't think we have truly completed any Acceptance Testing, yet.
+
+> ⚠️ _Report on the number of user stories that have passed all their acceptance criteria tests, the number that have some acceptance criteria tests failing, and the number of user stories that have not had any testing yet. Highlight the issues found during acceptance testing and if there are any concerns._
 
 ### Unit Testing and Code Coverage
 
-Unit tests are written before development starts in most cases unless an urgent issue needs to be resolved.
-Eventually, all unit tests are to be completed and validated. User testing is done by one of the developers. 
+> 🚧 This is yet to be completed. In development.
+
+> ⚠️ _Discuss your unit testing strategy. Report on the code coverage achieved from unit testing of the code base. Discuss the team's coverage targets, why you selected those values, and how well your code coverage met your targets. If there are any anomalies, discuss those._
