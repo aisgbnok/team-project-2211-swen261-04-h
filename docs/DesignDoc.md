@@ -28,6 +28,7 @@ each other.
 |:------|:------------|
 | A.I. | Artificial Intelligence |
 | MVP | Minimum Viable Product |
+| OO | Object Oriented |
 | OS | Operating System|
 | UI | User Interface |
 | VO | Value Object |
