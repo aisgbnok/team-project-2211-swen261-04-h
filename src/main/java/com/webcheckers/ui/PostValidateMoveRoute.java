@@ -16,7 +16,7 @@ import spark.Route;
  * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
  */
 public class PostValidateMoveRoute implements Route {
-  private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
+  private static final Logger LOG = Logger.getLogger(PostValidateMoveRoute.class.getName());
 
   /**
    * Create the Spark Route (UI controller) to handle all {@code POST /validateMove} HTTP requests.
