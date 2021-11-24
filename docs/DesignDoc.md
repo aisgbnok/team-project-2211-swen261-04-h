@@ -165,9 +165,9 @@ developed during the first sprint is in need of a refactor/rewrite.
 
 > 👉 Our entire Application Tier which consists of PlayerLobby and GameCenter are entirely static classes. This does not adhere to OO principles and poses security risks. Instead, these classes should be instantiated in WebServer and passed to each the routes that require them. [#36](https://github.com/RIT-SWEN-261-04/team-project-2211-swen261-04-h/issues/36), [#37](https://github.com/RIT-SWEN-261-04/team-project-2211-swen261-04-h/issues/37).
 
-> I'm sure there are many other code base design improvements that can be made, and this section will be updated to reflect them once identified.
+> ⚠️ I'm sure there are many other code base design improvements that can be made, and this section will be updated to reflect them once identified.
 
-> After completion of the Code metrics exercise, you will also discuss the resulting metric measurements. Indicate the hot spots the metrics identified in your code base, and your suggested design improvements to address those hot spots.
+> ⚠️ After completion of the Code metrics exercise, you will also discuss the resulting metric measurements. Indicate the hot spots the metrics identified in your code base, and your suggested design improvements to address those hot spots.
 
 ## Testing
 
