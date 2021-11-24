@@ -145,7 +145,7 @@ relay information between the UI and Model tier. For example, when a player resi
 signals to the GameCenter who resigned, GameCenter then correctly updates information stored in the
 Model Tier as well as global game stats.
 
-> Provide a summary of the Application tier of your architecture. This section will follow the same instructions that are given for the UI Tier above.
+> _Provide a summary of the Application tier of your architecture. This section will follow the same instructions that are given for the UI Tier above._
 
 ### Model Tier
 
@@ -167,7 +167,7 @@ developed during the first sprint is in need of a refactor/rewrite.
 
 > I'm sure there are many other code base design improvements that can be made, and this section will be updated to reflect them once identified.
 
-> After completion of the Code metrics exercise, you will also discuss the resulting metric measurements. Indicate the hot spots the metrics identified in your code base, and your suggested design improvements to address those hot spots.
+> _After completion of the Code metrics exercise, you will also discuss the resulting metric measurements. Indicate the hot spots the metrics identified in your code base, and your suggested design improvements to address those hot spots._
 
 ## Testing
 
