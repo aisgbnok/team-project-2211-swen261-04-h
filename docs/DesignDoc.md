@@ -87,7 +87,7 @@ This section describes the application architecture.
 
 The following Tiers/Layers model shows a high-level view of the webapp's architecture.
 
-![The Tiers & Layers of the Architecture](architecture-tiers-and-layers.png)
+![The Tiers & Layers of the Architecture](Team-H_Architecture-Tiers-And-Layers.png)
 
 As a web application, the user interacts with the system using a browser. The client-side of the UI
 is composed of HTML pages with some minimal CSS for styling the page. There is also some JavaScript
