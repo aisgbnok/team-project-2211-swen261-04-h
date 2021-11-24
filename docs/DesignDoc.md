@@ -106,13 +106,19 @@ WebCheckers application.
 
 ![The WebCheckers Web Interface Statechart](Team-H_State-Chart.png)
 
-The application provides the player with a view of a traditional chess board with access to submit moves, resing a game, among other things. 
+The user interface is streamlined and consists of only three pages: a home, sign-in, and game page.
+However, a there are a lot of states and routes that handles these three pages.
 
-The web checkers game starts with a home page that presents the
-user with the ability to sign and to see how many people are playing.
+The player starts off signed out with only the ability to sign in. During sign in the user's name is
+validated to ensure it is alphanumeric, once that is complete the player is now signed in.
 
-After signing in you can then see a list of games and have the ability
-to select a game to join. Once you are in the game you are presented with a checkers board.
+Once player is signed in, the home page lists all other players and provides a method to start a
+game with another player. The start game validates that starting a game is possible, this state is
+not visible to the user.
+
+Once a game is started the user is then taken to the game page where they are able to play a game of
+checkers. While they always see the game page, various states like check turn, validate move, submit
+turn, and backup handle various game functions.
 
 ### UI Tier
 The main UI for the server is WebServer class that handles routing, and displaying pages. Each page is represented in a class
