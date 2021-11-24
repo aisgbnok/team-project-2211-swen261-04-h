@@ -9,32 +9,35 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import static com.webcheckers.ui.GetHomeRoute.PLAYER_KEY;
+import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER_KEY;
 import static spark.Spark.halt;
 
 /**
- * The UI Controller to GET the Login page.
+ * The UI Controller to POST the Sign-Out page.
  *
- * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
+ * @author <a href='mailto:jwd2488@rit.edu'>Jake Downie</a>
+ * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
  */
-public class GetSignOutRoute implements Route {
-    private static final Logger LOG = Logger.getLogger(GetSignOutRoute.class.getName());
+public class PostSignOutRoute implements Route {
+    // Console Logger
+    private static final Logger LOG = Logger.getLogger(PostSignOutRoute.class.getName());
 
+    // TemplateEngine used for HTML page rendering
     private final TemplateEngine templateEngine;
 
     /**
-     * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
+     * Create the Spark Route (UI controller) to handle all {@code POST /signout} HTTP requests.
      *
      * @param templateEngine the HTML template rendering engine
      */
-    public GetSignOutRoute(final TemplateEngine templateEngine) {
+    public PostSignOutRoute(final TemplateEngine templateEngine) {
         this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
-        //
-        LOG.config("GetSignInRoute is initialized.");
+
+        LOG.config("PostSignInRoute is initialized.");
     }
 
     /**
-     * Render the WebCheckers Sign in
+     * Sign out and redirect to the WebCheckers home page
      *
      * @param request  the HTTP request
      * @param response the HTTP response
@@ -42,12 +45,12 @@ public class GetSignOutRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
-        LOG.finer("GetSignOutRoute is invoked.");
+        LOG.finer("PostSignOutRoute is invoked.");
         final Session httpSession = request.session();
 
-        Player currentPlayer = httpSession.attribute(PLAYER_KEY);
+        Player currentPlayer = httpSession.attribute(CURRENT_PLAYER_KEY);
         PlayerLobby.removePlayer(currentPlayer);
-        httpSession.removeAttribute(PLAYER_KEY);
+        httpSession.removeAttribute(CURRENT_PLAYER_KEY);
         Map<String, Object> vm = new HashMap<>();
         response.redirect(WebServer.HOME_URL);
         halt();
