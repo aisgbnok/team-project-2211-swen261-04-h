@@ -148,8 +148,10 @@
               <workingDirectory>docs</workingDirectory>
               <arguments>
                 <argument>DesignDoc.md</argument>
+                <argument>--pdf-engine</argument>
+                <argument>lualatex</argument>
                 <argument>-o</argument>
-                <argument>${project.build.directory}/DesignDoc.pdf</argument>
+                <argument>${project.build.directory}/Team-H_Design-Doc.pdf</argument>
               </arguments>
             </configuration>
           </execution>
