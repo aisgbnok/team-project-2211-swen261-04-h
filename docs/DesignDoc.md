@@ -136,15 +136,16 @@ request. GET is used for rendering pages, and POST is used for handling user inp
 
 > _If a dynamic model, such as a statechart describes a feature that is not mostly in this tier and cuts across multiple tiers, you can consider placing the narrative description of that feature in a separate section for describing significant features. Place this after you describe the design of the three tiers._
 
-
-
 ### Application Tier
 
-The application tier handles a player lobby and a session timeout watchdog.
-Both of these components are essential to the project working as desired.
+Our application tier is composed of a PlayerLobby and a GameCenter for aiding the UI and Model
+tiers. PlayerLobby handles registering and holding players along with tracking global player
+statistics. Similarly, GameCenter handles registering and holding games. As well, GameCenter helps
+relay information between the UI and Model tier. For example, when a player resigns the UI tier
+signals to the GameCenter who resigned, GameCenter then correctly updates information stored in the
+Model Tier as well as global game stats.
 
-The player lobby tracks what players are in the game and SessionTimeoutWatchdog tracks 
- player sessions. 
+> Provide a summary of the Application tier of your architecture. This section will follow the same instructions that are given for the UI Tier above.
 
 ### Model Tier
 
