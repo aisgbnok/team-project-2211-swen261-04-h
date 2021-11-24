@@ -1,6 +1,12 @@
-# WebCheckers
+# WebCheckers ⚠️
 
 An online Checkers game system built in Java 8 => 17 and Spark, a web micro-framework.
+
+> ⚠️
+>
+> This is [@ajs2576's](https://github.com/ajs2576) custom branch for outputting design documentation. 
+> 
+> **Don't use this for any real project related stuff: don't checkout or branch off of it!**
 
 ## Team H
 
@@ -10,7 +16,7 @@ _Semester 2211, SWEN-261, Section 04, Team H_
 - Jake Downie, jwd2488
 - Ian Chasse, idc7947
 
-## Prerequisites 
+## Prerequisites
 
 - You must have Java 8 to 17
 - You must have Maven 3.6.3 or later
@@ -19,7 +25,7 @@ _Semester 2211, SWEN-261, Section 04, Team H_
 _This project has been tested up to Java SE `17.0.1` and Maven `3.8.4`, but other versions may
 work._
 
-## Running 
+## Running
 
 1. Clone the repository
 
