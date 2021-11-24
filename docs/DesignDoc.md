@@ -26,9 +26,11 @@ each other.
 
 | Term | Definition |
 |:------|:------------|
+| A.I. | Artificial Intelligence |
 | MVP | Minimum Viable Product |
+| OS | Operating System|
 | UI | User Interface |
-| A.I. | Artificial Intelligence|
+| VO | Value Object |
 
 ## Requirements
 
