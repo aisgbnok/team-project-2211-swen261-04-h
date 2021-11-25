@@ -21,7 +21,7 @@ import spark.Route;
 public class PostCheckTurnRoute implements Route {
 
   // Console Logger
-  private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
+  private static final Logger LOG = Logger.getLogger(PostCheckTurnRoute.class.getName());
 
   /** Create the Spark Route (UI controller) to handle all {@code POST /checkTurn} HTTP requests. */
   public PostCheckTurnRoute() {
