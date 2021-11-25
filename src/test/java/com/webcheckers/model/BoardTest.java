@@ -6,10 +6,12 @@ import static com.webcheckers.model.Board.VALID_SLIDE;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.webcheckers.util.Message;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.TestMethodOrder;
 
 /**
  * The unit test suite for the {@link Board} component.
@@ -18,9 +20,11 @@ import org.junit.jupiter.api.Test;
  */
 @Tag("Model-tier")
 @DisplayName("Board Model Tests")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class BoardTest {
 
   @Test
+  @Order(1)
   @DisplayName("Default Board Constructor")
   void ctor_noArgument() {
     new Board();
@@ -28,6 +32,7 @@ public class BoardTest {
 
 
   @Test
+  @Order(2)
   @DisplayName("Duplication Board Constructor")
   void ctor_duplicateBoard() {
     final Board ogBoard = new Board();
@@ -35,20 +40,16 @@ public class BoardTest {
   }
 
   @Test
+  @Order(3)
   @DisplayName("Reflection Board Constructor")
   void ctor_reflectBoard() {
     final Board ogBoard = new Board();
     new Board(ogBoard, true);
   }
 
-  @BeforeEach
-  void init() {
-    // Generate blank board
-    Board board = new Board();
-  }
-
   @Test
-  @DisplayName("Move Invalid")
+  @Order(4)
+  @DisplayName("Validate End Space Not Valid")
   void validateMove_SpaceTaken() {
     // Generate blank board
     Board board = new Board();
@@ -64,10 +65,10 @@ public class BoardTest {
     String actual = board.validateMove(move).toString();
 
     assertEquals(expected, actual);
-
   }
 
   @Test
+  @Order(5)
   @DisplayName("Validate Valid Slides Successfully")
   void validateMove_validSlides() {
 
@@ -104,6 +105,7 @@ public class BoardTest {
   }
 
   @Test
+  @Order(6)
   @DisplayName("Validate Multiple Slides Error")
   void validateMove_twoSlidesError() {
 
