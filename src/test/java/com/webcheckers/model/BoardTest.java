@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.webcheckers.util.Message;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -14,21 +15,25 @@ import org.junit.jupiter.api.Test;
  * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
  */
 @Tag("Model-tier")
+@DisplayName("Board Model Tests")
 public class BoardTest {
 
   @Test
-  void ctor_noArg() {
+  @DisplayName("Default Board Constructor")
+  void ctor_noArgument() {
     new Board();
   }
 
 
   @Test
-  void ctor_dupBoard() {
+  @DisplayName("Duplication Board Constructor")
+  void ctor_duplicateBoard() {
     final Board ogBoard = new Board();
     new Board(ogBoard);
   }
 
   @Test
+  @DisplayName("Reflection Board Constructor")
   void ctor_reflectBoard() {
     final Board ogBoard = new Board();
     new Board(ogBoard, true);
@@ -41,6 +46,7 @@ public class BoardTest {
   }
 
   @Test
+  @DisplayName("Move Invalid")
   void validateMove_SpaceTaken() {
     // Generate blank board
     Board board = new Board();
