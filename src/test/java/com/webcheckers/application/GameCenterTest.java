@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
  */
-@Tag("Application-Tier")
+@Tag("Application-tier")
 public class GameCenterTest {
 
   @BeforeAll
@@ -31,6 +31,7 @@ public class GameCenterTest {
 
     // Games list should not be null
     assertNotNull(games, "GameCenter didn't initialize game list!");
+
     // Games list size should be 0
     assertEquals(initGameAmount, 0);
   }
