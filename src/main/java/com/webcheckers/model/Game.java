@@ -216,7 +216,7 @@ public class Game {
   }
 
   private void makeKings(){
-    for(int cell = 0; cell < 8; cell++){
+/*    for(int cell = 0; cell < 8; cell++){
       if(
               board.getRows().get(0).getSpaces().get(cell).isFull() &&
               board.getRows().get(0).getSpaces().get(cell).getPiece().getColor() == Color.RED
@@ -232,7 +232,7 @@ public class Game {
       ){
         board.getRows().get(7).getSpaces().get(cell).getPiece().king();
       }
-    }
+    }*/
   }
 
   // TODO: viewModes don't belong to a game, but a session. Where should we put these?
