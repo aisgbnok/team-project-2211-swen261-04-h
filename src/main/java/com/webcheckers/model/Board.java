@@ -24,20 +24,20 @@ public class Board implements Iterable<Row> {
   /*
    * Validation Messages // TODO: Possibly Move into utility tier
    */
-  private static final String INVALID_MOVE = "Invalid Move";
-  private static final String INVALID_SLIDE = "Invalid Slide";
-  private static final String INVALID_JUMP = "Invalid Jump";
-  private static final String INVALID_DIRECTION = "%s pieces can only move %s!";
-  private static final String INVALID_END_SPACE = "End space is not valid!";
-  private static final String INVALID_JUMP_AFTER_SLIDE = "You can't jump after a slide!";
-  private static final String INVALID_JUMP_SAME_PIECE = "You can't jump over your own pieces!";
-  private static final String INVALID_JUMP_EMPTY_MIDDLE = "You can't jump over an empty space!";
-  private static final String INVALID_SLIDE_AFTER_JUMP = "You can't slide after a jump!";
-  private static final String INVALID_SLIDE_AFTER_SLIDE = "You can't slide twice!";
-  private static final String INVALID_SLIDE_WHEN_JUMP = "A jump is possible, you must jump!";
+  public static final String INVALID_MOVE = "Invalid Move";
+  public static final String INVALID_SLIDE = "Invalid Slide";
+  public static final String INVALID_JUMP = "Invalid Jump";
+  public static final String INVALID_DIRECTION = "%s pieces can only move %s!";
+  public static final String INVALID_END_SPACE = "End space is not valid!";
+  public static final String INVALID_JUMP_AFTER_SLIDE = "You can't jump after a slide!";
+  public static final String INVALID_JUMP_SAME_PIECE = "You can't jump over your own pieces!";
+  public static final String INVALID_JUMP_EMPTY_MIDDLE = "You can't jump over an empty space!";
+  public static final String INVALID_SLIDE_AFTER_JUMP = "You can't slide after a jump!";
+  public static final String INVALID_SLIDE_AFTER_SLIDE = "You can't slide twice!";
+  public static final String INVALID_SLIDE_WHEN_JUMP = "A jump is possible, you must jump!";
 
-  private static final String VALID_SLIDE = "Valid Slide";
-  private static final String VALID_JUMP = "Valid Jump";
+  public static final String VALID_SLIDE = "Valid Slide";
+  public static final String VALID_JUMP = "Valid Jump";
 
   /** Constructs a new board in the default orientation. Red pieces are generated at the bottom. */
   public Board() {
