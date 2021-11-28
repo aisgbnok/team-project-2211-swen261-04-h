@@ -51,8 +51,13 @@ public class PostCheckTurnRoute implements Route {
     // Determine if it is the player's turn and generate the correct message
     Game game = GameCenter.getGame(gameID);
 
+    // FIXME: See issue #50
+    //  (https://github.com/RIT-SWEN-261-04/team-project-2211-swen261-04-h/issues/50)
+
     Message message;
-    if (game.isActivePlayer(player)) {
+    if (game == null) { // Game will be null if opponent resigned. Return true for now.
+      message = Message.info("true");
+    } else if (game.isActivePlayer(player)) { // if isActivePlayer(thisPlayer) then return true.
       message = Message.info("true");
     } else {
       message = Message.info("false");
