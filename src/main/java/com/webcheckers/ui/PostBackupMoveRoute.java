@@ -1,7 +1,9 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.application.GameCenter;
 import com.webcheckers.model.Board;
+import com.webcheckers.model.Game;
 import com.webcheckers.util.Message;
 import com.webcheckers.model.Move;
 import spark.*;
@@ -51,10 +53,12 @@ public class PostBackupMoveRoute implements Route {
 
 
         Board board = httpSession.attribute("BOARD");
-
+        //Game game = GameCenter.getGame(request.queryParams("sessionPlayer"));
+        //TODO: Get game correctly when merged with submit turn
         Message message;
-       //board.undoMove(board.lastMove);
-        //TODO: Change turn
+        board.undoMove(board.lastMove, board);
+        //game.changePlayer();
+        //TODO: implement through submit turn
         message = Message.info("true");
         return gson.toJson(message);
 
