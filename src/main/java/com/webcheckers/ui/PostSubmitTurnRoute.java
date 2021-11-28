@@ -1,11 +1,13 @@
 package com.webcheckers.ui;
 
+
+import com.webcheckers.application.GameCenter;
 import com.webcheckers.model.Board;
-import com.webcheckers.model.Message;
+import com.webcheckers.model.Game;
+import com.webcheckers.util.Message;
+import com.webcheckers.model.Player;
 import spark.*;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -15,7 +17,6 @@ import java.util.logging.Logger;
  */
 public class PostSubmitTurnRoute implements Route {
   private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
-
   /**
    * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
    *
@@ -36,18 +37,10 @@ public class PostSubmitTurnRoute implements Route {
   @Override
   public Object handle(Request request, Response response) {
 
-    // final Session httpSession = request.session();
+    Player sessionPlayer = request.session().attribute("Player");
+    Game game = GameCenter.getGame(sessionPlayer);
+    assert game != null;
+    return game.submitTurn(sessionPlayer).toString();
 
-    // LOG.finer("GetSignInRoute is invoked.");
-    //
-    // Map<String, Object> vm = new HashMap<>();
-
-    // Board board = httpSession.attribute("BOARD");
-    // board.makeMove(board.proposedMove);
-    // board.proposedMove = null;
-    // board.setTurn("OPPONENT");
-
-    // return Message.info("Success");
-    return null;
   }
 }

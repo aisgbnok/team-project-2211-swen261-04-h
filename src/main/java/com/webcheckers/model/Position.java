@@ -21,20 +21,20 @@ public class Position {
    * @param cell Position's cell index, must be integer from zero to COLS.
    */
   public Position(int row, int cell) {
-    // Check to ensure row is within 0 and ROWS
-    if ((0 <= row) && (row < ROWS)) {
+    // Check to ensure given row is in bounds
+    if (isRowInBounds(row)) {
       this.row = row;
     } else {
       throw new IllegalArgumentException(
           "Position: row must be within 0 and row size, row is " + row);
     }
 
-    // Check to ensure cell is within 0 and COLS
-    if ((0 <= cell) && (cell < COLS)) {
+    // Check to ensure given cell is in bounds
+    if (isCellInBounds(cell)) {
       this.cell = cell;
     } else {
       throw new IllegalArgumentException(
-          "Position: cell must be within 0 and column size, cell is " + row);
+          "Position: cell must be within 0 and column size, cell is " + cell);
     }
   }
 
@@ -54,5 +54,38 @@ public class Position {
    */
   public int getCell() {
     return cell;
+  }
+
+  /**
+   * Determines if the given row index is on the board or not.
+   *
+   * @param row The row index to check
+   * @return True if row index is in bounds (on the board), or false if it is not.
+   */
+  public static boolean isRowInBounds(int row) {
+    // Check to ensure row is within 0 and ROWS
+    return (0 <= row) && (row < ROWS);
+  }
+
+  /**
+   * Determines if the given cell index is on the board or not.
+   *
+   * @param cell The cell index to check
+   * @return True if cell index is in bounds (on the board), or false if it is not.
+   */
+  public static boolean isCellInBounds(int cell) {
+    return (0 <= cell) && (cell < COLS);
+  }
+
+  /**
+   * Determines if the given cell index and row index are on the board or not.
+   *
+   * @param row The row index to check
+   * @param cell The cell index to check
+   * @return True if indexes are in bounds (on the board), or false if they are not.
+   */
+  public static boolean isInBounds(int row, int cell) {
+    // Check to ensure cell is within 0 and COLS
+    return isRowInBounds(row) && isCellInBounds(cell);
   }
 }

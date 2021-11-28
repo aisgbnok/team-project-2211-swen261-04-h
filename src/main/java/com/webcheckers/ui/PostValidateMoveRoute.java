@@ -1,73 +1,53 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
-import com.webcheckers.model.Board;
-import com.webcheckers.model.Message;
+import com.webcheckers.application.GameCenter;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Move;
-import spark.*;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.UUID;
 import java.util.logging.Logger;
+import spark.Request;
+import spark.Response;
+import spark.Route;
 
 /**
- * The UI Controller to GET the Login page.
+ * UI Controller that handles move validation. {@code POST /validateMove}.
  *
- * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
+ * @author <a href='mailto:ajs2576@rit.edu'>Anthony Swierkosz</a>
  */
 public class PostValidateMoveRoute implements Route {
-    private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
-    private final TemplateEngine templateEngine;
+  private static final Logger LOG = Logger.getLogger(PostValidateMoveRoute.class.getName());
 
-    public PostValidateMoveRoute(TemplateEngine templateEngine) {
-        this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
-        //
-        LOG.config("GetSignInRoute is initialized.");
-    }
+  /**
+   * Create the Spark Route (UI controller) to handle all {@code POST /validateMove} HTTP requests.
+   */
+  public PostValidateMoveRoute() {
+    LOG.config("PostValidateMoveRoute is initialized.");
+  }
 
+  /**
+   * Handle piece movement validation and return appropriate json ajax response.
+   *
+   * @param request The HTTP request
+   * @param response The HTTP response
+   * @return Json Ajax response
+   */
+  @Override
+  public Object handle(Request request, Response response) {
+    LOG.finer("PostValidateMoveRoute is invoked.");
 
-    /**
-     * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
-     *
-     * @param templateEngine the HTML template rendering engine
-     */
-    public void PostSignInRoute(final TemplateEngine templateEngine) {
-        //
-        LOG.config("GetSignInRoute is initialized.");
-    }
+    // Get Move
+    Gson gson = new Gson();
+    Move move = gson.fromJson(request.queryParams("actionData"), Move.class);
+    UUID uuid = gson.fromJson(request.queryParams("gameID"), UUID.class);
 
-    /**
-     * Render the WebCheckers Home page.
-     *
-     * @param request  the HTTP request
-     * @param response the HTTP response
-     * @return the rendered HTML for the Home page
-     */
-    @Override
-    public Object handle(Request request, Response response) {
+    // GSON deserialization doesn't call constructor, so we need to manually recreate the Move to
+    // ensure the constructor is called.
+    move = new Move(move);
 
-        final Session httpSession = request.session();
+    Game game = GameCenter.getGame(uuid);
+    // Board board = game.getBoard();
 
-        LOG.finer("GetSignInRoute is invoked.");
-        //
-        Map<String, Object> vm = new HashMap<>();
-
-        String param = request.queryParams("actionData");
-        Gson gson = new Gson();
-        Move newMove = gson.fromJson(param, Move.class);
-
-
-        Board board = httpSession.attribute("BOARD");
-
-        Message message;
-//        if (board.getValidMoves().contains(newMove)) {
-//            message = Message.info("true");
-//            board.proposedMove = newMove;
-//        } else {
-//            message = Message.info("false");
-//        }
-        return null; //gson.toJson(message);
-
-    }
+    return new Gson().toJson(game.validateMove(move));
+  }
 }
