@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("Model-tier")
 public class ColorTest {
+    //TODO: come back and fix
     /** Something is wrong with this, I don't get it
     @Test
     void testgetOppositeColor(){
