@@ -100,11 +100,14 @@ public class Game {
     Message result = testBoard.validateMove(move);
     if (result.isSuccessful()) {
       pendingMoves.add(move);
+      board.setLastValidMove(move);
     }
 
     // Return the message result from board.validateMove
     return result;
   }
+
+
 
   private void makeKings() {
     for (int cell = 0; cell < 8; cell++) {

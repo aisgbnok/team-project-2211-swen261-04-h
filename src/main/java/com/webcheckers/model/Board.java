@@ -145,6 +145,8 @@ public class Board implements Iterable<Row> {
       return; // Finished
     }
 
+
+
     // Get midSpace needed for jump
     Space midSpace = getSpace(move.getMiddle());
 
@@ -158,6 +160,10 @@ public class Board implements Iterable<Row> {
 
       hasJumped = true; // A jump has occurred
     }
+  }
+
+  public void setLastValidMove(Move move){
+    this.lastValidMove = move;
   }
 
   /**
