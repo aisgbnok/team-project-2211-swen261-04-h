@@ -26,7 +26,7 @@ public class Position {
       this.row = row;
     } else {
       throw new IllegalArgumentException(
-          "Position: row must be within 0 and row size, row is " + row);
+          "Position: row must be within 0 and " + ROWS + ". row is " + row);
     }
 
     // Check to ensure given cell is in bounds
@@ -34,7 +34,7 @@ public class Position {
       this.cell = cell;
     } else {
       throw new IllegalArgumentException(
-          "Position: cell must be within 0 and column size, cell is " + cell);
+          "Position: cell must be within 0 and " + COLS + ". cell is " + cell);
     }
   }
 
