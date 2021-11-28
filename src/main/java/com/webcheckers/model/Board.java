@@ -339,6 +339,7 @@ public class Board implements Iterable<Row> {
   }
 
   public Move getLastValidMove() {
+    //TODO: have validate move store the move in variable if it was valid. that way we can just make that move 
     return lastValidMove;
   }
 }
