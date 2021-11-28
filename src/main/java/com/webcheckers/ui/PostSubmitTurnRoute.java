@@ -36,7 +36,7 @@ public class PostSubmitTurnRoute implements Route {
    * @return Json Ajax response
    */
   @Override
-  public Object handle(Request request, Response response) {
+  public Object handle(Request request, Response response) throws Exception {
     LOG.finer("PostSubmitTurnRoute is invoked.");
 
     // Setup new Gson
@@ -49,7 +49,11 @@ public class PostSubmitTurnRoute implements Route {
     UUID gameID = gson.fromJson(request.queryParams("gameID"), UUID.class);
     Game game = GameCenter.getGame(gameID);
 
-    // Call submitTurn and return the result
-    return gson.toJson(game.submitTurn(player));
+    if (game != null) {
+      return gson.toJson(game.submitTurn(player, game));
+    } else {
+      //TODO: replace with custom exception
+      throw new Exception();
+    }
   }
 }

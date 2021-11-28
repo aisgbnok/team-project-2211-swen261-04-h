@@ -17,6 +17,8 @@ public class Board implements Iterable<Row> {
 
   private final ArrayList<Row> rows; // Contains all rows in a board in order.
 
+  private Move lastValidMove;
+
   // FIXME: Think about implications when submitting a turn? How do we reset them?
   private boolean hasSlid; // A slide has occurred previously
   private boolean hasJumped; // A jump has occurred previously
@@ -334,5 +336,9 @@ public class Board implements Iterable<Row> {
   @Override
   public Iterator<Row> iterator() {
     return new Board(this).rows.iterator();
+  }
+
+  public Move getLastValidMove() {
+    return lastValidMove;
   }
 }
