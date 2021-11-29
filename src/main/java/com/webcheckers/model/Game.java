@@ -199,14 +199,25 @@ public class Game {
         && this.whitePlayer.equals(game.whitePlayer);
   }
 
-  public Message submitTurn(Player sessionPlayer, Game game) {
-    if (game.getActivePlayer() == sessionPlayer) {
+  public Message submitTurn() {
+    // Perform each pending move on the board
+    for (Move pendingMove : pendingMoves) {
+      board.performMove(pendingMove);
+    }
+
+    pendingMoves.clear();
+
+    changeActivePlayer();
+
+    return Message.info("Submitted Successfully");
+
+/*    if (game.getActivePlayer() == sessionPlayer) {
       // TODO perform pendingMoves
       changeActivePlayer();
       return Message.info("Turn Submitted Successfully");
     } else {
       return Message.error("Error Submitting Turn");
-    }
+    }*/
   }
 
   private Player getActivePlayer() {

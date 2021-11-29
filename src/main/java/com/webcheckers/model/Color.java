@@ -16,7 +16,7 @@ public enum Color {
    * @return Opposite color; RED if object is WHITE or vice versa.
    */
   public static Color getOppositeColor(Color color) {
-    return color.equals(RED) ? RED : WHITE;
+    return color.equals(RED) ? WHITE : RED;
   }
 
   /**
