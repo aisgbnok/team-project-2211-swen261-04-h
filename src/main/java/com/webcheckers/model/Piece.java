@@ -22,6 +22,17 @@ public class Piece {
   }
 
   /**
+   * Constructs a duplicate of a game piece with a different type.
+   *
+   * @param piece Piece to duplicate
+   * @param type Piece type enum, SINGLE or KING.
+   */
+  public Piece(Piece piece, Type type) {
+    this.color = piece.color;
+    this.type = type;
+  }
+
+  /**
    * Constructs a duplicate of a game piece.
    *
    * @param piece Piece to duplicate
