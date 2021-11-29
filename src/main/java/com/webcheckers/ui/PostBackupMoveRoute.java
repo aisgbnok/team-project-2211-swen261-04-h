@@ -3,7 +3,6 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.model.Game;
-import com.webcheckers.util.Message;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -38,7 +37,7 @@ public class PostBackupMoveRoute implements Route {
    *
    * @param request The HTTP request
    * @param response The HTTP response
-   * @return Json Ajax response
+   * @return JSON INFO Message if successful, or ERROR Message if unsuccessful
    */
   @Override
   public Object handle(Request request, Response response) {
@@ -48,8 +47,7 @@ public class PostBackupMoveRoute implements Route {
     UUID uuid = gson.fromJson(request.queryParams("gameID"), UUID.class);
     Game game = GameCenter.getGame(uuid);
 
-    // TODO: add once backupMove method is written
-    // return new Gson().toJson(game.backupMove());
-    return Message.info("True?");
+    // Call game.backupMove and return the result
+    return gson.toJson(game.backupMove());
   }
 }
