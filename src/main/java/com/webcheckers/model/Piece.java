@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import java.util.Objects;
+
 /**
  * Game Piece placed on a Board Space.
  *
@@ -59,6 +61,11 @@ public class Piece {
     if (o == null || getClass() != o.getClass()) return false;
     final Piece piece = (Piece) o;
     return this.color == piece.color && this.type == piece.type;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.type, this.color);
   }
 
   // Enumerations
