@@ -1,5 +1,8 @@
 package com.webcheckers.model;
 
+import static com.webcheckers.model.Piece.Type.KING;
+import static com.webcheckers.model.Piece.Type.SINGLE;
+
 import com.webcheckers.model.Piece.Type;
 import com.webcheckers.util.Message;
 import java.util.ArrayList;
@@ -108,7 +111,6 @@ public class Board implements Iterable<Row> {
     }
   }
 
-
   /**
    * Private getter for a space on the board.
    *
@@ -138,11 +140,11 @@ public class Board implements Iterable<Row> {
       endSpace.setPiece(movePiece); // Set endSpace piece to movePiece
       startSpace.removePiece(); // Remove movePiece from startSpace
 
+      tryKing(move.getEnd()); // Try to king the piece, after the slide
+
       hasSlid = true; // A slide has occurred
       return; // Finished
     }
-
-
 
     // Get midSpace needed for jump
     Space midSpace = getSpace(move.getMiddle());
@@ -152,10 +154,31 @@ public class Board implements Iterable<Row> {
       endSpace.setPiece(movePiece); // Set endSpace piece to movePiece
       startSpace.removePiece(); // Remove movePiece from startSpace
 
+      tryKing(move.getEnd()); // Try to king the piece, after the jump
+
       // Capture (remove) the middle piece
       midSpace.removePiece();
 
       hasJumped = true; // A jump has occurred
+    }
+  }
+
+  private void tryKing(Position pos) {
+    int posRow = pos.getRow();
+
+    // If the position is at an end row (far TOP or far BOTTOM)
+    if (posRow == 0 || posRow == (ROWS - 1)) {
+
+      Space space = getSpace(pos); // Space containing Piece to KING
+      Piece piece = space.getPiece(); // Piece to KING
+
+      // Make sure the piece is a SINGLE
+      if (piece.getType() == SINGLE) {
+        space.removePiece(); // Remove the single piece from the space
+        space.setPiece(new Piece(piece, KING)); // Add duplicate piece (same color) that is a KING
+
+        wasKinged = true; // A piece was kinged
+      }
     }
   }
 
@@ -196,7 +219,7 @@ public class Board implements Iterable<Row> {
     }
 
     // Ensure SINGLE piece is moving in the right direction
-    if ((moveType == Type.SINGLE)
+    if ((moveType == SINGLE)
         && ((moveColor == Color.RED && rowDelta < 0) // RED row delta should be positive
             || (moveColor == Color.WHITE && rowDelta > 0))) // WHITE row delta should be negative
     {
@@ -305,7 +328,7 @@ public class Board implements Iterable<Row> {
     };
 
     // Traverse first two positions if it is a SINGLE, or all if it is a KING
-    int maxTraverse = piece.getType() == Type.SINGLE ? 2 : 4;
+    int maxTraverse = piece.getType() == SINGLE ? 2 : 4;
 
     // Generate an empty ArrayList to store possible jump moves
     ArrayList<Move> possibleJumps = new ArrayList<>(maxTraverse);
