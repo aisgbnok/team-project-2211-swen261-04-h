@@ -106,6 +106,17 @@ public class Game {
     return result;
   }
 
+  public Message backupMove() {
+    if (!pendingMoves.isEmpty()) {
+      pendingMoves.remove(pendingMoves.size() - 1);
+
+      return Message.info("Removed successfully");
+
+    } else {
+      return Message.error("No move to revert");
+    }
+  }
+
   /*
    * Player Methods
    */
