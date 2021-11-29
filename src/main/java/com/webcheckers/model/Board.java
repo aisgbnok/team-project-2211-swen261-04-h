@@ -15,17 +15,7 @@ public class Board implements Iterable<Row> {
   public static final int ROWS = 8; // How many rows in a board
   public static final int COLS = 8; // How many columns in a board
 
-  private final ArrayList<Row> rows; // Contains all rows in a board in order.
-
-  private Move lastValidMove;
-
-  // FIXME: Think about implications when submitting a turn? How do we reset them?
-  private boolean hasSlid; // A slide has occurred previously
-  private boolean hasJumped; // A jump has occurred previously
-
-  /*
-   * Validation Messages // TODO: Possibly Move into utility tier
-   */
+  // Invalid Messages
   private static final String INVALID_MOVE = "Invalid Move";
   private static final String INVALID_SLIDE = "Invalid Slide";
   private static final String INVALID_JUMP = "Invalid Jump";
@@ -37,9 +27,18 @@ public class Board implements Iterable<Row> {
   private static final String INVALID_SLIDE_AFTER_JUMP = "You can't slide after a jump!";
   private static final String INVALID_SLIDE_AFTER_SLIDE = "You can't slide twice!";
   private static final String INVALID_SLIDE_WHEN_JUMP = "A jump is possible, you must jump!";
-
+  // Valid Messages
   private static final String VALID_SLIDE = "Valid Slide";
   private static final String VALID_JUMP = "Valid Jump";
+
+  private final ArrayList<Row> rows; // Contains all rows in a board in order.
+
+  private Move lastValidMove;
+
+  // FIXME: Think about implications when submitting a turn? How do we reset them?
+  private boolean hasSlid; // A slide has occurred previously
+  private boolean hasJumped; // A jump has occurred previously
+  private boolean wasKinged; // A piece was kinged
 
   /** Constructs a new board in the default orientation. Red pieces are generated at the bottom. */
   public Board() {
