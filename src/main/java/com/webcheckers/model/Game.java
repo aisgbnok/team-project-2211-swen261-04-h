@@ -106,6 +106,12 @@ public class Game {
     return result;
   }
 
+  /**
+   * Attempts to revert the last move from the game's pending moves. Moves are pending until turn is
+   * submitted.
+   *
+   * @return Message of type INFO if backup is successful, or type ERROR if unsuccessful.
+   */
   public Message backupMove() {
     // No move to revert
     if (pendingMoves.isEmpty()) {
