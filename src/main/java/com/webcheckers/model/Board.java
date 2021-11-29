@@ -16,8 +16,6 @@ public class Board implements Iterable<Row> {
   public static final int COLS = 8; // How many columns in a board
 
   private final ArrayList<Row> rows; // Contains all rows in a board in order.
-  public Move lastMove;
-  //TODO: Set move here after submit.
 
   // FIXME: Think about implications when submitting a turn? How do we reset them?
   private boolean hasSlid; // A slide has occurred previously
@@ -255,14 +253,6 @@ public class Board implements Iterable<Row> {
 
     // Invalid Slide, above checks failed
     return Message.error(INVALID_SLIDE);
-  }
-
-  public void undoMove(Move move, Board board) {
-    Position start = move.getStart();
-    Position end = move.getEnd();
-    Piece piece = board.rows.get(end.getRow()).getSpaces().get(end.getCell()).getPiece();
-    board.rows.get(end.getRow()).getSpaces().get(end.getCell()).setPiece(null);
-    board.rows.get(start.getRow()).getSpaces().get(start.getCell()).setPiece(piece);
   }
 
   /**
