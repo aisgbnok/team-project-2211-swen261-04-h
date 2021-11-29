@@ -33,17 +33,53 @@ public class PieceTest {
         assertEquals(piece2, piece);
     }
 
-    @Test
-    void testgetTypeANDColor(){
-        Piece piece = new Piece(Piece.Type.SINGLE, Color.WHITE);
-        assertNotEquals(Color.RED, piece.getColor());
-        assertEquals(Color.WHITE, piece.getColor());
-        Piece piece2 = new Piece(Piece.Type.SINGLE, Color.RED);
-        assertNotEquals(Color.WHITE, piece2.getColor());
-        assertEquals(Color.RED, piece2.getColor());
-        assertEquals(Piece.Type.SINGLE, piece.getType());
-        assertEquals(Piece.Type.SINGLE, piece2.getType());
-    }
+  @Test
+  @Order(2)
+  @DisplayName("Piece getType Successfully")
+  void test_getType() {
+    // Generate SINGLE pieces
+    final Piece singleWhite = new Piece(Type.SINGLE, Color.WHITE);
+    final Piece singleRed = new Piece(Type.SINGLE, Color.RED);
+
+    // Test SINGLE
+    assertEquals(Type.SINGLE, singleWhite.getType());
+    assertEquals(Type.SINGLE, singleRed.getType());
+
+    // Generate KING pieces
+    final Piece kingWhite = new Piece(Type.KING, Color.WHITE);
+    final Piece kingRed = new Piece(Type.KING, Color.RED);
+
+    // Test KING
+    assertEquals(Type.KING, kingWhite.getType());
+    assertEquals(Type.KING, kingRed.getType());
+  }
+
+  @Test
+  @Order(3)
+  @DisplayName("Piece getColor Successfully")
+  void test_getColor() {
+    // Generate WHITE pieces
+    final Piece singleWhite = new Piece(Type.SINGLE, Color.WHITE);
+    final Piece kingWhite = new Piece(Type.SINGLE, Color.WHITE);
+
+    // Test WHITE
+    assertEquals(Color.WHITE, singleWhite.getColor());
+    assertNotEquals(Color.RED, singleWhite.getColor());
+
+    assertEquals(Color.WHITE, kingWhite.getColor());
+    assertNotEquals(Color.RED, kingWhite.getColor());
+
+    // Generate RED pieces
+    final Piece singleRed = new Piece(Type.SINGLE, Color.RED);
+    final Piece kingRed = new Piece(Type.SINGLE, Color.RED);
+
+    // Test RED
+    assertEquals(Color.RED, singleRed.getColor());
+    assertNotEquals(Color.WHITE, singleRed.getColor());
+
+    assertEquals(Color.RED, kingRed.getColor());
+    assertNotEquals(Color.WHITE, kingRed.getColor());
+  }
 
     @Test
     @Order(4)
