@@ -51,6 +51,7 @@ public class WebServer {
 
   public static final String RESIGN_URL = "/resignGame"; // Resign Game
   public static final String VALIDATE_MOVE_URL = "/validateMove"; // Validate Piece Move
+  public static final String BACKUP_MOVE_URL = "/backupMove"; // Revert Last Valid Move
   public static final String SUBMIT_TURN_URL = "/submitTurn"; // Submit Player Turn
 
   //
@@ -148,6 +149,7 @@ public class WebServer {
     // Game Actions
     post(RESIGN_URL, new PostResignRoute());
     post(VALIDATE_MOVE_URL, new PostValidateMoveRoute());
+    post(BACKUP_MOVE_URL, new PostBackupMoveRoute(gson));
     post(SUBMIT_TURN_URL, new PostSubmitTurnRoute());
 
     // Setup Application Layer
