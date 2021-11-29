@@ -13,16 +13,17 @@ import java.util.UUID;
  */
 public class Game {
 
+  // Game Constants
   private final UUID gameID; // Game Identifier
   private final Board board; // Game Board
   private final ArrayList<Move> pendingMoves; // Pending game piece moves
-
-  private Color activeColor; // Active Player/Piece Color
   private final Player redPlayer; // Player with red pieces
   private final Player whitePlayer; // Player with white pieces
 
-  private boolean isGameOver;
-  private String gameOverMessage;
+  // Game Fields
+  private Color activeColor; // Active Player/Piece Color
+  private boolean isGameOver; // Game is over
+  private String gameOverMessage; // Reason why game is over (e.g., "[redPlayer] resigned/won")
 
   /**
    * Constructs a new game. Generates a gameID and a new board. Sets the activeColor to RED, and
@@ -32,17 +33,15 @@ public class Game {
    * @param whitePlayer Player with white pieces.
    */
   public Game(Player redPlayer, Player whitePlayer) {
-    // Game
+    // Game Constants
     this.gameID = UUID.randomUUID(); // Set gameID
     this.board = new Board(); // Create a new board
     this.pendingMoves = new ArrayList<>(); // Create an empty list to store pending moves
-
-    // Players
-    this.activeColor = Color.RED; // RED is always the starting color
     this.redPlayer = redPlayer; // Set Red Player
     this.whitePlayer = whitePlayer; // Set White Player
 
     // Game Status
+    this.activeColor = Color.RED; // RED is always the starting color
     this.isGameOver = false; // Game is just starting
     this.gameOverMessage = null; // Game is not over
   }
