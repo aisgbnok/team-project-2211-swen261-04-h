@@ -223,13 +223,6 @@ public class Game {
     activeColor = activeColor.opposite();
   }
 
-  // TODO: viewModes don't belong to a game, but a session. Where should we put these?
-  public enum viewModes {
-    PLAY,
-    SPECTATOR,
-    REPLAY
-  }
-
   /*
    * The methods below here should maybe be phased out? Debating.
    *
@@ -271,5 +264,12 @@ public class Game {
     if (currentPlayer.equals(redPlayer)) return whitePlayer;
     if (currentPlayer.equals(whitePlayer)) return redPlayer;
     return null;
+  }
+
+  // TODO: viewModes don't belong to a game, but a session. Where should we put these?
+  public enum viewModes {
+    PLAY,
+    SPECTATOR,
+    REPLAY
   }
 }
