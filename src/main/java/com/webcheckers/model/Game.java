@@ -107,14 +107,23 @@ public class Game {
   }
 
   public Message backupMove() {
-    if (!pendingMoves.isEmpty()) {
-      pendingMoves.remove(pendingMoves.size() - 1);
-
-      return Message.info("Removed successfully");
-
-    } else {
+    // No move to revert
+    if (pendingMoves.isEmpty()) {
       return Message.error("No move to revert");
     }
+
+    // Remove the last move, and store it
+    Move lastMove = pendingMoves.remove(pendingMoves.size() - 1);
+
+    // Return descriptive success message
+    if (lastMove.isSlide()) {
+      return Message.info("Removed previous slide");
+    } else if (lastMove.isJump()) {
+      return Message.info("Removed previous jump");
+    }
+
+    // Return default success message
+    return Message.info("Removed successfully");
   }
 
   /*
