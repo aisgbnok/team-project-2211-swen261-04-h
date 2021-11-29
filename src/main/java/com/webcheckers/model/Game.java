@@ -99,7 +99,6 @@ public class Game {
     Message result = testBoard.validateMove(move);
     if (result.isSuccessful()) {
       pendingMoves.add(move);
-      board.setLastValidMove(move);
     }
 
     // Return the message result from board.validateMove
@@ -201,9 +200,8 @@ public class Game {
   }
 
   public Message submitTurn(Player sessionPlayer, Game game) {
-    if (game.getActivePlayer() == sessionPlayer){
-      Move moveToMake = board.getLastValidMove();
-      board.performMove(moveToMake);
+    if (game.getActivePlayer() == sessionPlayer) {
+      // TODO perform pendingMoves
       changeActivePlayer();
       return Message.info("Turn Submitted Successfully");
     } else {
@@ -212,7 +210,7 @@ public class Game {
   }
 
   private Player getActivePlayer() {
-    if (activeColor == Color.RED){
+    if (activeColor == Color.RED) {
       return redPlayer;
     } else {
       return whitePlayer;
