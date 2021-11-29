@@ -107,24 +107,6 @@ public class Game {
     return result;
   }
 
-
-
-  private void makeKings() {
-    for (int cell = 0; cell < 8; cell++) {
-      if (board.getRows().get(0).getSpaces().get(cell).isFull()
-          && board.getRows().get(0).getSpaces().get(cell).getPiece().getColor() == Color.RED) {
-        board.getRows().get(0).getSpaces().get(cell).getPiece().king();
-      }
-    }
-
-    for (int cell = 0; cell < 8; cell++) {
-      if (board.getRows().get(7).getSpaces().get(cell).isFull()
-          && board.getRows().get(7).getSpaces().get(cell).getPiece().getColor() == Color.WHITE) {
-        board.getRows().get(7).getSpaces().get(cell).getPiece().king();
-      }
-    }
-  }
-
   /*
    * Player Methods
    */
@@ -240,11 +222,6 @@ public class Game {
 
   private void changeActivePlayer() {
     activeColor = activeColor.opposite();
-
-    // 1. determine who the next player is
-    // 2. make kings
-    makeKings();
-    // 3. determine winners
   }
 
   // TODO: viewModes don't belong to a game, but a session. Where should we put these?
