@@ -273,9 +273,10 @@ public class Board implements Iterable<Row> {
       return Message.error(INVALID_END_SPACE);
     }
 
-
-
-
+    Message directionResult = validateDirection(move);
+    if (!directionResult.isSuccessful()) {
+      return directionResult;
+    }
 
 
 
