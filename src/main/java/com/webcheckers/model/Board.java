@@ -321,10 +321,14 @@ public class Board implements Iterable<Row> {
    * @return Message of type INFO if move is a valid jump, or type ERROR if invalid.
    */
   private Message validateJump(Move move) {
-    Position midPos = move.getMiddle(); // Position between start and end position
+    // Move is not a jump
+    if (!move.isJump()) {
+      return Message.error(INVALID_JUMP);
+    }
+
     Space endSpace = this.getSpace(move.getEnd()); // Space where the jump move ends
-    Piece midPiece = this.getSpace(midPos).getPiece(); // Piece at middle position
     Piece startPiece = this.getSpace(move.getStart()).getPiece(); // Piece at start position
+    Piece midPiece = this.getSpace(move.getMiddle()).getPiece(); // Piece at middle position
 
     // End space should not be invalid
     if (!endSpace.isValid()) {
