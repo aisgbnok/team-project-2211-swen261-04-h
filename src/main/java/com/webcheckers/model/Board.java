@@ -340,6 +340,16 @@ public class Board implements Iterable<Row> {
   }
 
   /**
+   * Checks if there are one or more valid jumps for pieces of the given color.
+   *
+   * @param color Color of the pieces to be tested for valid jumps.
+   * @return True if there is a valid jump for a piece of the given color, or false if not.
+   */
+  private boolean canJump(Color color) {
+    return true;
+  }
+
+  /**
    * Checks if there are available valid jumps from the given starting position.
    *
    * @param startPosition Position to test if it can perform any valid jumps.
@@ -386,16 +396,6 @@ public class Board implements Iterable<Row> {
 
     // None of the possible jumps were viable
     return false;
-  }
-
-  /**
-   * Checks if there are one or more valid jumps for pieces of the given color.
-   *
-   * @param color Color of the pieces to be tested for valid jumps.
-   * @return True if there is a valid jump for a piece of the given color, or false if not.
-   */
-  private boolean canJump(Color color) {
-    return true;
   }
 
   @Override
