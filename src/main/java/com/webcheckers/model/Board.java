@@ -313,16 +313,14 @@ public class Board implements Iterable<Row> {
    * Checks if a given move is going the right direction. RED goes UP, WHITE goes DOWN.
    *
    * @param move Move that needs its direction to be validated.
-   * @return Message of type INFO if move direction is a valid, or type ERROR if invalid.
+   * @return Message of type INFO if move direction is valid, or type ERROR if invalid.
    */
   private Message validateDirection(Move move) {
-    // Position
-    Position startPos = move.getStart();
-    Position endPos = move.getEnd();
-    int rowDelta = startPos.getRow() - endPos.getRow();
+    // Calculate Row Delta
+    int rowDelta = move.getStart().getRow() - move.getEnd().getRow();
 
-    // Piece
-    Piece movePiece = this.getSpace(startPos).getPiece();
+    // Piece Information
+    Piece movePiece = this.getSpace(move.getStart()).getPiece();
     Color moveColor = movePiece.getColor();
     Type moveType = movePiece.getType();
 
@@ -331,11 +329,8 @@ public class Board implements Iterable<Row> {
       return Message.info(VALID_DIRECTION_KING);
     }
 
-    // Check if a color is going the wrong direction
-    // RED's row delta should be positive, WHITE's should be negative
+    // Color is going wrong direction, return descriptive error message
     if ((moveColor == Color.RED && rowDelta < 0) || (moveColor == Color.WHITE && rowDelta > 0)) {
-
-      // Color is going wrong direction, return descriptive error message
       return Message.error(String.format(INVALID_DIRECTION, moveColor, moveColor.direction()));
     }
 
