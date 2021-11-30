@@ -286,6 +286,12 @@ public class Board implements Iterable<Row> {
     return Message.error(INVALID_SLIDE);
   }
 
+  /**
+   * Checks if a given move is going the right direction. RED goes UP, WHITE goes DOWN.
+   *
+   * @param move Move that needs its direction to be validated.
+   * @return Message of type INFO if move direction is a valid, or type ERROR if invalid.
+   */
   private Message validateDirection(Move move) {
     // Position
     Position startPos = move.getStart();
