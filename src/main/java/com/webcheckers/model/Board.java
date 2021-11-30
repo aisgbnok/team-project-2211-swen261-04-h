@@ -169,81 +169,18 @@ public class Board implements Iterable<Row> {
    * @return Message of type INFO if move is valid, or type ERROR if invalid.
    */
   public Message validateMove(Move move) {
-    // Positions
-    Position startPos = move.getStart();
-    Position endPos = move.getEnd();
-    int rowDelta = startPos.getRow() - endPos.getRow();
-
-    // Spaces
-    Space startSpace = this.getSpace(startPos);
-    Space endSpace = this.getSpace(endPos);
-
-    // Piece
-    Piece movePiece = startSpace.getPiece(); // This is the piece we want to move
-    Color moveColor = movePiece.getColor();
-    Type moveType = movePiece.getType();
-
-    /*
-     * Basic Validation Checks
-     */
-
-    // CSS/JavaScript shouldn't let pieces be moved to invalid spaces, but keeping this as a simple
-    // check to filter out basic exceptions.
-    if (!endSpace.isValid()) {
-      return Message.error(INVALID_END_SPACE);
-    }
-
-    // Move should not be invalid
-    if (move.isInvalid()) {
-      return Message.error(INVALID_MOVE);
-    }
-
-    // Ensure SINGLE piece is moving in the right direction
-    if ((moveType == Type.SINGLE)
-        && ((moveColor == Color.RED && rowDelta < 0) // RED row delta should be positive
-            || (moveColor == Color.WHITE && rowDelta > 0))) // WHITE row delta should be negative
-    {
-      return Message.error(
-          String.format(INVALID_DIRECTION, moveColor.name(), moveColor.direction()));
-    }
-
-    /*
-     * Slide Validation
-     */
-
+    //  Slide Validation, check for previous moves
     if (move.isSlide()) {
-      // If a slide or jump has already occurred return appropriate error message
-      if (hasSlid) {
-        return Message.error(INVALID_SLIDE_AFTER_SLIDE);
-      } else if (hasJumped) {
-        return Message.error(INVALID_SLIDE_AFTER_JUMP);
-      }
-
-      // If a jump is possible, tell the player
-      if (canJump(startPos)) {
-        return Message.error(INVALID_SLIDE_WHEN_JUMP);
-      }
-
-      // Valid Slide, above checks passed
-      return Message.info(VALID_SLIDE);
+      return this.validateSlide(move, true);
     }
 
-    /*
-     * Jump Validation
-     */
-
+    // Jump Validation, check for previous slides
     if (move.isJump()) {
-      // If a slide has already occurred return appropriate error message
-      if (hasSlid) {
-        return Message.error(INVALID_JUMP_AFTER_SLIDE);
-      }
-
-      // Validate the Jump, and return the result
-      return validateJump(move);
+      return this.validateJump(move, true);
     }
 
-    // Invalid Move, above checks failed. This should never happen, if you see this look into it.
-    return Message.error(INVALID_MOVE + " (Edge Case)");
+    // Was not a slide or a jump
+    return Message.error(INVALID_MOVE);
   }
 
   /**
