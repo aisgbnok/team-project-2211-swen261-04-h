@@ -287,30 +287,30 @@ public class Board implements Iterable<Row> {
   }
 
   private Message validateDirection(Move move) {
-    // Positions
+    // Position
     Position startPos = move.getStart();
     Position endPos = move.getEnd();
     int rowDelta = startPos.getRow() - endPos.getRow();
 
-    // Spaces
-    Space startSpace = this.getSpace(startPos);
-
     // Piece
-    Piece movePiece = startSpace.getPiece();
+    Piece movePiece = this.getSpace(startPos).getPiece();
     Color moveColor = movePiece.getColor();
     Type moveType = movePiece.getType();
 
-    // Kings can move any direction
-    if(moveType != Type.SINGLE) {
+    // Only Single pieces need direction to be validated
+    if (moveType != Type.SINGLE) {
       return Message.info("It's a king");
     }
 
+    // Check if a color is going the wrong direction
     // RED's row delta should be positive, WHITE's should be negative
-    if((moveColor == Color.RED && rowDelta < 0) || (moveColor == Color.WHITE && rowDelta > 0)) {
-      return Message.error(
-          String.format(INVALID_DIRECTION, moveColor, moveColor.direction()));
+    if ((moveColor == Color.RED && rowDelta < 0) || (moveColor == Color.WHITE && rowDelta > 0)) {
+
+      // Color is going wrong direction, return descriptive error message
+      return Message.error(String.format(INVALID_DIRECTION, moveColor, moveColor.direction()));
     }
 
+    // Valid Direction, above checks passed
     return Message.info("Valid Direction");
   }
 
