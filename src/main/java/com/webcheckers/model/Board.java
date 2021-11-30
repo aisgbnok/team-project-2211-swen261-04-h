@@ -346,7 +346,20 @@ public class Board implements Iterable<Row> {
    * @return True if there is a valid jump for a piece of the given color, or false if not.
    */
   private boolean canJump(Color color) {
-    return true;
+    // Create new array for storing all positions for pieces of given color
+    ArrayList<Position> piecePositions = getPiecePositions(color);
+
+    // For each position check if they can jump
+    for (Position piecePosition : piecePositions) {
+
+      // Use deprecated canJump for now
+      if (canJump(piecePosition)) {
+        return true; // Jump was found, return true.
+      }
+    }
+
+    // None of them can jump, return false
+    return false;
   }
 
   /**
