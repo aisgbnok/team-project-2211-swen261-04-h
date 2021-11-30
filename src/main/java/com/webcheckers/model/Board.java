@@ -259,31 +259,21 @@ public class Board implements Iterable<Row> {
       return Message.error(INVALID_NOT_SLIDE);
     }
 
-    // Positions
-    Position startPos = move.getStart();
-    Position endPos = move.getEnd();
-    int rowDelta = startPos.getRow() - endPos.getRow();
-
-    // Spaces
-    Space startSpace = this.getSpace(startPos);
-    Space endSpace = this.getSpace(endPos);
-
-    // Piece
-    Piece movePiece = startSpace.getPiece(); // This is the piece we want to move
-    Color moveColor = movePiece.getColor();
-    Type moveType = movePiece.getType();
-
     // End space is not valid
-    if (!endSpace.isValid()) {
+    if (!getSpace(move.getEnd()).isValid()) {
       return Message.error(INVALID_END_SPACE);
     }
 
+    // Validate Direction
     Message directionResult = validateDirection(move);
+
+    // If directionResult message is not successful
     if (!directionResult.isSuccessful()) {
       return directionResult;
     }
 
-    if (canJump(startPos)) {
+    // Check for possible jumps
+    if (canJump(move.getStart())) {
       return Message.error(INVALID_SLIDE_WHEN_JUMP);
     }
 
