@@ -52,6 +52,7 @@ public class WebServer {
   public static final String RESIGN_URL = "/resignGame"; // Resign Game
   public static final String VALIDATE_MOVE_URL = "/validateMove"; // Validate Piece Move
   public static final String SUBMIT_TURN_URL = "/submitTurn"; // Submit Player Turn
+  public static final String CHECK_TURN_URL = "/checkTurn"; // Check Player Turn
 
   //
   // Constants
@@ -144,11 +145,12 @@ public class WebServer {
     // Game
     post(GAME_START_URL, new PostStartGameRoute());
     get(GAME_URL, new GetGameRoute(templateEngine));
-    
+
     // Game Actions
     post(RESIGN_URL, new PostResignRoute());
     post(VALIDATE_MOVE_URL, new PostValidateMoveRoute());
     post(SUBMIT_TURN_URL, new PostSubmitTurnRoute());
+    post(CHECK_TURN_URL, new PostCheckTurnRoute());
 
     // Setup Application Layer
     PlayerLobby.initPlayers();

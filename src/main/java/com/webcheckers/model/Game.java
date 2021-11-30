@@ -119,6 +119,10 @@ public class Game {
     return activeColor;
   }
 
+  public boolean isActivePlayer(Player player) {
+    return player.equals(activeColor.equals(Color.RED) ? redPlayer : whitePlayer);
+  }
+
   /**
    * Getter for the playerName corresponding to the player matching the given color.
    *
