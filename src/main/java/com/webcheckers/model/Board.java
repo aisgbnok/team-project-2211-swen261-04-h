@@ -286,6 +286,34 @@ public class Board implements Iterable<Row> {
     return Message.error(INVALID_SLIDE);
   }
 
+  private Message validateDirection(Move move) {
+    // Positions
+    Position startPos = move.getStart();
+    Position endPos = move.getEnd();
+    int rowDelta = startPos.getRow() - endPos.getRow();
+
+    // Spaces
+    Space startSpace = this.getSpace(startPos);
+
+    // Piece
+    Piece movePiece = startSpace.getPiece();
+    Color moveColor = movePiece.getColor();
+    Type moveType = movePiece.getType();
+
+    // Kings can move any direction
+    if(moveType != Type.SINGLE) {
+      return Message.info("It's a king");
+    }
+
+    // RED's row delta should be positive, WHITE's should be negative
+    if((moveColor == Color.RED && rowDelta < 0) || (moveColor == Color.WHITE && rowDelta > 0)) {
+      return Message.error(
+          String.format(INVALID_DIRECTION, moveColor, moveColor.direction()));
+    }
+
+    return Message.info("Valid Direction");
+  }
+
   /**
    * Checks if a given jump is a valid on the board.
    *
