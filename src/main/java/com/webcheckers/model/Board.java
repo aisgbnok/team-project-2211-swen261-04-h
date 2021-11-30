@@ -328,7 +328,7 @@ public class Board implements Iterable<Row> {
 
     // Only Single pieces need direction to be validated
     if (moveType != Type.SINGLE) {
-      return Message.info("It's a king");
+      return Message.info(VALID_DIRECTION_KING);
     }
 
     // Check if a color is going the wrong direction
@@ -340,7 +340,7 @@ public class Board implements Iterable<Row> {
     }
 
     // Valid Direction, above checks passed
-    return Message.info("Valid Direction");
+    return Message.info(VALID_DIRECTION);
   }
 
   /**
