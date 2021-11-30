@@ -315,15 +315,21 @@ public class Board implements Iterable<Row> {
   }
 
   /**
-   * Checks if a given jump is a valid on the board.
+   * Checks if a given move is a valid jump on the board.
    *
-   * @param move Jump that needs to be validated.
-   * @return Message of type INFO if jump is valid, or type ERROR if invalid.
+   * @param move Move that needs to be validated as a jump.
+   * @return Message of type INFO if move is a valid jump, or type ERROR if invalid.
    */
   private Message validateJump(Move move) {
     Position midPos = move.getMiddle(); // Position between start and end position
-    Piece midPiece = getSpace(midPos).getPiece(); // Piece at middle position
-    Piece startPiece = getSpace(move.getStart()).getPiece(); // Piece at start position
+    Space endSpace = this.getSpace(move.getEnd()); // Space where the jump move ends
+    Piece midPiece = this.getSpace(midPos).getPiece(); // Piece at middle position
+    Piece startPiece = this.getSpace(move.getStart()).getPiece(); // Piece at start position
+
+    // End space should not be invalid
+    if (!endSpace.isValid()) {
+      return Message.error(INVALID_END_SPACE);
+    }
 
     // Middle piece should not be empty
     if (midPiece == null) {
