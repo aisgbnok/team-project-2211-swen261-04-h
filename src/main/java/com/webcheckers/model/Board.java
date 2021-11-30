@@ -350,13 +350,21 @@ public class Board implements Iterable<Row> {
       return Message.error(INVALID_NOT_JUMP);
     }
 
-    Space endSpace = this.getSpace(move.getEnd()); // Space where the jump move ends
-    Piece startPiece = this.getSpace(move.getStart()).getPiece(); // Piece at start position
-    Piece midPiece = this.getSpace(move.getMiddle()).getPiece(); // Piece at middle position
+    // Pieces
+    Piece startPiece = this.getSpace(move.getStart()).getPiece();
+    Piece midPiece = this.getSpace(move.getMiddle()).getPiece();
 
     // End space should not be invalid
-    if (!endSpace.isValid()) {
+    if (!getSpace(move.getEnd()).isValid()) {
       return Message.error(INVALID_END_SPACE);
+    }
+
+    // Validate Direction
+    Message directionResult = validateDirection(move);
+
+    // If directionResult message is not successful
+    if (!directionResult.isSuccessful()) {
+      return directionResult;
     }
 
     // Middle piece should not be empty
@@ -364,7 +372,7 @@ public class Board implements Iterable<Row> {
       return Message.error(INVALID_JUMP_EMPTY_MIDDLE);
     }
 
-    // Middle piece should not be the same color as the jumping piece
+    // Middle piece should not be the same color as the startPiece piece
     if (midPiece.getColor() == startPiece.getColor()) {
       return Message.error(INVALID_JUMP_SAME_PIECE);
     }
