@@ -201,9 +201,8 @@ public class Game {
 
   public Message submitTurn(Player sessionPlayer, Game game) {
     if (game.getActivePlayer() == sessionPlayer) {
-      Move move = pendingMoves.get(0);
+      Move move = pendingMoves.remove(0);
       board.performMove(move);
-      pendingMoves.set(0, null);
       changeActivePlayer();
       return Message.info("Turn Submitted Successfully");
     } else {
