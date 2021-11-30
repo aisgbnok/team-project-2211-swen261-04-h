@@ -287,6 +287,34 @@ public class Board implements Iterable<Row> {
   }
 
   /**
+   * Checks if a given move is a valid slide on the board. Will also check to ensure a slide or jump
+   * has not occurred on the board during the current turn if checkPrevious is true.
+   *
+   * @param move Move that needs to be validated as a slide.
+   * @param checkPrevious Whether to check for previous slides or jumps during current turn.
+   * @return Message of type INFO if move is a valid slide, or type ERROR if invalid.
+   */
+  private Message validateSlide(Move move, boolean checkPrevious) {
+    // checkPrevious is false, return default validateSlide
+    if (!checkPrevious) {
+      return validateSlide(move);
+    }
+
+    // A slide has occurred during current turn
+    if (hasSlid) {
+      return Message.error(INVALID_SLIDE_AFTER_SLIDE);
+    }
+
+    // A jump has occurred during current turn
+    if (hasJumped) {
+      return Message.error(INVALID_SLIDE_AFTER_JUMP);
+    }
+
+    // Return default validateSlide, above checks passed
+    return validateSlide(move);
+  }
+
+  /**
    * Checks if a given move is going the right direction. RED goes UP, WHITE goes DOWN.
    *
    * @param move Move that needs its direction to be validated.
@@ -353,6 +381,29 @@ public class Board implements Iterable<Row> {
 
     // Valid Jump, above checks passed
     return Message.info(VALID_JUMP);
+  }
+
+  /**
+   * Checks if a given move is a valid jump on the board. Will also check to ensure a slide has not
+   * occurred on the board during the current turn if checkPrevious is true.
+   *
+   * @param move Move that needs to be validated as a jump.
+   * @param checkPrevious Whether to check for previous slides during current turn.
+   * @return Message of type INFO if move is a valid jump, or type ERROR if invalid.
+   */
+  private Message validateJump(Move move, boolean checkPrevious) {
+    // checkPrevious is false, return default validateJump
+    if (!checkPrevious) {
+      return validateJump(move);
+    }
+
+    // A slide has occurred during current turn
+    if (hasSlid) {
+      return Message.error(INVALID_JUMP_AFTER_SLIDE);
+    }
+
+    // Return default validateJump, above checks passed
+    return validateJump(move);
   }
 
   /**
