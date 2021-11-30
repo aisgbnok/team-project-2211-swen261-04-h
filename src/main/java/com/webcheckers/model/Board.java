@@ -40,6 +40,9 @@ public class Board implements Iterable<Row> {
 
   private static final String VALID_SLIDE = "Valid Slide";
   private static final String VALID_JUMP = "Valid Jump";
+  public static final String VALID_DIRECTION = "Valid Direction";
+  public static final String VALID_DIRECTION_KING = "Is A King";
+
 
   /** Constructs a new board in the default orientation. Red pieces are generated at the bottom. */
   public Board() {
