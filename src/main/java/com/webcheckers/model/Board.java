@@ -27,8 +27,8 @@ public class Board implements Iterable<Row> {
   private static final String INVALID_MOVE = "Invalid Move";
   private static final String INVALID_SLIDE = "Invalid Slide";
   private static final String INVALID_JUMP = "Invalid Jump";
-  private static final String INVALID_NOT_SLIDE = "Not A Slide";
-  private static final String INVALID_NOT_JUMP = "Not A Jump";
+  public static final String INVALID_NOT_SLIDE = "Not A Slide";
+  public static final String INVALID_NOT_JUMP = "Not A Jump";
   private static final String INVALID_DIRECTION = "%s pieces can only move %s!";
   private static final String INVALID_END_SPACE = "End space is not valid!";
   private static final String INVALID_JUMP_AFTER_SLIDE = "You can't jump after a slide!";
@@ -42,7 +42,6 @@ public class Board implements Iterable<Row> {
   private static final String VALID_JUMP = "Valid Jump";
   public static final String VALID_DIRECTION = "Valid Direction";
   public static final String VALID_DIRECTION_KING = "Is A King";
-
 
   /** Constructs a new board in the default orientation. Red pieces are generated at the bottom. */
   public Board() {
