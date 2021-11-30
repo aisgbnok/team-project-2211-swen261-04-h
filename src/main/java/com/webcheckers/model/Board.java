@@ -208,7 +208,7 @@ public class Board implements Iterable<Row> {
     }
 
     // Check for possible jumps
-    if (canJump(move.getStart())) {
+    if (canJump(getSpace(move.getStart()).getPiece().getColor())) {
       return Message.error(INVALID_SLIDE_WHEN_JUMP);
     }
 
