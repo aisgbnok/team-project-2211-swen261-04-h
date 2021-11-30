@@ -27,6 +27,8 @@ public class Board implements Iterable<Row> {
   private static final String INVALID_MOVE = "Invalid Move";
   private static final String INVALID_SLIDE = "Invalid Slide";
   private static final String INVALID_JUMP = "Invalid Jump";
+  private static final String INVALID_NOT_SLIDE = "Not A Slide";
+  private static final String INVALID_NOT_JUMP = "Not A Jump";
   private static final String INVALID_DIRECTION = "%s pieces can only move %s!";
   private static final String INVALID_END_SPACE = "End space is not valid!";
   private static final String INVALID_JUMP_AFTER_SLIDE = "You can't jump after a slide!";
@@ -251,7 +253,7 @@ public class Board implements Iterable<Row> {
   private Message validateSlide(Move move) {
     // Move is not a slide
     if (!move.isSlide()) {
-      return Message.error(INVALID_SLIDE);
+      return Message.error(INVALID_NOT_SLIDE);
     }
 
     // Positions
@@ -357,7 +359,7 @@ public class Board implements Iterable<Row> {
   private Message validateJump(Move move) {
     // Move is not a jump
     if (!move.isJump()) {
-      return Message.error(INVALID_JUMP);
+      return Message.error(INVALID_NOT_JUMP);
     }
 
     Space endSpace = this.getSpace(move.getEnd()); // Space where the jump move ends
