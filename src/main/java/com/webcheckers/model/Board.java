@@ -278,10 +278,9 @@ public class Board implements Iterable<Row> {
       return directionResult;
     }
 
-
-
-
-
+    if (canJump(startPos)) {
+      return Message.error(INVALID_SLIDE_WHEN_JUMP);
+    }
 
     // Invalid Slide, above checks failed
     return Message.error(INVALID_SLIDE);
