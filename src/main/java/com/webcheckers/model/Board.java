@@ -243,13 +243,44 @@ public class Board implements Iterable<Row> {
   }
 
   /**
-   * PLACEHOLDER! Checks if a given slide is valid on the board.
+   * Checks if a given move is a valid slide on the board.
    *
-   * @param move Slide that needs to be validated.
-   * @return Message of type INFO if slide is valid, or type ERROR if invalid.
+   * @param move Move that needs to be validated as a slide.
+   * @return Message of type INFO if move is a valid slide, or type ERROR if invalid.
    */
   private Message validateSlide(Move move) {
-    // NOTE THIS IS A PLACEHOLDER METHOD THAT IS NEVER USED AND DOES NOT PERFORM ANY FUNCTION
+    // Move is not a slide
+    if (!move.isSlide()) {
+      return Message.error(INVALID_SLIDE);
+    }
+
+    // Positions
+    Position startPos = move.getStart();
+    Position endPos = move.getEnd();
+    int rowDelta = startPos.getRow() - endPos.getRow();
+
+    // Spaces
+    Space startSpace = this.getSpace(startPos);
+    Space endSpace = this.getSpace(endPos);
+
+    // Piece
+    Piece movePiece = startSpace.getPiece(); // This is the piece we want to move
+    Color moveColor = movePiece.getColor();
+    Type moveType = movePiece.getType();
+
+    // End space is not valid
+    if (!endSpace.isValid()) {
+      return Message.error(INVALID_END_SPACE);
+    }
+
+
+
+
+
+
+
+
+
 
     // Invalid Slide, above checks failed
     return Message.error(INVALID_SLIDE);
