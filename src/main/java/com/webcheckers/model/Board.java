@@ -113,7 +113,6 @@ public class Board implements Iterable<Row> {
     }
   }
 
-
   /**
    * Private getter for a space on the board.
    *
@@ -246,35 +245,6 @@ public class Board implements Iterable<Row> {
   }
 
   /**
-   * Checks if a given move is going the right direction. RED goes UP, WHITE goes DOWN.
-   *
-   * @param move Move that needs its direction to be validated.
-   * @return Message of type INFO if move direction is valid, or type ERROR if invalid.
-   */
-  private Message validateDirection(Move move) {
-    // Calculate Row Delta
-    int rowDelta = move.getStart().getRow() - move.getEnd().getRow();
-
-    // Piece Information
-    Piece movePiece = this.getSpace(move.getStart()).getPiece();
-    Color moveColor = movePiece.getColor();
-    Type moveType = movePiece.getType();
-
-    // Only Single pieces need direction to be validated
-    if (moveType != Type.SINGLE) {
-      return Message.info(VALID_DIRECTION_KING);
-    }
-
-    // Color is going wrong direction, return descriptive error message
-    if ((moveColor == Color.RED && rowDelta < 0) || (moveColor == Color.WHITE && rowDelta > 0)) {
-      return Message.error(String.format(INVALID_DIRECTION, moveColor, moveColor.direction()));
-    }
-
-    // Valid Direction, above checks passed
-    return Message.info(VALID_DIRECTION);
-  }
-
-  /**
    * Checks if a given move is a valid jump on the board.
    *
    * @param move Move that needs to be validated as a jump.
@@ -338,6 +308,35 @@ public class Board implements Iterable<Row> {
 
     // Return default validateJump, above checks passed
     return validateJump(move);
+  }
+
+  /**
+   * Checks if a given move is going the right direction. RED goes UP, WHITE goes DOWN.
+   *
+   * @param move Move that needs its direction to be validated.
+   * @return Message of type INFO if move direction is valid, or type ERROR if invalid.
+   */
+  private Message validateDirection(Move move) {
+    // Calculate Row Delta
+    int rowDelta = move.getStart().getRow() - move.getEnd().getRow();
+
+    // Piece Information
+    Piece movePiece = this.getSpace(move.getStart()).getPiece();
+    Color moveColor = movePiece.getColor();
+    Type moveType = movePiece.getType();
+
+    // Only Single pieces need direction to be validated
+    if (moveType != Type.SINGLE) {
+      return Message.info(VALID_DIRECTION_KING);
+    }
+
+    // Color is going wrong direction, return descriptive error message
+    if ((moveColor == Color.RED && rowDelta < 0) || (moveColor == Color.WHITE && rowDelta > 0)) {
+      return Message.error(String.format(INVALID_DIRECTION, moveColor, moveColor.direction()));
+    }
+
+    // Valid Direction, above checks passed
+    return Message.info(VALID_DIRECTION);
   }
 
   /**
