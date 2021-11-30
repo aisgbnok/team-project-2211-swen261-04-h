@@ -106,6 +106,33 @@ public class Row implements Iterable<Space> {
     return spaces.get(colIndex);
   }
 
+  /**
+   * Gets all positions that contain piece of given color on the row. Find positions based on piece
+   * color.
+   *
+   * @param color Color of pieces to get positions for.
+   * @return All positions that contain a piece of the given color.
+   */
+  protected ArrayList<Position> getPiecePositions(Color color) {
+    // Create new array for storing positions
+    ArrayList<Position> positions = new ArrayList<>();
+
+    // TODO: Only check black spaces
+    // Find positions of spaces that contain piece of given color
+    for (Space space : spaces) {
+      // Get the piece on the space
+      Piece piece = space.getPiece();
+
+      // If piece exists, and it's color matches,then generate position
+      if (piece != null && piece.getColor() == color) {
+        positions.add(new Position(this.index, space.getCellIdx()));
+      }
+    }
+
+    // Return all matching positions
+    return positions;
+  }
+
   @Override
   public Iterator<Space> iterator() {
     return new Row(this).spaces.iterator();
