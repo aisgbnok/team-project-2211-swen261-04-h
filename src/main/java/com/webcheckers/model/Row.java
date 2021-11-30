@@ -96,6 +96,11 @@ public class Row implements Iterable<Space> {
     return index;
   }
 
+  /**
+   * Getter for the space at the given column index.
+   * @param colIndex Column index of space to return.
+   * @return Space object at given column index.
+   */
   protected Space getSpace(int colIndex) {
     return spaces.get(colIndex);
   }
