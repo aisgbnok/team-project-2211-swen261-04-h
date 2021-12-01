@@ -13,6 +13,12 @@ import java.util.UUID;
  */
 public class Game {
 
+  // Backup Messages
+  private static final String BACKUP_NO_MOVES = "No move to revert!";
+  private static final String BACKUP_REVERT_SLIDE = "Reverted previous Slide";
+  private static final String BACKUP_REVERT_JUMP = "Reverted previous Jump";
+  private static final String BACKUP_REVERT_MOVE = "Reverted previous Move";
+
   private final UUID gameID; // Game Identifier
   private final Board board; // Game Board
   private final ArrayList<Move> pendingMoves; // Pending game piece moves
@@ -104,6 +110,32 @@ public class Game {
 
     // Return the message result from board.validateMove
     return result;
+  }
+
+  /**
+   * Attempts to revert the last move from the game's pending moves. Moves are pending until turn is
+   * submitted.
+   *
+   * @return Message of type INFO if backup is successful, or type ERROR if unsuccessful.
+   */
+  public Message backupMove() {
+    // No move to revert
+    if (pendingMoves.isEmpty()) {
+      return Message.error(BACKUP_NO_MOVES);
+    }
+
+    // Remove the last move, and store it
+    Move lastMove = pendingMoves.remove(pendingMoves.size() - 1);
+
+    // Return descriptive success message
+    if (lastMove.isSlide()) {
+      return Message.info(BACKUP_REVERT_SLIDE);
+    } else if (lastMove.isJump()) {
+      return Message.info(BACKUP_REVERT_JUMP);
+    }
+
+    // Return default success message
+    return Message.info(BACKUP_REVERT_MOVE);
   }
 
   /*
