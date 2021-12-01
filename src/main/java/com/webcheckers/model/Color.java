@@ -56,6 +56,13 @@ public enum Color {
     return direction().value();
   }
 
+ @Override
+  public String toString() {
+    String name = super.toString();
+    name = name.charAt(0) + name.substring(1).toLowerCase();
+    return name;
+  }
+
   /** Provides directionality for COLOR */
   private enum Direction {
     UP,
