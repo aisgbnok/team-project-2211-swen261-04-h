@@ -1,11 +1,9 @@
 package com.webcheckers.ui;
 
-import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER_KEY;
-
 import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.model.Game;
-import com.webcheckers.model.Player;
+import com.webcheckers.util.Message;
 import java.util.UUID;
 import java.util.logging.Logger;
 import spark.Request;
@@ -19,6 +17,11 @@ import spark.Route;
  * @author <a href='mailto:jwd2488@rit.edu'>Jake Downie</a>
  */
 public class PostSubmitTurnRoute implements Route {
+
+  // Messages
+  public static final String VALID_SUBMIT_TURN = "Turn Submitted";
+
+  // Private Logger
   private static final Logger LOG = Logger.getLogger(PostSubmitTurnRoute.class.getName());
 
   /**
@@ -42,14 +45,13 @@ public class PostSubmitTurnRoute implements Route {
     // Setup new Gson
     Gson gson = new Gson();
 
-    // currentPlayer that wants to submit turn
-    Player player = request.session().attribute(CURRENT_PLAYER_KEY);
-
     // Get the current game
     UUID gameID = gson.fromJson(request.queryParams("gameID"), UUID.class);
     Game game = GameCenter.getGame(gameID);
 
-    // Submit Turn, and return result
-    return gson.toJson(game.submitTurn(player));
+    // Submit Turn
+    game.submitTurn();
+
+    return gson.toJson(Message.info(VALID_SUBMIT_TURN));
   }
 }
