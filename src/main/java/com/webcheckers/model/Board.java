@@ -42,10 +42,6 @@ public class Board implements Iterable<Row> {
   private boolean hasJumped; // A jump has occurred previously
   private boolean wasKinged; // A piece was kinged
 
-  // Win Tracking
-  private int redPieces = 12;
-  private int whitePieces = 12;
-
   /** Constructs a new board in the default orientation. Red pieces are generated at the bottom. */
   public Board() {
     // Calls private board constructor providing color that will be on bottom of board.
@@ -161,32 +157,10 @@ public class Board implements Iterable<Row> {
 
       tryKing(move.getEnd()); // Try to king the piece, after the jump
 
-      // Update piece count for win conditions
-      decreasePieceCount(midSpace);
-
       // Capture (remove) the middle piece
       midSpace.removePiece();
 
       hasJumped = true; // A jump has occurred
-    }
-  }
-
-  /**
-   * Decreases the piece count of the color of the piece on the given space. Used for tracking wins.
-   *
-   * @param space Space containing piece of color to decrease.
-   */
-  private void decreasePieceCount(Space space) {
-    // Piece Information
-    Piece piece = space.getPiece();
-    Color pieceColor = piece.getColor();
-
-    if (pieceColor == Color.RED) {
-      redPieces -= 1;
-    }
-
-    if (pieceColor == Color.WHITE) {
-      whitePieces -= 1;
     }
   }
 
