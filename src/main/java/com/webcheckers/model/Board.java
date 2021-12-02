@@ -368,7 +368,6 @@ public class Board implements Iterable<Row> {
    * @param startPosition Position to test if it can perform any valid jumps.
    * @return True if there are available valid jumps from the starting position, or false if not.
    */
-  @Deprecated
   private boolean canJump(Position startPosition) {
     Space space = getSpace(startPosition); // Starting Space
     Piece piece = space.getPiece(); // Starting (Moving) Piece
