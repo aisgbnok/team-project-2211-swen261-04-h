@@ -205,6 +205,12 @@ public class Game {
     return Objects.hash(gameID, redPlayer, whitePlayer);
   }
 
+  /**
+   * Submits pending moves that have already been validated.
+   *
+   * @param sessionPlayer Player attempting to submit turn.
+   * @return Message of type INFO if turn submitted, or type ERROR if failed.
+   */
   public Message submitTurn(Player sessionPlayer) {
 
     // Shouldn't have to check this (submit turn button is greyed out if it's not your turn)
