@@ -124,6 +124,9 @@ public class Game {
       board.performMove(move);
     }
 
+    // Update Win
+    updateWin();
+
     // Change the active player
     changeActiveColor();
   }
@@ -204,6 +207,22 @@ public class Game {
   /*
    * Game Status Methods
    */
+
+  /**
+   * Check if pieces have been captured and call gameOver if so.
+   */
+  private void updateWin() {
+    // Get piece count
+    ArrayList<Position> redCount = board.getPiecePositions(Color.RED);
+    ArrayList<Position> whiteCount = board.getPiecePositions(Color.WHITE);
+
+    // See if game is over
+    if(redCount.isEmpty()) {
+      gameOver(String.format(GAME_OVER_CAPTURE, whitePlayer.getName()));
+    } else if (whiteCount.isEmpty()) {
+      gameOver(String.format(GAME_OVER_CAPTURE, redPlayer.getName()));
+    }
+  }
 
   /**
    * Getter for game over status.
