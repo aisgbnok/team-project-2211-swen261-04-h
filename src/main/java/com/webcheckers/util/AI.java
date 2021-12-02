@@ -3,13 +3,8 @@ package com.webcheckers.util;
 import com.webcheckers.model.*;
 
 public class AI {
-    private Game game;
 
-    public AI(Game game) {
-        this.game = game;
-    }
-
-    public Move getNextMove() {
+    public static Move getNextMove(Game game) {
         Board board = game.getBoard();
         for (Row row : board.getRows()) {
             for (Space space : row.getSpaces()) {

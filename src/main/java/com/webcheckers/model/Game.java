@@ -237,10 +237,14 @@ public class Game {
   }
 
   public Message submitTurn(Player sessionPlayer) {
-    //Check if players active turn
-      //1. Update board
-      //2. Change who the active player is
-      //3. return successful message
+    //Needs submit turn to work. Might rebase.
+    /*
+     * if(!hasAI){
+     *  changePlayer();
+     * } else {
+     *  performMove(AI.getMove());
+     * }
+     */
     return null;
   }
 
