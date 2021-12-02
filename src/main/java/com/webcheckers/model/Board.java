@@ -163,13 +163,19 @@ public class Board implements Iterable<Row> {
     }
   }
 
-  private void tryKing(Position pos) {
-    int posRow = pos.getRow();
+  /**
+   * Attempts to King the piece at the given position. Piece must be at an end row and be a single
+   * to be kinged.
+   *
+   * @param position Position of the piece to King
+   */
+  private void tryKing(Position position) {
+    int posRow = position.getRow();
 
     // If the position is at an end row (far TOP or far BOTTOM)
     if (posRow == 0 || posRow == (ROWS - 1)) {
 
-      Space space = getSpace(pos); // Space containing Piece to KING
+      Space space = getSpace(position); // Space containing Piece to KING
       Piece piece = space.getPiece(); // Piece to KING
 
       // Make sure the piece is a SINGLE
