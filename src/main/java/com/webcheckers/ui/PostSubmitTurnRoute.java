@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
 import com.webcheckers.model.Game;
 import com.webcheckers.util.Message;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Logger;
 import spark.Request;
@@ -24,10 +25,17 @@ public class PostSubmitTurnRoute implements Route {
   // Private Logger
   private static final Logger LOG = Logger.getLogger(PostSubmitTurnRoute.class.getName());
 
+  // Global GSON instance
+  private final Gson gson;
+
   /**
    * Create the Spark Route (UI controller) to handle all {@code POST /submitTurn} HTTP requests.
+   *
+   * @param gson The GSON instance used for communicating messages to Webpage Javascript
    */
-  public PostSubmitTurnRoute() {
+  public PostSubmitTurnRoute(final Gson gson) {
+    this.gson = Objects.requireNonNull(gson, "gson is required");
+
     LOG.config("PostSubmitTurnRoute is initialized.");
   }
 
@@ -41,9 +49,6 @@ public class PostSubmitTurnRoute implements Route {
   @Override
   public Object handle(Request request, Response response) throws Exception {
     LOG.finer("PostSubmitTurnRoute is invoked.");
-
-    // Setup new Gson
-    Gson gson = new Gson();
 
     // Get the current game
     UUID gameID = gson.fromJson(request.queryParams("gameID"), UUID.class);

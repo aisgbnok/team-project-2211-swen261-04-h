@@ -148,7 +148,7 @@ public class WebServer {
     // Game Actions
     post(RESIGN_URL, new PostResignRoute());
     post(VALIDATE_MOVE_URL, new PostValidateMoveRoute());
-    post(SUBMIT_TURN_URL, new PostSubmitTurnRoute());
+    post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(gson));
 
     // Setup Application Layer
     PlayerLobby.initPlayers();
