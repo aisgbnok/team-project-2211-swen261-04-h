@@ -222,14 +222,6 @@ public class Game {
     changeActiveColor();
   }
 
-  private Player getActivePlayer() {
-    if (activeColor == Color.RED) {
-      return redPlayer;
-    } else {
-      return whitePlayer;
-    }
-  }
-
   /**
    * Toggles the active color used to determine active player.
    */
