@@ -200,17 +200,32 @@ public class Game {
   }
 
   public Message submitTurn(Player sessionPlayer) {
-    if (this.getActivePlayer() == sessionPlayer) {
-      while(!pendingMoves.isEmpty()) {
-        Move move = pendingMoves.remove(0);
-        board.performMove(move);
-      }
-      board.resetMoveMarker();
-      changeActivePlayer();
-      return Message.info("Turn Submitted Successfully");
-    } else {
-      return Message.error("Error Submitting Turn");
+
+    // Shouldn't have to check this (submit turn button is greyed out if it's not your turn)
+    // Keeping just for extra checks
+    if (getActivePlayer() == sessionPlayer) {
+      return Message.error("It's not your turn!");
     }
+
+    // Ensure pendingMoves is not empty (sort of also redundant, keeps client from breaking server?)
+    if (pendingMoves.isEmpty()) {
+      return Message.error("No moves to submit!");
+    }
+
+    // Go through pending moves, performing each move, until complete
+    while (!pendingMoves.isEmpty()) {
+      Move move = pendingMoves.remove(0);
+      board.performMove(move);
+    }
+
+    // Reset board markers, not sure if this is needed
+    board.resetMoveMarker();
+
+    // Change the active player
+    changeActivePlayer();
+
+    // Turn Submitted Successfully
+    return Message.info("Turn Submitted Successfully");
   }
 
   private Player getActivePlayer() {
