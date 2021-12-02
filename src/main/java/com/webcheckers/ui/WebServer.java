@@ -153,7 +153,7 @@ public class WebServer {
     post(VALIDATE_MOVE_URL, new PostValidateMoveRoute());
     post(BACKUP_MOVE_URL, new PostBackupMoveRoute(gson));
     post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(gson));
-    post(RESIGN_URL, new PostResignRoute());
+    post(RESIGN_URL, new PostResignRoute(gson));
 
     // Setup Application Layer
     PlayerLobby.initPlayers();

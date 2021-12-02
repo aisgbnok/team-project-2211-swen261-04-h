@@ -2,10 +2,12 @@ package com.webcheckers.ui;
 
 import static com.webcheckers.model.Game.GAME_OVER_RESIGN;
 import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER_KEY;
+
 import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
-import com.webcheckers.util.Message;
 import com.webcheckers.model.Player;
+import com.webcheckers.util.Message;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Logger;
 import spark.Request;
@@ -22,10 +24,17 @@ public class PostResignRoute implements Route {
   // Console Logger
   private static final Logger LOG = Logger.getLogger(PostResignRoute.class.getName());
 
+  // Global GSON instance
+  private final Gson gson;
+
   /**
    * Create the Spark Route (UI controller) to handle all {@code POST /resignGame} HTTP requests.
+   *
+   * @param gson The GSON instance used for communicating messages to Webpage Javascript
    */
-  public PostResignRoute() {
+  public PostResignRoute(final Gson gson) {
+    this.gson = Objects.requireNonNull(gson, "gson is required");
+
     LOG.config("PostResignRoute is initialized.");
   }
 
@@ -39,9 +48,6 @@ public class PostResignRoute implements Route {
   @Override
   public Object handle(Request request, Response response) {
     LOG.finer("PostResignRoute is invoked.");
-
-    // Setup new Gson
-    Gson gson = new Gson();
 
     // currentPlayer that wants to resign
     Player player = request.session().attribute(CURRENT_PLAYER_KEY);
