@@ -234,7 +234,7 @@ public class Game {
     board.resetMoveMarker();
 
     // Change the active player
-    changeActivePlayer();
+    changeActiveColor();
 
     // Turn Submitted Successfully
     return Message.info("Turn Submitted Successfully");
@@ -248,7 +248,10 @@ public class Game {
     }
   }
 
-  private void changeActivePlayer() {
+  /**
+   * Toggles the active color used to determine active player.
+   */
+  private void changeActiveColor() {
     activeColor = activeColor.opposite();
   }
 
