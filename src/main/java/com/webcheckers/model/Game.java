@@ -20,6 +20,10 @@ public class Game {
   private static final String BACKUP_REVERT_JUMP = "Reverted previous Jump";
   private static final String BACKUP_REVERT_MOVE = "Reverted previous Move";
 
+  // Game Win Messages
+  public static final String GAME_OVER_CAPTURE = "%s has captured all of the pieces.";
+  public static final String GAME_OVER_RESIGN = "%s has resigned.";
+
   // Game Fields
   private final UUID gameID; // Game Identifier
   private final Board board; // Game Board
