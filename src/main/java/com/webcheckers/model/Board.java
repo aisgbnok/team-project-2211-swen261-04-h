@@ -445,7 +445,7 @@ public class Board implements Iterable<Row> {
    * @param color Color of pieces to get positions for.
    * @return All positions that contain a piece of the given color.
    */
-  private ArrayList<Position> getPiecePositions(Color color) {
+  protected ArrayList<Position> getPiecePositions(Color color) {
     // Create new array for storing positions
     ArrayList<Position> positions = new ArrayList<>();
 
