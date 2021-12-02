@@ -4,6 +4,7 @@ import com.webcheckers.util.Message;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -197,6 +198,11 @@ public class Game {
     return this.gameID.equals(game.gameID)
         && this.redPlayer.equals(game.redPlayer)
         && this.whitePlayer.equals(game.whitePlayer);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(gameID, redPlayer, whitePlayer);
   }
 
   public Message submitTurn(Player sessionPlayer) {
