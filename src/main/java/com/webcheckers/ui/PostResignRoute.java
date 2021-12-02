@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import static com.webcheckers.model.Game.GAME_OVER_RESIGN;
 import static com.webcheckers.ui.GetHomeRoute.CURRENT_PLAYER_KEY;
 import com.google.gson.Gson;
 import com.webcheckers.application.GameCenter;
@@ -46,7 +47,7 @@ public class PostResignRoute implements Route {
     Player player = request.session().attribute(CURRENT_PLAYER_KEY);
 
     // Message
-    String messageText = player.getName() + " has resigned.";
+    String messageText = String.format(GAME_OVER_RESIGN, player.getName());
     Message message = Message.info(messageText);
 
     // Get the gameID UUID from queryParam
