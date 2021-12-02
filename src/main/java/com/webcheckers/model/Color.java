@@ -56,6 +56,21 @@ public enum Color {
     return direction().value();
   }
 
+  /**
+   * Returns the friendly name for the enum. RED is Red, and WHITE is White.
+   *
+   * @return Friendly enum string
+   */
+  @Override
+  public String toString() {
+    // Get original toString, and lowercase every character but the first
+    String name = super.toString();
+    name = name.charAt(0) + name.substring(1).toLowerCase(); // "RED" -> "Red"
+
+    // Return friendly string
+    return name;
+  }
+
   /** Provides directionality for COLOR */
   private enum Direction {
     UP,

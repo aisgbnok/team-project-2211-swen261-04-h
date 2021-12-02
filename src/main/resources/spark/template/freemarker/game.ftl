@@ -14,7 +14,7 @@
       "modeOptions": ${modeOptionsAsJSON!'{}'},
       "redPlayer": "${redPlayer.name}",
       "whitePlayer": "${whitePlayer.name}",
-      "activeColor": "${activeColor}"
+      "activeColor": "${activeColor.name()}"
     };
   </script>
 </head>
@@ -74,7 +74,7 @@
                         <div class="Piece"
                              id="piece-${row.index}-${space.cellIdx}"
                              data-type="${space.piece.type}"
-                             data-color="${space.piece.color}">
+                             data-color="${space.piece.color.name()}">
                         </div>
                       </#if>
                   </td>

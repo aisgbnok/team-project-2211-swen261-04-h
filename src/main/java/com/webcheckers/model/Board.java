@@ -29,7 +29,7 @@ public class Board implements Iterable<Row> {
   private static final String INVALID_JUMP = "Invalid Jump";
   public static final String INVALID_NOT_SLIDE = "Not A Slide";
   public static final String INVALID_NOT_JUMP = "Not A Jump";
-  private static final String INVALID_DIRECTION = "%s pieces can only move %s!";
+  private static final String INVALID_DIRECTION = "%s single pieces can't go in that direction!";
   private static final String INVALID_END_SPACE = "End space is not valid!";
   private static final String INVALID_JUMP_AFTER_SLIDE = "You can't jump after a slide!";
   private static final String INVALID_JUMP_SAME_PIECE = "You can't jump over your own pieces!";
@@ -332,7 +332,7 @@ public class Board implements Iterable<Row> {
 
     // Color is going wrong direction, return descriptive error message
     if ((moveColor == Color.RED && rowDelta < 0) || (moveColor == Color.WHITE && rowDelta > 0)) {
-      return Message.error(String.format(INVALID_DIRECTION, moveColor, moveColor.direction()));
+      return Message.error(String.format(INVALID_DIRECTION, moveColor));
     }
 
     // Valid Direction, above checks passed
