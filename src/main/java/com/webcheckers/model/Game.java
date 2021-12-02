@@ -114,9 +114,6 @@ public class Game {
       board.performMove(move);
     }
 
-    // Reset board markers, not sure if this is needed
-    board.resetMoveMarker();
-
     // Change the active player
     changeActiveColor();
   }
