@@ -208,7 +208,7 @@ public class Board implements Iterable<Row> {
     }
 
     // Check for possible jumps
-    if (canJump(move.getStart())) {
+    if (canJump(getSpace(move.getStart()).getPiece().getColor())) {
       return Message.error(INVALID_SLIDE_WHEN_JUMP);
     }
 
@@ -340,6 +340,29 @@ public class Board implements Iterable<Row> {
   }
 
   /**
+   * Checks if there are one or more valid jumps for pieces of the given color.
+   *
+   * @param color Color of the pieces to be tested for valid jumps.
+   * @return True if there is a valid jump for a piece of the given color, or false if not.
+   */
+  private boolean canJump(Color color) {
+    // Create new array for storing all positions for pieces of given color
+    ArrayList<Position> piecePositions = getPiecePositions(color);
+
+    // For each position check if they can jump
+    for (Position piecePosition : piecePositions) {
+
+      // Use deprecated canJump for now
+      if (canJump(piecePosition)) {
+        return true; // Jump was found, return true.
+      }
+    }
+
+    // None of them can jump, return false
+    return false;
+  }
+
+  /**
    * Checks if there are available valid jumps from the given starting position.
    *
    * @param startPosition Position to test if it can perform any valid jumps.
@@ -385,6 +408,26 @@ public class Board implements Iterable<Row> {
 
     // None of the possible jumps were viable
     return false;
+  }
+
+  /**
+   * Gets all positions that contain piece of given color on the board. Find positions based on
+   * piece color.
+   *
+   * @param color Color of pieces to get positions for.
+   * @return All positions that contain a piece of the given color.
+   */
+  private ArrayList<Position> getPiecePositions(Color color) {
+    // Create new array for storing positions
+    ArrayList<Position> positions = new ArrayList<>();
+
+    // Find positions in each row
+    for (Row row : rows) {
+      positions.addAll(row.getPiecePositions(color));
+    }
+
+    // Return all matching positions
+    return positions;
   }
 
   @Override
