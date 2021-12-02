@@ -83,10 +83,6 @@ public class Row implements Iterable<Space> {
     }
   }
 
-  public ArrayList<Space> getSpaces(){
-    return spaces;
-  }
-
   /**
    * Getter for the row index.
    *
