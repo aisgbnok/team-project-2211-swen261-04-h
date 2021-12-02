@@ -13,10 +13,10 @@ public enum Color {
    * Returns the opposite color of the given color.
    *
    * @param color Color to get opposite color of
-   * @return Opposite color; RED if object is WHITE or vice versa.
+   * @return Opposite color; WHITE if given color is RED, or vice versa.
    */
   public static Color getOppositeColor(Color color) {
-    return color.equals(RED) ? RED : WHITE;
+    return color.equals(RED) ? WHITE : RED;
   }
 
   /**
@@ -54,6 +54,21 @@ public enum Color {
    */
   public int value() {
     return direction().value();
+  }
+
+  /**
+   * Returns the friendly name for the enum. RED is Red, and WHITE is White.
+   *
+   * @return Friendly enum string
+   */
+  @Override
+  public String toString() {
+    // Get original toString, and lowercase every character but the first
+    String name = super.toString();
+    name = name.charAt(0) + name.substring(1).toLowerCase(); // "RED" -> "Red"
+
+    // Return friendly string
+    return name;
   }
 
   /** Provides directionality for COLOR */

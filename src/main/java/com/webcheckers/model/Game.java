@@ -14,14 +14,20 @@ import java.util.UUID;
  */
 public class Game {
 
-  // Game Constants
+  // Backup Messages
+  private static final String BACKUP_NO_MOVES = "No move to revert!";
+  private static final String BACKUP_REVERT_SLIDE = "Reverted previous Slide";
+  private static final String BACKUP_REVERT_JUMP = "Reverted previous Jump";
+  private static final String BACKUP_REVERT_MOVE = "Reverted previous Move";
+
+  // Game Fields
   private final UUID gameID; // Game Identifier
   private final Board board; // Game Board
   private final ArrayList<Move> pendingMoves; // Pending game piece moves
   private final Player redPlayer; // Player with red pieces
   private final Player whitePlayer; // Player with white pieces
 
-  // Game Fields
+  // Game Status
   private Color activeColor; // Active Player/Piece Color
   private boolean isGameOver; // Game is over
   private String gameOverMessage; // Reason why game is over (e.g., "[redPlayer] resigned/won")
@@ -34,7 +40,7 @@ public class Game {
    * @param whitePlayer Player with white pieces.
    */
   public Game(Player redPlayer, Player whitePlayer) {
-    // Game Constants
+    // Game Fields
     this.gameID = UUID.randomUUID(); // Set gameID
     this.board = new Board(); // Create a new board
     this.pendingMoves = new ArrayList<>(); // Create an empty list to store pending moves
@@ -119,6 +125,32 @@ public class Game {
   }
 
   /**
+   * Attempts to revert the last move from the game's pending moves. Moves are pending until turn is
+   * submitted.
+   *
+   * @return Message of type INFO if backup is successful, or type ERROR if unsuccessful.
+   */
+  public Message backupMove() {
+    // No move to revert
+    if (pendingMoves.isEmpty()) {
+      return Message.error(BACKUP_NO_MOVES);
+    }
+
+    // Remove the last move, and store it
+    Move lastMove = pendingMoves.remove(pendingMoves.size() - 1);
+
+    // Return descriptive success message
+    if (lastMove.isSlide()) {
+      return Message.info(BACKUP_REVERT_SLIDE);
+    } else if (lastMove.isJump()) {
+      return Message.info(BACKUP_REVERT_JUMP);
+    }
+
+    // Return default success message
+    return Message.info(BACKUP_REVERT_MOVE);
+  }
+
+  /**
    * Signals game end, and sets gameOverMessage to provided message.
    *
    * @param gameOverMessage Message describing why/how the game ended.
@@ -143,6 +175,10 @@ public class Game {
    */
   public Color getActiveColor() {
     return activeColor;
+  }
+
+  public boolean isActivePlayer(Player player) {
+    return player.equals(activeColor.equals(Color.RED) ? redPlayer : whitePlayer);
   }
 
   /**

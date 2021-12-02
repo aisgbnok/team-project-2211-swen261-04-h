@@ -1,8 +1,5 @@
 package com.webcheckers.model;
 
-import static com.webcheckers.model.Piece.Type.KING;
-import static com.webcheckers.model.Piece.Type.SINGLE;
-
 import com.webcheckers.model.Piece.Type;
 import com.webcheckers.util.Message;
 import java.util.ArrayList;
@@ -15,24 +12,29 @@ import java.util.Iterator;
  */
 public class Board implements Iterable<Row> {
 
+  // Invalid Messages
+  public static final String INVALID_MOVE = "Invalid Move";
+  public static final String INVALID_SLIDE = "Invalid Slide";
+  public static final String INVALID_JUMP = "Invalid Jump";
+  public static final String INVALID_NOT_SLIDE = "Not A Slide";
+  public static final String INVALID_NOT_JUMP = "Not A Jump";
+  public static final String INVALID_DIRECTION = "%s single pieces can't go in that direction!";
+  public static final String INVALID_END_SPACE = "End space is not valid!";
+  public static final String INVALID_JUMP_AFTER_SLIDE = "You can't jump after a slide!";
+  public static final String INVALID_JUMP_SAME_PIECE = "You can't jump over your own pieces!";
+  public static final String INVALID_JUMP_EMPTY_MIDDLE = "You can't jump over an empty space!";
+  public static final String INVALID_SLIDE_AFTER_JUMP = "You can't slide after a jump!";
+  public static final String INVALID_SLIDE_AFTER_SLIDE = "You can't slide twice!";
+  public static final String INVALID_SLIDE_WHEN_JUMP = "A jump is possible, you must jump!";
+
+  // Valid Messages
+  public static final String VALID_SLIDE = "Valid Slide";
+  public static final String VALID_JUMP = "Valid Jump";
+  public static final String VALID_DIRECTION = "Valid Direction";
+  public static final String VALID_DIRECTION_KING = "Is A King";
+
   public static final int ROWS = 8; // How many rows in a board
   public static final int COLS = 8; // How many columns in a board
-
-  // Invalid Messages
-  private static final String INVALID_MOVE = "Invalid Move";
-  private static final String INVALID_SLIDE = "Invalid Slide";
-  private static final String INVALID_JUMP = "Invalid Jump";
-  private static final String INVALID_DIRECTION = "%s pieces can only move %s!";
-  private static final String INVALID_END_SPACE = "End space is not valid!";
-  private static final String INVALID_JUMP_AFTER_SLIDE = "You can't jump after a slide!";
-  private static final String INVALID_JUMP_SAME_PIECE = "You can't jump over your own pieces!";
-  private static final String INVALID_JUMP_EMPTY_MIDDLE = "You can't jump over an empty space!";
-  private static final String INVALID_SLIDE_AFTER_JUMP = "You can't slide after a jump!";
-  private static final String INVALID_SLIDE_AFTER_SLIDE = "You can't slide twice!";
-  private static final String INVALID_SLIDE_WHEN_JUMP = "A jump is possible, you must jump!";
-  // Valid Messages
-  private static final String VALID_SLIDE = "Valid Slide";
-  private static final String VALID_JUMP = "Valid Jump";
 
   private final ArrayList<Row> rows; // Contains all rows in a board in order.
 
@@ -178,9 +180,9 @@ public class Board implements Iterable<Row> {
       Piece piece = space.getPiece(); // Piece to KING
 
       // Make sure the piece is a SINGLE
-      if (piece.getType() == SINGLE) {
+      if (piece.getType() == Type.SINGLE) {
         space.removePiece(); // Remove the single piece from the space
-        space.setPiece(new Piece(piece, KING)); // Add duplicate piece (same color) that is a KING
+        space.setPiece(new Piece(piece, Type.KING)); // Add same color piece that is a KING
 
         wasKinged = true; // A piece was kinged
       }
@@ -194,119 +196,198 @@ public class Board implements Iterable<Row> {
    * @return Message of type INFO if move is valid, or type ERROR if invalid.
    */
   public Message validateMove(Move move) {
-    // Positions
-    Position startPos = move.getStart();
-    Position endPos = move.getEnd();
-    int rowDelta = startPos.getRow() - endPos.getRow();
+    //  Slide Validation, check for previous moves
+    if (move.isSlide()) {
+      return this.validateSlide(move, true);
+    }
 
-    // Spaces
-    Space startSpace = this.getSpace(startPos);
-    Space endSpace = this.getSpace(endPos);
+    // Jump Validation, check for previous slides
+    if (move.isJump()) {
+      return this.validateJump(move, true);
+    }
 
-    // Piece
-    Piece movePiece = startSpace.getPiece(); // This is the piece we want to move
-    Color moveColor = movePiece.getColor();
-    Type moveType = movePiece.getType();
+    // Was not a slide or a jump
+    return Message.error(INVALID_MOVE);
+  }
 
-    /*
-     * Basic Validation Checks
-     */
+  /**
+   * Checks if a given move is a valid slide on the board.
+   *
+   * @param move Move that needs to be validated as a slide.
+   * @return Message of type INFO if move is a valid slide, or type ERROR if invalid.
+   */
+  private Message validateSlide(Move move) {
+    // Move is not a slide
+    if (!move.isSlide()) {
+      return Message.error(INVALID_NOT_SLIDE);
+    }
 
-    // CSS/JavaScript shouldn't let pieces be moved to invalid spaces, but keeping this as a simple
-    // check to filter out basic exceptions.
-    if (!endSpace.isValid()) {
+    // End space is not valid
+    if (!getSpace(move.getEnd()).isValid()) {
       return Message.error(INVALID_END_SPACE);
     }
 
-    // Move should not be invalid
-    if (move.isInvalid()) {
-      return Message.error(INVALID_MOVE);
+    // Validate Direction
+    Message directionResult = validateDirection(move);
+
+    // If directionResult message is not successful
+    if (!directionResult.isSuccessful()) {
+      return directionResult;
     }
 
-    // Ensure SINGLE piece is moving in the right direction
-    if ((moveType == SINGLE)
-        && ((moveColor == Color.RED && rowDelta < 0) // RED row delta should be positive
-            || (moveColor == Color.WHITE && rowDelta > 0))) // WHITE row delta should be negative
-    {
-      return Message.error(
-          String.format(INVALID_DIRECTION, moveColor.name(), moveColor.direction()));
+    // Check for possible jumps
+    if (canJump(getSpace(move.getStart()).getPiece().getColor())) {
+      return Message.error(INVALID_SLIDE_WHEN_JUMP);
     }
 
-    /*
-     * Slide Validation
-     */
-
-    if (move.isSlide()) {
-      // If a slide or jump has already occurred return appropriate error message
-      if (hasSlid) {
-        return Message.error(INVALID_SLIDE_AFTER_SLIDE);
-      } else if (hasJumped) {
-        return Message.error(INVALID_SLIDE_AFTER_JUMP);
-      }
-
-      // If a jump is possible, tell the player
-      if (canJump(startPos)) {
-        return Message.error(INVALID_SLIDE_WHEN_JUMP);
-      }
-
-      // Valid Slide, above checks passed
-      return Message.info(VALID_SLIDE);
-    }
-
-    /*
-     * Jump Validation
-     */
-
-    if (move.isJump()) {
-      // If a slide has already occurred return appropriate error message
-      if (hasSlid) {
-        return Message.error(INVALID_JUMP_AFTER_SLIDE);
-      }
-
-      // Validate the Jump, and return the result
-      return validateJump(move);
-    }
-
-    // Invalid Move, above checks failed. This should never happen, if you see this look into it.
-    return Message.error(INVALID_MOVE + " (Edge Case)");
+    // Valid Slide, above checks passed
+    return Message.info(VALID_SLIDE);
   }
 
   /**
-   * PLACEHOLDER! Checks if a given slide is valid on the board.
+   * Checks if a given move is a valid slide on the board. Will also check to ensure a slide or jump
+   * has not occurred on the board during the current turn if checkPrevious is true.
    *
-   * @param move Slide that needs to be validated.
-   * @return Message of type INFO if slide is valid, or type ERROR if invalid.
+   * @param move Move that needs to be validated as a slide.
+   * @param checkPrevious Whether to check for previous slides or jumps during current turn.
+   * @return Message of type INFO if move is a valid slide, or type ERROR if invalid.
    */
-  private Message validateSlide(Move move) {
-    // NOTE THIS IS A PLACEHOLDER METHOD THAT IS NEVER USED AND DOES NOT PERFORM ANY FUNCTION
+  private Message validateSlide(Move move, boolean checkPrevious) {
+    // checkPrevious is false, return default validateSlide
+    if (!checkPrevious) {
+      return validateSlide(move);
+    }
 
-    // Invalid Slide, above checks failed
-    return Message.error(INVALID_SLIDE);
+    // A slide has occurred during current turn
+    if (hasSlid) {
+      return Message.error(INVALID_SLIDE_AFTER_SLIDE);
+    }
+
+    // A jump has occurred during current turn
+    if (hasJumped) {
+      return Message.error(INVALID_SLIDE_AFTER_JUMP);
+    }
+
+    // Return default validateSlide, above checks passed
+    return validateSlide(move);
   }
 
   /**
-   * Checks if a given jump is a valid on the board.
+   * Checks if a given move is a valid jump on the board.
    *
-   * @param move Jump that needs to be validated.
-   * @return Message of type INFO if jump is valid, or type ERROR if invalid.
+   * @param move Move that needs to be validated as a jump.
+   * @return Message of type INFO if move is a valid jump, or type ERROR if invalid.
    */
   private Message validateJump(Move move) {
-    Position midPos = move.getMiddle(); // Position between start and end position
-    Piece midPiece = getSpace(midPos).getPiece(); // Piece at middle position
-    Piece startPiece = getSpace(move.getStart()).getPiece(); // Piece at start position
+    // Move is not a jump
+    if (!move.isJump()) {
+      return Message.error(INVALID_NOT_JUMP);
+    }
+
+    // Pieces
+    Piece startPiece = this.getSpace(move.getStart()).getPiece();
+    Piece midPiece = this.getSpace(move.getMiddle()).getPiece();
+
+    // End space should not be invalid
+    if (!getSpace(move.getEnd()).isValid()) {
+      return Message.error(INVALID_END_SPACE);
+    }
+
+    // Validate Direction
+    Message directionResult = validateDirection(move);
+
+    // If directionResult message is not successful
+    if (!directionResult.isSuccessful()) {
+      return directionResult;
+    }
 
     // Middle piece should not be empty
     if (midPiece == null) {
       return Message.error(INVALID_JUMP_EMPTY_MIDDLE);
     }
 
-    // Middle piece should not be the same color as the jumping piece
+    // Middle piece should not be the same color as the startPiece piece
     if (midPiece.getColor() == startPiece.getColor()) {
       return Message.error(INVALID_JUMP_SAME_PIECE);
     }
 
     // Valid Jump, above checks passed
     return Message.info(VALID_JUMP);
+  }
+
+  /**
+   * Checks if a given move is a valid jump on the board. Will also check to ensure a slide has not
+   * occurred on the board during the current turn if checkPrevious is true.
+   *
+   * @param move Move that needs to be validated as a jump.
+   * @param checkPrevious Whether to check for previous slides during current turn.
+   * @return Message of type INFO if move is a valid jump, or type ERROR if invalid.
+   */
+  private Message validateJump(Move move, boolean checkPrevious) {
+    // checkPrevious is false, return default validateJump
+    if (!checkPrevious) {
+      return validateJump(move);
+    }
+
+    // A slide has occurred during current turn
+    if (hasSlid) {
+      return Message.error(INVALID_JUMP_AFTER_SLIDE);
+    }
+
+    // Return default validateJump, above checks passed
+    return validateJump(move);
+  }
+
+  /**
+   * Checks if a given move is going the right direction. RED goes UP, WHITE goes DOWN.
+   *
+   * @param move Move that needs its direction to be validated.
+   * @return Message of type INFO if move direction is valid, or type ERROR if invalid.
+   */
+  private Message validateDirection(Move move) {
+    // Calculate Row Delta
+    int rowDelta = move.getStart().getRow() - move.getEnd().getRow();
+
+    // Piece Information
+    Piece movePiece = this.getSpace(move.getStart()).getPiece();
+    Color moveColor = movePiece.getColor();
+    Type moveType = movePiece.getType();
+
+    // Only Single pieces need direction to be validated
+    if (moveType != Type.SINGLE) {
+      return Message.info(VALID_DIRECTION_KING);
+    }
+
+    // Color is going wrong direction, return descriptive error message
+    if ((moveColor == Color.RED && rowDelta < 0) || (moveColor == Color.WHITE && rowDelta > 0)) {
+      return Message.error(String.format(INVALID_DIRECTION, moveColor));
+    }
+
+    // Valid Direction, above checks passed
+    return Message.info(VALID_DIRECTION);
+  }
+
+  /**
+   * Checks if there are one or more valid jumps for pieces of the given color.
+   *
+   * @param color Color of the pieces to be tested for valid jumps.
+   * @return True if there is a valid jump for a piece of the given color, or false if not.
+   */
+  private boolean canJump(Color color) {
+    // Create new array for storing all positions for pieces of given color
+    ArrayList<Position> piecePositions = getPiecePositions(color);
+
+    // For each position check if they can jump
+    for (Position piecePosition : piecePositions) {
+
+      // Use deprecated canJump for now
+      if (canJump(piecePosition)) {
+        return true; // Jump was found, return true.
+      }
+    }
+
+    // None of them can jump, return false
+    return false;
   }
 
   /**
@@ -333,7 +414,7 @@ public class Board implements Iterable<Row> {
     };
 
     // Traverse first two positions if it is a SINGLE, or all if it is a KING
-    int maxTraverse = piece.getType() == SINGLE ? 2 : 4;
+    int maxTraverse = piece.getType() == Type.SINGLE ? 2 : 4;
 
     // Generate an empty ArrayList to store possible jump moves
     ArrayList<Move> possibleJumps = new ArrayList<>(maxTraverse);
@@ -355,6 +436,26 @@ public class Board implements Iterable<Row> {
 
     // None of the possible jumps were viable
     return false;
+  }
+
+  /**
+   * Gets all positions that contain piece of given color on the board. Find positions based on
+   * piece color.
+   *
+   * @param color Color of pieces to get positions for.
+   * @return All positions that contain a piece of the given color.
+   */
+  private ArrayList<Position> getPiecePositions(Color color) {
+    // Create new array for storing positions
+    ArrayList<Position> positions = new ArrayList<>();
+
+    // Find positions in each row
+    for (Row row : rows) {
+      positions.addAll(row.getPiecePositions(color));
+    }
+
+    // Return all matching positions
+    return positions;
   }
 
   @Override
