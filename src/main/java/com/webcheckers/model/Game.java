@@ -206,24 +206,9 @@ public class Game {
   }
 
   /**
-   * Submits pending moves that have already been validated.
-   *
-   * @param sessionPlayer Player attempting to submit turn.
-   * @return Message of type INFO if turn submitted, or type ERROR if failed.
+   * Submit current turn by performing pending moves and changing active color.
    */
-  public Message submitTurn(Player sessionPlayer) {
-
-    // Shouldn't have to check this (submit turn button is greyed out if it's not your turn)
-    // Keeping just for extra checks
-    if (getActivePlayer() == sessionPlayer) {
-      return Message.error("It's not your turn!");
-    }
-
-    // Ensure pendingMoves is not empty (sort of also redundant, keeps client from breaking server?)
-    if (pendingMoves.isEmpty()) {
-      return Message.error("No moves to submit!");
-    }
-
+  public void submitTurn() {
     // Go through pending moves, performing each move, until complete
     while (!pendingMoves.isEmpty()) {
       Move move = pendingMoves.remove(0);
@@ -235,9 +220,6 @@ public class Game {
 
     // Change the active player
     changeActiveColor();
-
-    // Turn Submitted Successfully
-    return Message.info("Turn Submitted Successfully");
   }
 
   private Player getActivePlayer() {
