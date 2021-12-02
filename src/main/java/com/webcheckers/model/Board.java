@@ -182,6 +182,52 @@ public class Board implements Iterable<Row> {
     return Message.error(INVALID_MOVE);
   }
 
+  public boolean isMoveValid(Move move) {
+    //  Slide Validation, check for previous moves
+    if (move.isSlide()) {
+      return this.isSlideValid(move);
+    }
+
+    // Jump Validation, check for previous slides
+    if (move.isJump()) {
+      return this.isJumpValid(move);
+    }
+
+    // Was not a slide or a jump
+    return false;
+  }
+
+  /**
+   * Checks if a given move is a valid slide on the board.
+   *
+   * @param move Move that needs to be validated as a slide.
+   * @return Message of type INFO if move is a valid slide, or type ERROR if invalid.
+   */
+  private boolean isSlideValid(Move move) {
+    // Move is not a slide
+    if (!move.isSlide()) {
+      return false;
+    }
+
+    // End space is not valid
+    if (!getSpace(move.getEnd()).isValid()) {
+      return false;
+    }
+
+    // Validate Direction
+    Message directionResult = validateDirection(move);
+
+    // If directionResult message is not successful
+    if (!directionResult.isSuccessful()) {
+      return false;
+    }
+
+    // Check for possible jumps
+    return !canJump(move.getStart());
+
+    // Valid Slide, above checks passed
+  }
+
   /**
    * Checks if a given move is a valid slide on the board.
    *
@@ -285,6 +331,43 @@ public class Board implements Iterable<Row> {
 
     // Valid Jump, above checks passed
     return Message.info(VALID_JUMP);
+  }
+
+  private boolean isJumpValid(Move move) {
+    // Move is not a jump
+    if (!move.isJump()) {
+      return false;
+    }
+
+    // Pieces
+    Piece startPiece = this.getSpace(move.getStart()).getPiece();
+    Piece midPiece = this.getSpace(move.getMiddle()).getPiece();
+
+    // End space should not be invalid
+    if (!getSpace(move.getEnd()).isValid()) {
+      return false;
+    }
+
+    // Validate Direction
+    Message directionResult = validateDirection(move);
+
+    // If directionResult message is not successful
+    if (!directionResult.isSuccessful()) {
+      return false;
+    }
+
+    // Middle piece should not be empty
+    if (midPiece == null) {
+      return false;
+    }
+
+    // Middle piece should not be the same color as the startPiece piece
+    if (midPiece.getColor() == startPiece.getColor()) {
+      return false;
+    }
+
+    // Valid Jump, above checks passed
+    return true;
   }
 
   /**
