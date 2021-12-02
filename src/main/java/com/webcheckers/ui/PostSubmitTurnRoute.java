@@ -50,9 +50,8 @@ public class PostSubmitTurnRoute implements Route {
     Game game = GameCenter.getGame(gameID);
 
     if (game != null) {
-      return gson.toJson(game.submitTurn(player, game));
+      return gson.toJson(game.submitTurn(player));
     } else {
-      //TODO: replace with custom exception
       throw new Exception();
     }
   }

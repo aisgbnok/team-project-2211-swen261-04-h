@@ -199,10 +199,12 @@ public class Game {
         && this.whitePlayer.equals(game.whitePlayer);
   }
 
-  public Message submitTurn(Player sessionPlayer, Game game) {
-    if (game.getActivePlayer() == sessionPlayer) {
-      Move move = pendingMoves.remove(0);
-      board.performMove(move);
+  public Message submitTurn(Player sessionPlayer) {
+    if (this.getActivePlayer() == sessionPlayer) {
+      while(!pendingMoves.isEmpty()) {
+        Move move = pendingMoves.remove(0);
+        board.performMove(move);
+      }
       changeActivePlayer();
       return Message.info("Turn Submitted Successfully");
     } else {
