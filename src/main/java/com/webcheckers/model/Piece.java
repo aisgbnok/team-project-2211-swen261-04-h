@@ -7,7 +7,7 @@ package com.webcheckers.model;
  */
 public class Piece {
 
-  private Type type; // Piece type enum, SINGLE or KING.
+  private final Type type; // Piece type enum, SINGLE or KING.
   private final Color color; // Piece color enum, WHITE or RED.
 
   /**
@@ -19,6 +19,17 @@ public class Piece {
   public Piece(Type type, Color color) {
     this.type = type;
     this.color = color;
+  }
+
+  /**
+   * Constructs a duplicate of a game piece with a different type.
+   *
+   * @param piece Piece to duplicate
+   * @param type Piece type enum, SINGLE or KING.
+   */
+  public Piece(Piece piece, Type type) {
+    this.color = piece.color;
+    this.type = type;
   }
 
   /**
@@ -47,10 +58,6 @@ public class Piece {
    */
   public Color getColor() {
     return color;
-  }
-
-  public void king() {
-    type = Type.KING;
   }
 
   // Enumerations

@@ -4,6 +4,7 @@ import com.webcheckers.util.Message;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -19,16 +20,17 @@ public class Game {
   private static final String BACKUP_REVERT_JUMP = "Reverted previous Jump";
   private static final String BACKUP_REVERT_MOVE = "Reverted previous Move";
 
+  // Game Fields
   private final UUID gameID; // Game Identifier
   private final Board board; // Game Board
   private final ArrayList<Move> pendingMoves; // Pending game piece moves
-
-  private final Color activeColor; // Active Player/Piece Color
   private final Player redPlayer; // Player with red pieces
   private final Player whitePlayer; // Player with white pieces
 
-  private boolean isGameOver;
-  private String gameOverMessage;
+  // Game Status
+  private Color activeColor; // Active Player/Piece Color
+  private boolean isGameOver; // Game is over
+  private String gameOverMessage; // Reason why game is over (e.g., "[redPlayer] resigned/won")
 
   /**
    * Constructs a new game. Generates a gameID and a new board. Sets the activeColor to RED, and
@@ -38,17 +40,15 @@ public class Game {
    * @param whitePlayer Player with white pieces.
    */
   public Game(Player redPlayer, Player whitePlayer) {
-    // Game
+    // Game Fields
     this.gameID = UUID.randomUUID(); // Set gameID
     this.board = new Board(); // Create a new board
     this.pendingMoves = new ArrayList<>(); // Create an empty list to store pending moves
-
-    // Players
-    this.activeColor = Color.RED; // RED is always the starting color
     this.redPlayer = redPlayer; // Set Red Player
     this.whitePlayer = whitePlayer; // Set White Player
 
     // Game Status
+    this.activeColor = Color.RED; // RED is always the starting color
     this.isGameOver = false; // Game is just starting
     this.gameOverMessage = null; // Game is not over
   }
@@ -112,6 +112,18 @@ public class Game {
     return result;
   }
 
+  /** Submit current turn by performing pending moves and changing active color. */
+  public void submitTurn() {
+    // Go through pending moves, performing each move, until complete
+    while (!pendingMoves.isEmpty()) {
+      Move move = pendingMoves.remove(0);
+      board.performMove(move);
+    }
+
+    // Change the active player
+    changeActiveColor();
+  }
+
   /**
    * Attempts to revert the last move from the game's pending moves. Moves are pending until turn is
    * submitted.
@@ -136,6 +148,20 @@ public class Game {
 
     // Return default success message
     return Message.info(BACKUP_REVERT_MOVE);
+  }
+
+  /**
+   * Signals game end, and sets gameOverMessage to provided message.
+   *
+   * @param gameOverMessage Message describing why/how the game ended.
+   */
+  public void gameOver(String gameOverMessage) {
+    this.isGameOver = true;
+    this.gameOverMessage = gameOverMessage;
+
+    // Update Players inGame status
+    redPlayer.inGame(false);
+    whitePlayer.inGame(false);
   }
 
   /*
@@ -166,23 +192,14 @@ public class Game {
     return (color.equals(Color.RED)) ? redPlayer.getName() : whitePlayer.getName();
   }
 
+  /** Toggles the active color used to determine active player. */
+  private void changeActiveColor() {
+    activeColor = activeColor.opposite();
+  }
+
   /*
    * Game Status Methods
    */
-
-  /**
-   * Signals game end, and sets gameOverMessage to provided message.
-   *
-   * @param gameOverMessage Message describing why/how the game ended.
-   */
-  public void gameOver(String gameOverMessage) {
-    this.isGameOver = true;
-    this.gameOverMessage = gameOverMessage;
-
-    // Update Players inGame status
-    redPlayer.inGame(false);
-    whitePlayer.inGame(false);
-  }
 
   /**
    * Getter for game over status.
@@ -236,46 +253,9 @@ public class Game {
         && this.whitePlayer.equals(game.whitePlayer);
   }
 
-  public Message submitTurn(Player sessionPlayer) {
-    //Check if players active turn
-      //1. Update board
-      //2. Change who the active player is
-      //3. return successful message
-    return null;
-  }
-
-  private void changeActivePlayer() {
-    //1. determine who the next player is
-    //2. make kings
-    makeKings();
-    //3. determine winners
-  }
-
-  private void makeKings(){
-    for(int cell = 0; cell < 8; cell++){
-      if(
-              board.getRows().get(0).getSpaces().get(cell).isFull() &&
-              board.getRows().get(0).getSpaces().get(cell).getPiece().getColor() == Color.RED
-      ){
-        board.getRows().get(0).getSpaces().get(cell).getPiece().king();
-      }
-    }
-
-    for(int cell = 0; cell < 8; cell++){
-      if(
-              board.getRows().get(7).getSpaces().get(cell).isFull() &&
-              board.getRows().get(7).getSpaces().get(cell).getPiece().getColor() == Color.WHITE
-      ){
-        board.getRows().get(7).getSpaces().get(cell).getPiece().king();
-      }
-    }
-  }
-
-  // TODO: viewModes don't belong to a game, but a session. Where should we put these?
-  public enum viewModes {
-    PLAY,
-    SPECTATOR,
-    REPLAY
+  @Override
+  public int hashCode() {
+    return Objects.hash(gameID, redPlayer, whitePlayer);
   }
 
   /*
@@ -319,5 +299,12 @@ public class Game {
     if (currentPlayer.equals(redPlayer)) return whitePlayer;
     if (currentPlayer.equals(whitePlayer)) return redPlayer;
     return null;
+  }
+
+  // TODO: viewModes don't belong to a game, but a session. Where should we put these?
+  public enum viewModes {
+    PLAY,
+    SPECTATOR,
+    REPLAY
   }
 }

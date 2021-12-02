@@ -12,36 +12,35 @@ import java.util.Iterator;
  */
 public class Board implements Iterable<Row> {
 
+  // Invalid Messages
+  public static final String INVALID_MOVE = "Invalid Move";
+  public static final String INVALID_SLIDE = "Invalid Slide";
+  public static final String INVALID_JUMP = "Invalid Jump";
+  public static final String INVALID_NOT_SLIDE = "Not A Slide";
+  public static final String INVALID_NOT_JUMP = "Not A Jump";
+  public static final String INVALID_DIRECTION = "%s single pieces can't go in that direction!";
+  public static final String INVALID_END_SPACE = "End space is not valid!";
+  public static final String INVALID_JUMP_AFTER_SLIDE = "You can't jump after a slide!";
+  public static final String INVALID_JUMP_SAME_PIECE = "You can't jump over your own pieces!";
+  public static final String INVALID_JUMP_EMPTY_MIDDLE = "You can't jump over an empty space!";
+  public static final String INVALID_SLIDE_AFTER_JUMP = "You can't slide after a jump!";
+  public static final String INVALID_SLIDE_AFTER_SLIDE = "You can't slide twice!";
+  public static final String INVALID_SLIDE_WHEN_JUMP = "A jump is possible, you must jump!";
+
+  // Valid Messages
+  public static final String VALID_SLIDE = "Valid Slide";
+  public static final String VALID_JUMP = "Valid Jump";
+  public static final String VALID_DIRECTION = "Valid Direction";
+  public static final String VALID_DIRECTION_KING = "Is A King";
+
   public static final int ROWS = 8; // How many rows in a board
   public static final int COLS = 8; // How many columns in a board
 
   private final ArrayList<Row> rows; // Contains all rows in a board in order.
 
-  // FIXME: Think about implications when submitting a turn? How do we reset them?
   private boolean hasSlid; // A slide has occurred previously
   private boolean hasJumped; // A jump has occurred previously
-
-  /*
-   * Validation Messages // TODO: Possibly Move into utility tier
-   */
-  private static final String INVALID_MOVE = "Invalid Move";
-  private static final String INVALID_SLIDE = "Invalid Slide";
-  private static final String INVALID_JUMP = "Invalid Jump";
-  public static final String INVALID_NOT_SLIDE = "Not A Slide";
-  public static final String INVALID_NOT_JUMP = "Not A Jump";
-  private static final String INVALID_DIRECTION = "%s single pieces can't go in that direction!";
-  private static final String INVALID_END_SPACE = "End space is not valid!";
-  private static final String INVALID_JUMP_AFTER_SLIDE = "You can't jump after a slide!";
-  private static final String INVALID_JUMP_SAME_PIECE = "You can't jump over your own pieces!";
-  private static final String INVALID_JUMP_EMPTY_MIDDLE = "You can't jump over an empty space!";
-  private static final String INVALID_SLIDE_AFTER_JUMP = "You can't slide after a jump!";
-  private static final String INVALID_SLIDE_AFTER_SLIDE = "You can't slide twice!";
-  private static final String INVALID_SLIDE_WHEN_JUMP = "A jump is possible, you must jump!";
-
-  private static final String VALID_SLIDE = "Valid Slide";
-  private static final String VALID_JUMP = "Valid Jump";
-  public static final String VALID_DIRECTION = "Valid Direction";
-  public static final String VALID_DIRECTION_KING = "Is A King";
+  private boolean wasKinged; // A piece was kinged
 
   /** Constructs a new board in the default orientation. Red pieces are generated at the bottom. */
   public Board() {
@@ -142,6 +141,8 @@ public class Board implements Iterable<Row> {
       endSpace.setPiece(movePiece); // Set endSpace piece to movePiece
       startSpace.removePiece(); // Remove movePiece from startSpace
 
+      tryKing(move.getEnd()); // Try to king the piece, after the slide
+
       hasSlid = true; // A slide has occurred
       return; // Finished
     }
@@ -154,10 +155,37 @@ public class Board implements Iterable<Row> {
       endSpace.setPiece(movePiece); // Set endSpace piece to movePiece
       startSpace.removePiece(); // Remove movePiece from startSpace
 
+      tryKing(move.getEnd()); // Try to king the piece, after the jump
+
       // Capture (remove) the middle piece
       midSpace.removePiece();
 
       hasJumped = true; // A jump has occurred
+    }
+  }
+
+  /**
+   * Attempts to King the piece at the given position. Piece must be at an end row and be a single
+   * to be kinged.
+   *
+   * @param position Position of the piece to King
+   */
+  private void tryKing(Position position) {
+    int posRow = position.getRow();
+
+    // If the position is at an end row (far TOP or far BOTTOM)
+    if (posRow == 0 || posRow == (ROWS - 1)) {
+
+      Space space = getSpace(position); // Space containing Piece to KING
+      Piece piece = space.getPiece(); // Piece to KING
+
+      // Make sure the piece is a SINGLE
+      if (piece.getType() == Type.SINGLE) {
+        space.removePiece(); // Remove the single piece from the space
+        space.setPiece(new Piece(piece, Type.KING)); // Add same color piece that is a KING
+
+        wasKinged = true; // A piece was kinged
+      }
     }
   }
 
