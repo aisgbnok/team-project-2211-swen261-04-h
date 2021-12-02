@@ -106,6 +106,35 @@ public class Game {
     return result;
   }
 
+  /** Submit current turn by performing pending moves and changing active color. */
+  public void submitTurn() {
+    // Go through pending moves, performing each move, until complete
+    while (!pendingMoves.isEmpty()) {
+      Move move = pendingMoves.remove(0);
+      board.performMove(move);
+    }
+
+    // Reset board markers, not sure if this is needed
+    board.resetMoveMarker();
+
+    // Change the active player
+    changeActiveColor();
+  }
+
+  /**
+   * Signals game end, and sets gameOverMessage to provided message.
+   *
+   * @param gameOverMessage Message describing why/how the game ended.
+   */
+  public void gameOver(String gameOverMessage) {
+    this.isGameOver = true;
+    this.gameOverMessage = gameOverMessage;
+
+    // Update Players inGame status
+    redPlayer.inGame(false);
+    whitePlayer.inGame(false);
+  }
+
   /*
    * Player Methods
    */
@@ -130,23 +159,14 @@ public class Game {
     return (color.equals(Color.RED)) ? redPlayer.getName() : whitePlayer.getName();
   }
 
+  /** Toggles the active color used to determine active player. */
+  private void changeActiveColor() {
+    activeColor = activeColor.opposite();
+  }
+
   /*
    * Game Status Methods
    */
-
-  /**
-   * Signals game end, and sets gameOverMessage to provided message.
-   *
-   * @param gameOverMessage Message describing why/how the game ended.
-   */
-  public void gameOver(String gameOverMessage) {
-    this.isGameOver = true;
-    this.gameOverMessage = gameOverMessage;
-
-    // Update Players inGame status
-    redPlayer.inGame(false);
-    whitePlayer.inGame(false);
-  }
 
   /**
    * Getter for game over status.
@@ -203,30 +223,6 @@ public class Game {
   @Override
   public int hashCode() {
     return Objects.hash(gameID, redPlayer, whitePlayer);
-  }
-
-  /**
-   * Submit current turn by performing pending moves and changing active color.
-   */
-  public void submitTurn() {
-    // Go through pending moves, performing each move, until complete
-    while (!pendingMoves.isEmpty()) {
-      Move move = pendingMoves.remove(0);
-      board.performMove(move);
-    }
-
-    // Reset board markers, not sure if this is needed
-    board.resetMoveMarker();
-
-    // Change the active player
-    changeActiveColor();
-  }
-
-  /**
-   * Toggles the active color used to determine active player.
-   */
-  private void changeActiveColor() {
-    activeColor = activeColor.opposite();
   }
 
   /*
