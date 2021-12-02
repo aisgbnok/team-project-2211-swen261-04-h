@@ -362,4 +362,9 @@ public class Board implements Iterable<Row> {
   public Iterator<Row> iterator() {
     return new Board(this).rows.iterator();
   }
+
+  public void resetMoveMarker() {
+    hasJumped = false;
+    hasSlid = false;
+  }
 }

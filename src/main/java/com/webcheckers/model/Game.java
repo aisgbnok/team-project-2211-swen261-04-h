@@ -205,6 +205,7 @@ public class Game {
         Move move = pendingMoves.remove(0);
         board.performMove(move);
       }
+      board.resetMoveMarker();
       changeActivePlayer();
       return Message.info("Turn Submitted Successfully");
     } else {
