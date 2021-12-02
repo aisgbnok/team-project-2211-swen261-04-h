@@ -52,9 +52,9 @@ mvn compile exec:java
 
 ## Known Bugs 🪲
 
-> 👉 Turn submission is not yet implemented
+> 👉 Resinging from the game, causes the game to be deleted instead of ended. For more details on why, see [#50](https://github.com/RIT-SWEN-261-04/team-project-2211-swen261-04-h/issues/50)
 
-> 👉 After submitting a turn, move validation breaks. For more details on why, see [#32](https://github.com/RIT-SWEN-261-04/team-project-2211-swen261-04-h/issues/32)
+> 👉 If a player makes it to the end of the board during their turn, the server treats that piece as a king before turn submission. For more details on why, see [#59](https://github.com/RIT-SWEN-261-04/team-project-2211-swen261-04-h/issues/59)
 
 > 👉 There are instances where routing breaks. e.g., players challenge another around the same time results in error message for second player [#34](https://github.com/RIT-SWEN-261-04/team-project-2211-swen261-04-h/issues/32)
 
